@@ -15,12 +15,13 @@ from IPython.display import display
 
 
 # import own functions
-from metrics_calculations import count_hits_per_ooi
+# from metrics_calculations import count_hits_per_ooi
 
 
 ### FUNCTIONS
 
 ### visualize
+#region
 
 # hits
 def visualize_hits(df, trial):
@@ -61,7 +62,7 @@ def save_plots_per_trial(trial):
     fig_dwelltime.savefig(join(ind_output_path, 'fig_{}_dwelltime_{}px.png'.format(txt_filenames[trial], pixel_distance)))
     fig_rel_dwelltime.savefig(join(ind_output_path, 'fig_{}_rel_dwelltime_{}px.png'.format(txt_filenames[trial], pixel_distance)))
 
-
+#endregion
 
 ### calculations
 
