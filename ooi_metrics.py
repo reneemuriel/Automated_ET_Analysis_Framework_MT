@@ -6,7 +6,7 @@ import statistics
 #region
 
 ### count total hits per ooi of entire trial
-def count_hits(data, all_ooi):
+def count_hits_ooi(data, all_ooi):
     """ counting all hits per OOI from the ogdhar_final file"""
     hits = []
     for ooi in all_ooi:
@@ -14,21 +14,22 @@ def count_hits(data, all_ooi):
     return hits
 
 
-### calculate total dwell time per OOI of entire trial
-def total_dwell_time(data, all_ooi):
-    global dwell_time
-    dwell_time = [0]*len(all_ooi)
+### calculate total dwell time/fixation time per OOI of entire trial
+def tot_fixation_time_ooi(data, all_ooi):
+    global tot_fixation_time
+    tot_fixation_time = [0]*len(all_ooi)
     i=0
     for ooi in all_ooi:
         for row in range(0,len(data)):
             if ooi in data.iloc[row]['fixation_object']:
-                dwell_time[i] = dwell_time[i] + data.iloc[row]['fixation_time']
+                tot_fixation_time[i] = tot_fixation_time[i] + data.iloc[row]['fixation_time']
         i=i+1
-    return dwell_time        
+    return tot_fixation_time   
 
 
-### calculate average dwell time per OOI of entire trial (only one single OOI per fixation) -> xx_Other -> -> python_selfassessment_notebook -> NEW CALCULATION OF DWELL TIME
-def average_dwell_time(data, all_ooi):
+
+### calculate average dwell time per OOI of entire trial (only one single OOI per fixation)
+def avg_dwell_time_ooi(data, all_ooi):
     
     global df_dwelltime
 
@@ -68,8 +69,8 @@ def average_dwell_time(data, all_ooi):
     return df_dwelltime.iloc[1]
 
 
-### calculate number of revisits per OOI
-def revisits(df_dwelltime_fun, all_ooi):
+### calculate number of revisits per OOI (with df_dwelltime from previous function)
+def revisits_per_ooi(df_dwelltime_fun, all_ooi):
     revisits = []
     for ooi in all_ooi:
         revisits.append(len(df_dwelltime_fun.iloc[0][ooi]))
@@ -77,7 +78,7 @@ def revisits(df_dwelltime_fun, all_ooi):
 
 
 ### calculate average fixation time 
-def average_fixation_time(data, all_ooi):
+def avg_fixation_time_ooi(data, all_ooi):
 
     global df_fixationtime
 
@@ -102,23 +103,27 @@ def average_fixation_time(data, all_ooi):
     return df_fixationtime.iloc[1]
 
 
-# calculate total fixations per OOI
-def fixations_per_ooi(df_fixationtime_fun, all_ooi):
-    # use first column of df_fixationtime -> # number of entries per list
-    fixations_per_ooi = []
-    for ooi in all_ooi:
-        fixations_per_ooi.append(len(df_fixationtime_fun.iloc[0][ooi]))
-    return fixations_per_ooi
-
-
 # calculate time to first fixation per OOI
-def time_to_first_fixation(data, all_ooi):
+def first_fixation_ooi(data, all_ooi):
     first_fixation = []
     for ooi in all_ooi:
         idx_first_fixation = (data['fixation_object'] == ooi).idxmax()
         first_fixation.append(data.iloc[idx_first_fixation]['start_time'])
     
     return first_fixation
+
+
+
+# calculate relative dwell time per OOI in percent (with dwelltime from previous function)
+def rel_dwell_time_ooi():
+    rel_dwell_time = []
+    for fix_time_ooi in tot_fixation_time:
+        rel_dwell_time.append(fix_time_ooi/sum(tot_fixation_time)*100)
+    a = sum(rel_dwell_time)
+    return rel_dwell_time
+
+
+100/60*10
 
 #endregion
 
@@ -130,37 +135,57 @@ def calculate_ooi_metrics(data, all_ooi):
     #   average dwell time per OOI
     #   number of revisits per OOI
     #   average fixation time per OOI
-    #   number of fixations per OOI
     #   time to first fixation per OOI
 
     df_ooi_metrics = pd.DataFrame(columns=all_ooi)
 
 
     # count total hits per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = count_hits(data, all_ooi)
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = count_hits_ooi(data, all_ooi)
 
 
-    # calculate total dwell time per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = total_dwell_time(data, all_ooi)
+    # calculate total dwell/fixation time per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = tot_fixation_time_ooi(data, all_ooi)
 
 
     # calculate average dwell time per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = average_dwell_time(data, all_ooi)
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_dwell_time_ooi(data, all_ooi)
 
 
     # calculate number of revisits per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = revisits(df_dwelltime, all_ooi)
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = revisits_per_ooi(df_dwelltime, all_ooi)
 
 
     # calculate average fixation time per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = average_fixation_time(data, all_ooi)
-
-
-    # calculate number of fixations per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = fixations_per_ooi(df_fixationtime, all_ooi)
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_fixation_time_ooi(data, all_ooi)
 
     # calculate time to first fixation per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = time_to_first_fixation(data, all_ooi)
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = first_fixation_ooi(data, all_ooi)
+
+    # calculate relative dwell time per OOI (percent) & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = rel_dwell_time_ooi()
+
 
     return df_ooi_metrics
 
+
+### CALCULATION OF GENERAL OOI-BASED METRICS
+#region
+
+# calculate average dwell time 
+
+
+def calculate_general_ooi_metrics(data, all_ooi):
+    
+    # calculate total hits & add to df_general_ooi_metrics
+
+
+    # calculate total dwells & add to df_general_ooi_metrics
+
+
+    # calculate entropy & add to df_general_ooi_metrics (or more complicated
+
+    e=9
+
+
+#endregion

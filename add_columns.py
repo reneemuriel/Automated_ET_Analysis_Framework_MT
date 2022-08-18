@@ -35,9 +35,9 @@ def add_fixation_object(data, pixel_distance):
 
 # def add_fixation_time
 def add_fixation_time(data):
-    fixation_time = [0]*len(data)
+    fixation_time = []
     for row in range (0,len(data)):
-        fixation_time[row] = data['end_time'][row]-data['start_time'][row]
+        fixation_time.append(data['end_time'][row]-data['start_time'][row])
     data['fixation_time'] = fixation_time
 
 
