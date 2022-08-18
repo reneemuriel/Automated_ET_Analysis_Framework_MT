@@ -197,6 +197,10 @@ if ooi_analysis == True:
 
             display(df_ooi_metrics)
 
+            # calculate all general ooi-based metrics
+            ooi_metrics.calculate_general_ooi_metrics(ogd_final, all_ooi)
+
+
 
 e=3
 
