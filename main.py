@@ -3,9 +3,10 @@
 from calendar import c
 from ntpath import join
 from re import A
+from tkinter.tix import DirSelectBox
 from zlib import DEF_BUF_SIZE
 import pandas as pd
-import seaborn as sns # added to OGM_HMM
+import seaborn as sns # added to OGD_HMM
 import numpy as np
 import matplotlib.pyplot as plt
 import shutil
@@ -21,8 +22,12 @@ from IPython.display import display
 # import own modules
 import add_columns as ac
 import ooi_metrics
-import tobii_to_cgom_new
+import general_metrics
+import tobii_to_fixations
+import tobii_to_saccades
 # import make_gaze_OGD
+
+# requiring python 3.8 for copytree (or solve it differently?)
 
 # from import_gui_input import get_variables_gui # the entire import_gui_input is executed already here!
 
@@ -38,7 +43,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, group_names, action_analysis, ooi_analysis, general_analysis
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/gaze_input_1file_ogd_with_har'
+    ui_input_path =  'Data/gaze_input_ooi_analysis'
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -84,11 +89,6 @@ get_variables_gui()
 # _____________ OTHER VARIABLES / DEFINITIONS / FUNCTIONS
 #region
 
-## for copying folder structure to output 
-# defining the function to ignore the files if present in any folder
-def ignore_files(dir, files):
-    return [f for f in files if os.path.isfile(os.path.join(dir, f))]
-
 #endregion
 
 
@@ -96,32 +96,51 @@ def ignore_files(dir, files):
 # _____________ GET LIST & PATHS OF PARTICIPANTS AND TRIALS 
 #region
 
-trials = [[]]
-trial_paths = [[]]
+trials = [[[]]]
+trial_paths = [[[]]]
 participants = [[]]
 participant_paths = [[]]
-i=0 
+i=0
 
-for group_name in group_names:
+for i in range (len(group_names)):
 
-    data_path = input_path / group_name
-    output_path_groups = output_path / group_name
+    group_path = input_path / group_names[i]
+    output_path_groups = output_path / group_names[i]
 
-    # copy folder structure to output (one folder per participant)
-    shutil.copytree(data_path, output_path_groups, ignore=ignore_files, dirs_exist_ok=True)
-
-    # take all files from fixation input (only one input type is needed to extract participants and trial names)
-    filepaths = glob(join(data_path,'*_fixationdata.tsv'))
-
-    # save all trials (trial[0] for group 1 and trial[1] for group 2)
-    trial_paths[i] = [filepath[:-17] for filepath in filepaths]
-    trials[i] = [os.path.basename(trial) for trial in trial_paths[i]]
-
+    # copy group folder structure to output 
+    os.makedirs(output_path / Path(group_names[i]), exist_ok=True)
+    
+    # take all files from tobii input (to get one name per trial)
+    filepaths = glob(join(group_path,'*_tobii.tsv'))
+    filenames =  [os.path.basename(filenames) for filenames in filepaths]
+    
     # save all participants (participants[0] for group 1 and participants[1] for group 2)
-    participant_paths[i] = [filepath[:-25] for filepath in filepaths] # -25 to get filename
+    participant_paths[i] = [filepath[:-18] for filepath in filepaths] # -18 to get participantxx
+    participant_paths[i] = set(participant_paths[i])
     participants[i] = [os.path.basename(participant) for participant in participant_paths[i]]
 
-    i=i+1
+    # iterate through participants to save trial paths per participants
+    j=0
+    for j in range(len(participants[i])):
+
+        # create folder for participant[i][j]
+        os.makedirs(output_path / Path(group_names[i]) / Path(participants[i][j]), exist_ok=True)
+        
+        # list all trials of participant[i][j]
+        trial_path_list = []
+        for file in filepaths:
+            if '{}'.format(participants[i][j]) in file:
+                trial_name = file[:-10] # to get trialname only
+                trial_path_list.append(trial_name)
+                #trial_paths[i][j] = [file]
+        trials_list = [os.path.basename(trial) for trial in trial_path_list]
+
+        # add to trial list
+        trials[i].insert(j,trials_list)
+        # add to trial_paths list
+        trial_paths[i].insert(j,trial_path_list) # for some reason adds a new empty element to trials[i][j]
+
+        
 
 #endregion
 
@@ -133,28 +152,42 @@ if general_analysis == True:
       
     i=0
     # iterate through groups
-    for i in range (len(group_names)):
-        # iterate through trials per group
-        for trial_path in trial_paths[i]:
+    for i in range(len(group_names)):
+        # iterate through participants
+        for j in range(len(participants[i])):
+            # iterate through each trial
+            k=0
+            for trial_path in trial_paths[i][j]:
+                
+                tobiipath = trial_path + '_tobii.tsv' # new: changed from _fixationdata.tsv!
 
-            # transform tobii into (not)cgom file (in all cases)
-            filename = trial_path + '_fixationdata.tsv'
-            tobii_to_cgom_new.reformat(filename, trial_path)
+                # transform tobii into (not)cgom file 
+                tobii_to_fixations.reformat(tobiipath, trial_path) # new: saved as _fixations.txt (not _cgom.txt anymore)
 
-            # read newly created cgom file 
-            cgom_data = pd.read_csv(trial_path + '_cgom.txt', sep='\t')
+                # read newly created cgom file 
+                fixationdata = pd.read_csv(trial_path + '_fixations.txt', sep='\t')
 
-            # calculations of general metrics
-            a=2
-        i=i+1
+                # transform tobii into saccade file
+                tobii_to_saccades.reformat(tobiipath, trial_path)
+
+                # read saccade data
+                saccadedata = pd.read_csv(trial_path + '_saccades.txt', sep='\t')
+
+                # calculations of general metrics
+                df_general_metrics = general_metrics.calculate_general_metrics(fixationdata, saccadedata,trials[i][j][k])
+
+                # save df_general_metrics to csv
+                participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
+                df_general_metrics.to_csv(participant_output_path / '{}_general_analysis.csv'.format(trials[i][j][k]))
+            
+                k=k+1
+        
 
 
-
-
+#endregion
 
 
 # _____________ OOI-BASED ANALYSIS
-
 
 #region
 
@@ -173,34 +206,45 @@ if ooi_analysis == True:
         a=1
     
     # go through each trial
-    for i in range (len(group_names)):
-        for trial_path in trial_paths[i]:
-            ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
 
-            # extract oois from ogd_data
-            if ogd_data.columns.values[-1] == 'action' or 'Action':
-            # format: start_time, end_time, OOI_1, OOI_2, OOI_3, action
-                all_ooi = ogd_data.columns.values.tolist()[2:-1]
-            else:
-                # format: start_time, end_time, OOI_1, OOI_2, OOI_3
-                all_ooi = ogd_data.columns.values.tolist()[2:]
+    for i in range(len(group_names)):
+        # iterate through participants
+        for j in range(len(participants[i])):
+            # iterate through each trial
+            k=0
+            for trial_path in trial_paths[i][j]:
 
+                ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
 
-            # add columns to ogd_data (fixation object, fixation time)
-            ogd_final = ogd_data
-            ac.add_fixation_object(ogd_final,pixel_distance)
-            ac.add_fixation_time(ogd_final)
-        
-
-            # calculate all ooi-based metrics
-            df_ooi_metrics = ooi_metrics.calculate_ooi_metrics(ogd_final, all_ooi)
-
-            display(df_ooi_metrics)
-
-            # calculate all general ooi-based metrics
-            ooi_metrics.calculate_general_ooi_metrics(ogd_final, all_ooi)
+                # extract oois from ogd_data
+                if ogd_data.columns.values[-1] == 'action' or 'Action':
+                # format: start_time, end_time, OOI_1, OOI_2, OOI_3, action
+                    all_ooi = ogd_data.columns.values.tolist()[2:-1]
+                else:
+                    # format: start_time, end_time, OOI_1, OOI_2, OOI_3
+                    all_ooi = ogd_data.columns.values.tolist()[2:]
 
 
+                # add columns to ogd_data (fixation object, fixation time)
+                ogd_final = ogd_data
+                ac.add_fixation_object(ogd_final,pixel_distance)
+                ac.add_fixation_time(ogd_final)
+            
+
+                # calculate all ooi-based metrics
+                df_ooi_metrics = ooi_metrics.calculate_ooi_metrics(ogd_final, all_ooi)
+
+                # save df_ooi_metrics to csv
+                participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
+                df_ooi_metrics.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis.csv'.format(trials[i][j][k]))
+            
+                # calculate all general ooi-based metrics
+                df_general_ooi_metrics = ooi_metrics.calculate_general_ooi_metrics(ogd_final, all_ooi, trials[i][j][k])
+
+                # save df_general_ooi_metrics
+                df_general_ooi_metrics.to_csv(participant_output_path / '{}_ooi-based_general_analysis.csv'.format(trials[i][j][k]))
+
+#endregion
 
 e=3
 
