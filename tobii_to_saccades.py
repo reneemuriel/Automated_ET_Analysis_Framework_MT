@@ -50,7 +50,6 @@ def reformat(file, trial_path):    #ouput file location added by renee
 
     df_out = df_out[["Event Start Trial Time [ms]", "Event End Trial Time [ms]", "Event Duration [ms]"]]
 
-
     base = os.path.basename(file)
     file_string = os.path.splitext(base)[0]
     

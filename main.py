@@ -27,11 +27,6 @@ import tobii_to_fixations
 import tobii_to_saccades
 # import make_gaze_OGD
 
-# requiring python 3.8 for copytree (or solve it differently?)
-
-# from import_gui_input import get_variables_gui # the entire import_gui_input is executed already here!
-
-
 #endregion
 
 
@@ -43,7 +38,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, group_names, action_analysis, ooi_analysis, general_analysis
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/gaze_input_ooi_analysis'
+    ui_input_path =  'Data/gaze_input_tobii_and_ogd'
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -86,20 +81,13 @@ get_variables_gui()
 #endregion
 
 
-# _____________ OTHER VARIABLES / DEFINITIONS / FUNCTIONS
-#region
-
-#endregion
-
-
-
 # _____________ GET LIST & PATHS OF PARTICIPANTS AND TRIALS 
 #region
 
-trials = [[[]]]
-trial_paths = [[[]]]
-participants = [[]]
-participant_paths = [[]]
+trials = []
+trial_paths = []
+participants = []
+participant_paths = []
 i=0
 
 for i in range (len(group_names)):
@@ -115,11 +103,13 @@ for i in range (len(group_names)):
     filenames =  [os.path.basename(filenames) for filenames in filepaths]
     
     # save all participants (participants[0] for group 1 and participants[1] for group 2)
-    participant_paths[i] = [filepath[:-18] for filepath in filepaths] # -18 to get participantxx
+    participant_paths.insert(i,[filepath[:-18] for filepath in filepaths]) # -18 to get participantxx
     participant_paths[i] = set(participant_paths[i])
-    participants[i] = [os.path.basename(participant) for participant in participant_paths[i]]
+    participants.insert(i,[os.path.basename(participant) for participant in participant_paths[i]])
 
     # iterate through participants to save trial paths per participants
+    trials.append([])
+    trial_paths.append([])
     j=0
     for j in range(len(participants[i])):
 
@@ -137,10 +127,11 @@ for i in range (len(group_names)):
 
         # add to trial list
         trials[i].insert(j,trials_list)
+        #trials[i].insert(j,trials_list)
         # add to trial_paths list
-        trial_paths[i].insert(j,trial_path_list) # for some reason adds a new empty element to trials[i][j]
+        trial_paths[i].insert(j,trial_path_list) # for some reason adds a new empty element
 
-        
+
 
 #endregion
 
@@ -188,7 +179,6 @@ if general_analysis == True:
 
 
 # _____________ OOI-BASED ANALYSIS
-
 #region
 
 # only run if specified to do so 
@@ -215,6 +205,10 @@ if ooi_analysis == True:
             for trial_path in trial_paths[i][j]:
 
                 ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
+
+                # drop columns with any NaN values (don't know why they occur sometimes?)
+                ogd_data.dropna(inplace=True)
+                ogd_data.reset_index(drop=True, inplace=True) 
 
                 # extract oois from ogd_data
                 if ogd_data.columns.values[-1] == 'action' or 'Action':
@@ -243,6 +237,8 @@ if ooi_analysis == True:
 
                 # save df_general_ooi_metrics
                 df_general_ooi_metrics.to_csv(participant_output_path / '{}_ooi-based_general_analysis.csv'.format(trials[i][j][k]))
+
+                k=k+1
 
 #endregion
 

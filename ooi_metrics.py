@@ -45,8 +45,16 @@ def avg_dwell_time_ooi(data, all_ooi):
             fix_object = data.fixation_object[row] 
             dwelltimes[fix_object][k] =   data.fixation_time[row-1] + dwelltimes[fix_object][k]
 
-            # if the next fix object is not the same, add current fix time and end dwell here by changing k
-            if data.fixation_object[row] != data.fixation_object[row+1]:
+            # if the next fix object is not the same 
+            # or if it is the last row
+            # then add current fix time and end dwell here by changing k
+            if row == (len(data)-1):
+                dwelltimes[fix_object][k] = data.fixation_time[row] + dwelltimes[fix_object][k] # add fixation time from current row
+                # add empty row to df
+                dwelltimes.loc[len(dwelltimes)] = 0
+                # add 1 to counter so that next row can be used in df_dwell_time
+                k=k+1
+            elif data.fixation_object[row] != data.fixation_object[row+1]:
                 dwelltimes[fix_object][k] = data.fixation_time[row] + dwelltimes[fix_object][k] # add fixation time from current row
                 # add empty row to df
                 dwelltimes.loc[len(dwelltimes)] = 0
@@ -173,7 +181,7 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
     df_ooi_metrics.loc[len(df_ooi_metrics)] = rel_dwell_time_ooi(tot_fixation_time)
 
     # name rows of df
-    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwelltime [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Time to First Fixation [ms]', 'Relative Dwelltime [%]']
+    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [s]', 'Average Dwelltime [s]', 'Revisits', 'Average Fixation Time [s]', 'Time to First Fixation [s]', 'Relative Dwelltime [%]']
 
 
     return df_ooi_metrics
@@ -208,7 +216,7 @@ def calculate_general_ooi_metrics(data, all_ooi, trialname):
     df_general_ooi_metrics = pd.DataFrame()
 
     # calculate average dwell time 
-    df_general_ooi_metrics['Average Dwell Time [ms]'] = [avg_dwell_time(all_ooi)]
+    df_general_ooi_metrics['Average Dwell Time [s]'] = [avg_dwell_time(all_ooi)]
     
     # calculate total hits
     df_general_ooi_metrics['Total Hits'] = [tot_hits()]
