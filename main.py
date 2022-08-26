@@ -16,6 +16,7 @@ from pathlib import Path
 import os
 # import glob
 from IPython.display import display
+import math
 
 # make requirements.txt that lists all packages that need to be installed in environment -
 
@@ -242,8 +243,7 @@ if ooi_analysis == True:
 
 #endregion
 
-e=3
-
+e=2
 
 
 
