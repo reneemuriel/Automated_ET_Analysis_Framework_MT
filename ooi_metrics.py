@@ -16,7 +16,7 @@ def count_hits_ooi(data, all_ooi):
     return hits
 
 
-### calculate total dwell time/fixation time per OOI of entire trial
+### calculate fixation time per OOI of entire trial
 def tot_fixation_time_ooi(data, all_ooi):
     global tot_fixation_time
     tot_fixation_time = [0]*len(all_ooi)
@@ -29,38 +29,39 @@ def tot_fixation_time_ooi(data, all_ooi):
     return tot_fixation_time   
 
 
-### calculate average dwell time per OOI of entire trial (only one single OOI per fixation)
+### calculate average dwell time per OOI of entire trial 
 def avg_dwell_time_ooi(data, all_ooi):
     
     global df_dwelltime
 
-    # create dataframe to fill with dwell times (one row per dwell time in respective columns, rest is filled with zeroes)
-    dwelltimes = pd.DataFrame(columns= all_ooi + ['Non-OOI']) 
+    # create df to fill in dwelltimes
+    cols = all_ooi + ['Non-OOI']
+    #cols.append('Non-OOI') 
+    dwelltimes = pd.DataFrame(columns=cols) 
     dwelltimes.loc[len(dwelltimes)] = 0
 
     k=0
-    for row in range (1, len(data)): # row by row through df
-        if data.fixation_object[row] == data.fixation_object[row-1]: # if same fixation obj in row before
-            
-            # current dwelltime = new fixation from last row + current dwelltime
-            fix_object = data.fixation_object[row] 
-            dwelltimes[fix_object][k] =   data.fixation_time[row-1] + dwelltimes[fix_object][k]
+    start_dwell_row = 0
+    for row in range (0, len(data)): # row by row through df
 
-            # if the next fix object is not the same 
-            # or if it is the last row
-            # then add current fix time and end dwell here by changing k
-            if row == (len(data)-1):
-                dwelltimes[fix_object][k] = data.fixation_time[row] + dwelltimes[fix_object][k] # add fixation time from current row
-                # add empty row to df
-                dwelltimes.loc[len(dwelltimes)] = 0
-                # add 1 to counter so that next row can be used in df_dwell_time
-                k=k+1
-            elif data.fixation_object[row] != data.fixation_object[row+1]:
-                dwelltimes[fix_object][k] = data.fixation_time[row] + dwelltimes[fix_object][k] # add fixation time from current row
-                # add empty row to df
-                dwelltimes.loc[len(dwelltimes)] = 0
-                # add 1 to counter so that next row can be used in df_dwell_tme
-                k=k+1
+        fix_object = data.fixation_object[row] 
+        
+        # if we're in last row, calculate dwell time from start_dwell_row to current row
+        if row == (len(data)-1):
+            dwelltimes[fix_object][k] = data.end_time[row] - data.start_time[start_dwell_row]
+
+
+        # if next fix obj is different, calculate dwell from start_dwell_row to current row
+        # and change start_dwell_row to next row
+        elif data.fixation_object[row] != data.fixation_object[row+1]:
+            dwelltimes[fix_object][k] = data.end_time[row] - data.start_time[start_dwell_row]
+            # add 1 to counter so that next row can be used in df_dwell_tme
+            k=k+1
+            # add empty row to df
+            dwelltimes.loc[len(dwelltimes)] = 0
+            # and change start_dwell_row to next row
+            start_dwell_row = row+1
+
 
     df_dwelltime = pd.DataFrame(columns=all_ooi) # do not include Non-OOI
     df_dwelltime.loc[len(df_dwelltime)] = 0 # add new row
@@ -69,14 +70,27 @@ def avg_dwell_time_ooi(data, all_ooi):
         a = dwelltimes[ooi].values
         a = a[a!=0]
         a = a.tolist()
+        # if list is empty (no dwells for this ooi), fill it with a zero for the calculation of the mean 
+        if not a:
+            a=[0]
         df_dwelltime[ooi]= [a]
 
     df_dwelltime.loc[len(df_dwelltime)] = 0 # add new row
     for ooi in all_ooi:
         df_dwelltime[ooi][1] = statistics.mean(df_dwelltime[ooi][0])
 
+    df_dwelltime
+
     return df_dwelltime.iloc[1]
 
+
+### calculate total dwell time per OOI of entire trial
+def total_dwell_time(df_dwelltime, all_ooi):
+    global tot_dwell_time
+    tot_dwell_time = []
+    for ooi in all_ooi:
+        tot_dwell_time.append(sum(df_dwelltime[ooi][0]))
+    return tot_dwell_time   
 
 ### calculate number of revisits per OOI (with df_dwelltime from previous function)
 def revisits_per_ooi(df_dwelltime, all_ooi):
@@ -104,6 +118,9 @@ def avg_fixation_time_ooi(data, all_ooi):
         for row in range(0,len(data)):
             if ooi == data.iloc[row]['fixation_object']:
                 fixation_times_list.append(data.iloc[row]['fixation_time'])  
+        # if list is empty (no fixation on this ooi) add 0 to list
+        if not fixation_times_list:
+            fixation_times_list = [0]
         df_fixationtime[ooi] = [fixation_times_list]
         i=i+1
 
@@ -127,11 +144,10 @@ def first_fixation_ooi(data, all_ooi):
 
 
 # calculate relative dwell time per OOI in percent (with dwelltime from previous function)
-def rel_dwell_time_ooi(tot_fixation_time):
+def rel_dwell_time_ooi(tot_dwell_time):
     rel_dwell_time = []
-    for fix_time_ooi in tot_fixation_time:
-        rel_dwell_time.append(fix_time_ooi/sum(tot_fixation_time)*100)
-    a = sum(rel_dwell_time)
+    for dwell_time_ooi in tot_dwell_time:
+        rel_dwell_time.append(dwell_time_ooi/sum(tot_dwell_time)*100)
     return rel_dwell_time
 
 
@@ -141,7 +157,7 @@ def rel_dwell_time_ooi(tot_fixation_time):
 
 def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
     '''
-    description
+    description n
     '''
     # fill df_ooi_metrics with all the metrics per ooi: 
     #   hits per OOI
@@ -158,12 +174,16 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
     df_ooi_metrics.loc[len(df_ooi_metrics)] = count_hits_ooi(data, all_ooi)
 
 
-    # calculate total dwell/fixation time per OOI & add to df_ooi_metrics
+    # calculate total fixation time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = tot_fixation_time_ooi(data, all_ooi)
 
 
     # calculate average dwell time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_dwell_time_ooi(data, all_ooi)
+
+
+    # calculate total dwell time per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = total_dwell_time(df_dwelltime, all_ooi)
 
 
     # calculate number of revisits per OOI & add to df_ooi_metrics
@@ -179,14 +199,58 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
 
 
     # calculate relative dwell time per OOI (percent) & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = rel_dwell_time_ooi(tot_fixation_time)
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = rel_dwell_time_ooi(tot_dwell_time)
 
     # name rows of df
-    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [s]', 'Average Dwelltime [s]', 'Revisits', 'Average Fixation Time [s]', 'Time to First Fixation [s]', 'Relative Dwelltime [%]']
+    # maybe convert back to seconds?
+    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwelltime [ms]', 'Total Dwelltime [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Time to First Fixation [ms]', 'Relative Dwelltime [%]']
 
 
     return df_ooi_metrics
 
+
+def calculate_ooi_metrics_per_action(data, all_ooi):
+    
+    df_ooi_metrics = pd.DataFrame(columns=all_ooi)
+
+
+    # count total hits per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = count_hits_ooi(data, all_ooi)
+
+
+    # calculate fixation time per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = tot_fixation_time_ooi(data, all_ooi)
+
+    
+    # calculate average dwell time per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_dwell_time_ooi(data, all_ooi)
+
+    
+    # calculate total dwell time per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = total_dwell_time(data, all_ooi)
+
+
+    # calculate number of revisits per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = revisits_per_ooi(df_dwelltime, all_ooi)
+
+
+    # calculate average fixation time per OOI & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_fixation_time_ooi(data, all_ooi)
+
+    
+    # calculate relative dwell time per OOI (percent) & add to df_ooi_metrics
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = rel_dwell_time_ooi(tot_dwell_time)
+
+    # calculate time to first fixation per OOI & add to df_ooi_metrics
+    # df_ooi_metrics.loc[len(df_ooi_metrics)] = first_fixation_ooi(data, all_ooi)
+
+
+    # name rows of df
+    # maybe convert back to seconds?
+    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwelltime [ms]', 'Total Dwelltime [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Relative Dwelltime [%]']
+
+
+    return df_ooi_metrics
 
 ### CALCULATION OF GENERAL OOI-BASED METRICS
 #region
@@ -198,7 +262,6 @@ def avg_dwell_time(all_ooi):
         for j in range (len(df_dwelltime.iloc[0][i])):
             all_dwell_times.append((df_dwelltime.iloc[0][i][j]))
     return statistics.mean(all_dwell_times)
-
 
 
 # calculate total hits (with df_hits)
@@ -344,5 +407,32 @@ def calculate_general_ooi_metrics(data, all_ooi, trialname):
     return df_general_ooi_metrics
 
     e=2
+
+
+def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
+    
+    df_general_ooi_metrics = pd.DataFrame()
+
+    # calculate average dwell time 
+    df_general_ooi_metrics['Average Dwell Time [s]'] = [avg_dwell_time(all_ooi)]
+    
+    # calculate total hits
+    df_general_ooi_metrics['Total Hits'] = [tot_hits()]
+    
+    # calculate total dwells 
+    df_general_ooi_metrics['Total Dwells'] = [tot_dwells(revisits)]
+
+    # calculate stationary gaze entropy 
+    df_general_ooi_metrics['Normalised Stationary Gaze Entropy'] = [stationary_gaze_entropy(all_ooi, data)]
+
+    # calculate transition gaze entropy
+    df_general_ooi_metrics['Normalised Transition Gaze Entropy'] = [transition_gaze_entropy(all_ooi, data)]
+
+    df_general_ooi_metrics.index = [trialname]
+
+    return df_general_ooi_metrics
+
+    e=2
+
 
 #endregion
