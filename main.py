@@ -52,10 +52,10 @@ def get_variables_gui():
     general_analysis = False
 
     # action-based analysis
-    action_analysis = False
+    action_analysis = True
 
     # ooi-based analysis
-    ooi_analysis = True
+    ooi_analysis = False
 
     # import ogd file if it already exists
     if ooi_analysis == True:
@@ -260,6 +260,7 @@ if action_analysis == True:
     for i in range(len(group_names)):
         # iterate through participants
         for j in range(len(participants[i])):
+            
             # iterate through each trial
             k=0
             for trial_path in trial_paths[i][j]:
@@ -305,19 +306,20 @@ if action_analysis == True:
                 #general_metrics_df_list = []
 
                
-                i=0
-                for i in range(0,len(df_actions)):
+                step=0
+                for step in range(0,len(df_actions)):
                 
                     ### OOI-based action-based analysis
 
                     # create dataframe for one action
 
                     # if last row of df_action, ogd_final from last change index until end
-                    if i == len(df_actions)-1:
-                        ogd_action = ogd_final[df_actions['action_change_index'][i]:]
+                    if step == (len(df_actions)-1):
+                        ogd_action = ogd_final[df_actions['action_change_index'][step]:]
                     
+                    # otherwise, from change_index to next change_index
                     else:
-                        ogd_action = ogd_final[df_actions['action_change_index'][i]:df_actions['action_change_index'][i+1]]
+                        ogd_action = ogd_final[df_actions['action_change_index'][step]:df_actions['action_change_index'][step+1]]
                     
                     # reindex this dataframe
                     ogd_action.reset_index(inplace = True, drop = True)  
@@ -337,63 +339,32 @@ if action_analysis == True:
 
                     # create df_summary_additions with identical columns 
                     # and indeces of metrics that can be calculated by addition (df.add())
-                    df_summary_additions = pd.DataFrame(columns=df_ooi_metrics_action.columns, index=['Hits', 'Total Fixation Time [ms]', 'Revisits', 'Relative Dwelltime [%]'])
+                    df_summary = pd.DataFrame(columns=df_ooi_metrics_action.columns, index=['Hits', 'Total Fixation Time [ms]', 'Total Dwelltime [ms]' , 'Revisits', 'Relative Dwelltime [%]'])
                     
                     # convert nans to 0
-                    df_summary_additions.fillna(0, inplace=True)
+                    df_summary.fillna(0, inplace=True)
 
                     # additions 
                     for idx_action in idx_action_dfs:
-                        df_summary_additions = df_summary_additions.add(ooi_metrics_action_df_list[idx_action], axis =0)
-                    df_summary_additions.fillna(0, inplace=True)
+                        df_summary = df_summary.add(ooi_metrics_action_df_list[idx_action], axis =0)
+                    df_summary.fillna(0, inplace=True)
 
                     # now calculate average fixation time and average dwelltime
-                    df_summary_additions.loc['Average Fixation Time [ms]'] = df_summary_additions.loc['Total Fixation Time [ms]'] / df_summary_additions.loc['Hits'].replace({ 0 : np.nan })
-                    df_summary_additions.loc['Average Dwelltime [ms]'] = df_summary_additions.loc['Total Dwelltime [ms]'] / df_summary_additions.loc['Revisits'].replace({ 0 : np.nan })
+                    df_summary.loc['Average Fixation Time [ms]'] = df_summary.loc['Total Fixation Time [ms]'] / df_summary.loc['Hits'].replace({ 0 : np.nan })
+                    df_summary.loc['Average Dwelltime [ms]'] = df_summary.loc['Total Dwelltime [ms]'] / df_summary.loc['Revisits'].replace({ 0 : np.nan })
 
-
-                    fix_time = pd.Series()
-                    # fix_time_sum = pd.Series()
-                    # for idx_action in idx_action_dfs:
-                    #     fix_time_sum(ooi_metrics_action_df_list[idx_action].loc['Average Fixation Time [ms]'].mul(ooi_metrics_action_df_list[idx_action].loc['Hits']))
-                    #     fix_time_sum.add(fix_time)
-
-                    # df_summary_additions.loc['Average Fixation Time [ms]'] = fix_time.div(df_summary_additions.loc['Hits'].replace({ 0 : np.nan }))
-  
-
-                    #test
-                    df_to_add = ooi_metrics_action_df_list[0]
-                    #df_to_add.drop(['Average Dwelltime [ms]', 'Average Fixation Time [ms]'], inplace = True)
-                    print(type(df_to_add))
-                    df_summary_additions = df_summary_additions.add(df_to_add, axis =0)
                     # convert nans to 0 again
-                    df_summary_additions.fillna(0, inplace=True)
-                    
+                    df_summary.fillna(0, inplace=True)
 
+                    # save output per action 
+                    participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
+                    df_summary.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis_{}.csv'.format(trials[i][j][k], action))
+                print(i,j,k)            
+                k=k+1
 
-
-                    print(ooi_metrics_action_df_list[3].loc['Hits'])
-                                                        
-                    j=0
-                    hits_list=[]
-                    for idx_action in idx_action_dfs:
-
-
-
-                        hits_list.append(df_actions[idx_action].loc['Hits'])
-                        
-                    
                 
-
-
-                    # gahtt eh nöd
-                        
-
-
-
-
-
-
+            
+    a=2
 
                 ### OOI-BASED ACTION-BASED ANALYSIS: 
                 # calculate without df_actions, but with ogd_final['action'] == xxx
@@ -416,9 +387,7 @@ if action_analysis == True:
 
                     # save 
 
-                        participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
-                        df_ooi_metrics.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis.csv'.format(trials[i][j][k]))
-            
+
 
 
     

@@ -3,6 +3,7 @@ import statistics
 import math
 
 
+
 ### CALCULATION OF OOI-BASED METRICS
 #region
 
@@ -79,7 +80,7 @@ def avg_dwell_time_ooi(data, all_ooi):
     for ooi in all_ooi:
         df_dwelltime[ooi][1] = statistics.mean(df_dwelltime[ooi][0])
 
-    df_dwelltime
+    e=2
 
     return df_dwelltime.iloc[1]
 
@@ -99,7 +100,11 @@ def revisits_per_ooi(df_dwelltime, all_ooi):
 
     revisits = []
     for ooi in all_ooi:
-        revisits.append(len(df_dwelltime.iloc[0][ooi]))
+        # exception for 0, since otherwise it counts 1 revisit despite it being 0
+        if df_dwelltime[ooi][0] == [0]:
+            revisits.append(0)  
+        else:
+            revisits.append(len(df_dwelltime[ooi][0]))
     return revisits
 
 
@@ -146,13 +151,14 @@ def first_fixation_ooi(data, all_ooi):
 # calculate relative dwell time per OOI in percent (with dwelltime from previous function)
 def rel_dwell_time_ooi(tot_dwell_time):
     rel_dwell_time = []
-    for dwell_time_ooi in tot_dwell_time:
-        rel_dwell_time.append(dwell_time_ooi/sum(tot_dwell_time)*100)
+    # if total dwell time = 0, revisits for each ooi = 0 (happens in certain steps)
+    if sum(tot_dwell_time) == 0:
+        rel_dwell_time = 0*len(tot_dwell_time)
+    else:
+        for dwell_time_ooi in tot_dwell_time:
+            rel_dwell_time.append(dwell_time_ooi/sum(tot_dwell_time)*100)
     return rel_dwell_time
 
-
-
-#endregion
 
 
 def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
@@ -227,7 +233,7 @@ def calculate_ooi_metrics_per_action(data, all_ooi):
 
     
     # calculate total dwell time per OOI & add to df_ooi_metrics
-    df_ooi_metrics.loc[len(df_ooi_metrics)] = total_dwell_time(data, all_ooi)
+    df_ooi_metrics.loc[len(df_ooi_metrics)] = total_dwell_time(df_dwelltime, all_ooi)
 
 
     # calculate number of revisits per OOI & add to df_ooi_metrics
@@ -251,6 +257,10 @@ def calculate_ooi_metrics_per_action(data, all_ooi):
 
 
     return df_ooi_metrics
+
+#endregion
+
+
 
 ### CALCULATION OF GENERAL OOI-BASED METRICS
 #region
