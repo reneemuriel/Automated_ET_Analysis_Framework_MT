@@ -1,6 +1,52 @@
 import pandas as pd
 import statistics
 import math
+import add_columns as ac
+import numpy as np
+
+### PREPARE OGD FILE
+#region
+
+def prepare_ogd_file(ogd_data, pixel_distance):
+
+    global all_ooi
+    
+    # drop columns with any NaN values (don't know why they occur sometimes)
+    ogd_data.dropna(inplace=True)
+    ogd_data.reset_index(drop=True, inplace=True) 
+
+    # turn [s] into [ms] for simplicity and change it back for output again (?)
+    ogd_data['start_time'] = ogd_data['start_time']*1000
+    ogd_data['end_time'] = ogd_data['end_time'] * 1000
+
+    # rename last column to 'action' if it is named 'Action'
+    if ogd_data.columns[-1] == 'Action':
+        ogd_data.rename(columns={ogd_data.columns[-1]: 'action'}, inplace=True)
+    
+    # add columns
+    ogd_final = ogd_data
+    ac.add_fixation_object(ogd_final,pixel_distance)
+    ac.add_fixation_time(ogd_final)
+
+    return ogd_final
+
+
+def extract_oois(ogd_data):
+    # extract oois from ogd_data
+    if ogd_data.columns.values[-1] == 'action' or 'Action':
+    # format: start_time, end_time, OOI_1, OOI_2, OOI_3, action
+        all_ooi = ogd_data.columns.values.tolist()[2:-1]
+    else:
+        # format: start_time, end_time, OOI_1, OOI_2, OOI_3
+        all_ooi = ogd_data.columns.values.tolist()[2:]
+    
+    return all_ooi
+
+
+#endregion
+
+
+
 
 
 
@@ -283,6 +329,28 @@ def tot_hits():
 def tot_dwells(revisits_per_ooi):
     return sum(revisits_per_ooi)
 
+# transition matrix for GTE
+def transition_matrix(transitions, number_of_states):
+
+    # from https://gist.github.com/tg12/d7efa579ceee4afbeaec97eb442a6b72 
+
+    #the following code takes a list such as
+    #[1,1,2,6,8,5,5,7,8,8,1,1,4,5,5,0,0,0,1,1,4,4,5,1,3,3,4,5,4,1,1]
+    #with states labeled as successive integers starting with 0
+    #and returns a transition matrix, M,
+    #where M[i][j] is the probability of transitioning from i to j
+
+    M = [[0]*number_of_states for _ in range(number_of_states)]
+
+    for (x,y) in zip(transitions,transitions[1:]):
+        M[x][y] += 1
+
+    #now convert to probabilities:
+    for row in M:
+        s = sum(row)
+        if s > 0:
+            row[:] = [f/s for f in row]
+    return M
 
 # calculate stationary gaze entropy (inclusive Non-OOI / BG)
 def stationary_gaze_entropy(all_ooi, data):
@@ -316,46 +384,37 @@ def stationary_gaze_entropy(all_ooi, data):
     sge_normalised = sge / max_entropy
     return sge_normalised # 1 = max entropy, 0 = minimum entropy
 
-
 # calculate transition gaze entropy (inclusive Non-OOI / BG)
-def transition_gaze_entropy(all_ooi, data):
-     
-    def transition_matrix(transitions, number_of_states):
-
-        # from https://gist.github.com/tg12/d7efa579ceee4afbeaec97eb442a6b72 
-
-        #the following code takes a list such as
-        #[1,1,2,6,8,5,5,7,8,8,1,1,4,5,5,0,0,0,1,1,4,4,5,1,3,3,4,5,4,1,1]
-        #with states labeled as successive integers starting with 0
-        #and returns a transition matrix, M,
-        #where M[i][j] is the probability of transitioning from i to j
-
-        M = [[0]*number_of_states for _ in range(number_of_states)]
-
-        for (i,j) in zip(transitions,transitions[1:]):
-            M[i][j] += 1
-
-        #now convert to probabilities:
-        for row in M:
-            s = sum(row)
-            if s > 0:
-                row[:] = [f/s for f in row]
-        return M
-    
+def gaze_transition_entropy(all_ooi, data):
+         
     # add
-    all_ooi_BG = all_ooi + ['Non-OOI']
+    # all_ooi_BG = all_ooi + ['Non-OOI']
 
-    # number of states as input for transition_matrix()
-    number_of_states= len(data['fixation_object'].unique())
+    # number of states as input for transition_matrix() -> only take objects that are looked at in this timeframe -> maybe change
+    number_of_states = len(data['fixation_object'].unique())
+    ooi_recognised = data['fixation_object'].unique()
 
     # convert fixation_object list to list of numbers as input for transition_matrix()
     transitions = data['fixation_object'].to_list()
-    dict_ooi = {k: v for v, k in enumerate(all_ooi_BG)}
+    
+    dict_ooi = {k: v for v, k in enumerate(ooi_recognised)}
     transitions_series = (pd.Series(transitions)).map(dict_ooi)
-    transitions_list = transitions_series.to_list()
+    transitions = transitions_series.to_list()
 
+    # without function
     # calculate matrix m
-    m = transition_matrix(transitions_list, number_of_states)
+    m = [[0]*number_of_states for _ in range(number_of_states)]
+
+    for (x,y) in zip(transitions,transitions[1:]):
+        m[x][y] += 1
+
+    #now convert to probabilities:
+    for row in m:
+        s = sum(row)
+        if s > 0:
+            row[:] = [f/s for f in row]
+
+    #m = transition_matrix(transitions_list, number_of_states)
     #for row in m: print(' '.join('{0:.2f}'.format(x) for x in row))
 
     # create new matrix with same size as m
@@ -365,8 +424,8 @@ def transition_gaze_entropy(all_ooi, data):
     # multiply each value in the matrix by its log and fill in new matrix
     i=0
     j=0
-    for i in range (len(all_ooi_BG)):
-        for j in range(len(all_ooi_BG)):
+    for i in range (len(ooi_recognised)):
+        for j in range(len(ooi_recognised)):
             if m[i][j] <= 0.0001: # or = 0 ?
                 m2[i][j] = 0
             else:
@@ -374,7 +433,7 @@ def transition_gaze_entropy(all_ooi, data):
 
     # conduct inner summation (each row) and multiply by stationary distribution value (from sge)
     inner_summation = []
-    for i in range(len(all_ooi_BG)):
+    for i in range(len(ooi_recognised)):
         inner_summation.append(sum(m2[i][:])*proportions[0])
 
     # conduct outer summation (sum of all inner summations) and negative
@@ -382,10 +441,13 @@ def transition_gaze_entropy(all_ooi, data):
     tge = -outer_summation
     
     # normalize stge with maxmimum entropy
-    max_entropy = math.log2(len(all_ooi_BG))
-    tge_normalised = tge / max_entropy
+    max_entropy = math.log2(len(ooi_recognised))
+    if max_entropy == 0:    # only one ooi fixated in this action -> too little to calculate entropy?
+        tge_normalised = np.nan    
+    else: 
+        tge_normalised = tge / max_entropy
     return tge_normalised 
-    # 1 = max entropy, 0 = minimum entropy
+# 1 = max entropy, 0 = minimum entropy
 
 
 
@@ -398,7 +460,7 @@ def calculate_general_ooi_metrics(data, all_ooi, trialname):
     df_general_ooi_metrics = pd.DataFrame()
 
     # calculate average dwell time 
-    df_general_ooi_metrics['Average Dwell Time [s]'] = [avg_dwell_time(all_ooi)]
+    df_general_ooi_metrics['Average Dwell Time [ms]'] = [avg_dwell_time(all_ooi)]
     
     # calculate total hits
     df_general_ooi_metrics['Total Hits'] = [tot_hits()]
@@ -410,7 +472,7 @@ def calculate_general_ooi_metrics(data, all_ooi, trialname):
     df_general_ooi_metrics['Normalised Stationary Gaze Entropy'] = [stationary_gaze_entropy(all_ooi, data)]
 
     # calculate transition gaze entropy
-    df_general_ooi_metrics['Normalised Transition Gaze Entropy'] = [transition_gaze_entropy(all_ooi, data)]
+    df_general_ooi_metrics['Normalised Gaze Transition Entropy'] = [gaze_transition_entropy(all_ooi, data)]
 
     df_general_ooi_metrics.index = [trialname]
 
@@ -424,7 +486,7 @@ def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
     df_general_ooi_metrics = pd.DataFrame()
 
     # calculate average dwell time 
-    df_general_ooi_metrics['Average Dwell Time [s]'] = [avg_dwell_time(all_ooi)]
+    df_general_ooi_metrics['Average Dwelltime [ms]'] = [avg_dwell_time(all_ooi)]
     
     # calculate total hits
     df_general_ooi_metrics['Total Hits'] = [tot_hits()]
@@ -436,7 +498,7 @@ def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
     df_general_ooi_metrics['Normalised Stationary Gaze Entropy'] = [stationary_gaze_entropy(all_ooi, data)]
 
     # calculate transition gaze entropy
-    df_general_ooi_metrics['Normalised Transition Gaze Entropy'] = [transition_gaze_entropy(all_ooi, data)]
+    df_general_ooi_metrics['Normalised Transition Gaze Entropy'] = [gaze_transition_entropy(all_ooi, data)]
 
     df_general_ooi_metrics.index = [trialname]
 

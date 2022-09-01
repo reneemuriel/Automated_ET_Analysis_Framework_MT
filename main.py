@@ -209,29 +209,12 @@ if ooi_analysis == True:
 
                 ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
 
-                # drop columns with any NaN values (don't know why they occur sometimes?)
-                ogd_data.dropna(inplace=True)
-                ogd_data.reset_index(drop=True, inplace=True) 
+                # extract all OOIs
+                all_ooi = ooi_metrics.extract_oois(ogd_data)
 
-                # extract oois from ogd_data
-                if ogd_data.columns.values[-1] == 'action' or 'Action':
-                # format: start_time, end_time, OOI_1, OOI_2, OOI_3, action
-                    all_ooi = ogd_data.columns.values.tolist()[2:-1]
-                else:
-                    # format: start_time, end_time, OOI_1, OOI_2, OOI_3
-                    all_ooi = ogd_data.columns.values.tolist()[2:]
+                # preprocess ogd data and add columns (fixation object and fixation time)
+                ogd_final = ooi_metrics.prepare_ogd_file(ogd_data, pixel_distance)
 
-
-                # turn [s] into [ms] for simplicity and change it back for output again?
-                ogd_data['start_time'] = ogd_data['start_time']*1000
-                ogd_data['end_time'] = ogd_data['end_time'] * 1000
-
-
-                # add columns to ogd_data (fixation object, fixation time)
-                ogd_final = ogd_data
-                ac.add_fixation_object(ogd_final,pixel_distance)
-                ac.add_fixation_time(ogd_final)
-            
 
                 # calculate all ooi-based metrics
                 df_ooi_metrics = ooi_metrics.calculate_ooi_metrics(ogd_final, all_ooi)
@@ -267,24 +250,11 @@ if action_analysis == True:
 
                 ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
 
-                # drop columns with any NaN values (don't know why they occur sometimes)
-                ogd_data.dropna(inplace=True)
-                ogd_data.reset_index(drop=True, inplace=True) 
+                # extract all OOIs
+                all_ooi = ooi_metrics.extract_oois(ogd_data)
 
-                # turn [s] into [ms] for simplicity and change it back for output again (?)
-                ogd_data['start_time'] = ogd_data['start_time']*1000
-                ogd_data['end_time'] = ogd_data['end_time'] * 1000
-
-                # extract all oois
-                all_ooi = ogd_data.columns.values.tolist()[2:-1]
-
-                # rename last column to 'action' (in case it is named 'Action' or something else)
-                ogd_data.rename(columns={ogd_data.columns[-1]: 'action'}, inplace=True)
-                
-                # add columns
-                ogd_final = ogd_data
-                ac.add_fixation_object(ogd_final,pixel_distance)
-                ac.add_fixation_time(ogd_final)
+                # preprocess ogd data and add columns (fixation object and fixation time)
+                ogd_final = ooi_metrics.prepare_ogd_file(ogd_data, pixel_distance)
 
                 # import fixationdata 
                 fixationdata = pd.read_csv(trial_path + '_fixations.txt', sep='\t')
@@ -292,43 +262,22 @@ if action_analysis == True:
                 # extract actions
                 all_actions = ogd_final['action'].unique().tolist()
 
+               
                 # get dataframe with actions + time from ogd dataframe
                 df_actions = action_separation.action_times(ogd_final, fixationdata, all_actions)
-                # add a new index
-                df_actions.reset_index(inplace=True)
-                # save the indeces in a column (can be used to separate the ogd file into new dfs)
-                df_actions = df_actions.rename(columns = {'index':'action_change_index'})
+
                 # save a list with the subsequent actioons
                 action_sequence = df_actions['action'].tolist()
 
-                ooi_metrics_action_df_list = []
-                #general_ooi_metrics_action_df_list = []
-                #general_metrics_df_list = []
-
-               
-                step=0
-                for step in range(0,len(df_actions)):
+                # general metrics
                 
-                    ### OOI-based action-based analysis
 
-                    # create dataframe for one action
 
-                    # if last row of df_action, ogd_final from last change index until end
-                    if step == (len(df_actions)-1):
-                        ogd_action = ogd_final[df_actions['action_change_index'][step]:]
-                    
-                    # otherwise, from change_index to next change_index
-                    else:
-                        ogd_action = ogd_final[df_actions['action_change_index'][step]:df_actions['action_change_index'][step+1]]
-                    
-                    # reindex this dataframe
-                    ogd_action.reset_index(inplace = True, drop = True)  
+                # ooi-based ooi metrics
+                ooi_metrics_action_df_list = action_separation.get_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi)
 
-                    # calculate ooi metrics (all but time to first fixation)                
-                    df_ooi_metrics_action = ooi_metrics.calculate_ooi_metrics_per_action(ogd_action, all_ooi)
-                    # append to df list
-                    ooi_metrics_action_df_list.append(df_ooi_metrics_action)
-
+                # ooi-based general metrics
+                gen_ooi_metrics_action_df_list = action_separation.get_general_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
 
                 # combine all dfs to one summary df per action
                 for action in all_actions:
@@ -337,55 +286,30 @@ if action_analysis == True:
                     # to know which actions we need to 
                     idx_action_dfs = [action_sequence.index(action)]
 
-                    # create df_summary_additions with identical columns 
-                    # and indeces of metrics that can be calculated by addition (df.add())
-                    df_summary = pd.DataFrame(columns=df_ooi_metrics_action.columns, index=['Hits', 'Total Fixation Time [ms]', 'Total Dwelltime [ms]' , 'Revisits', 'Relative Dwelltime [%]'])
-                    
-                    # convert nans to 0
-                    df_summary.fillna(0, inplace=True)
+                    # get summary of ooi-based ooi metrics per action
+                    df_summary_ooi = action_separation.summary_ooi_metrics_per_action(ooi_metrics_action_df_list, idx_action_dfs)
 
-                    # additions 
-                    for idx_action in idx_action_dfs:
-                        df_summary = df_summary.add(ooi_metrics_action_df_list[idx_action], axis =0)
-                    df_summary.fillna(0, inplace=True)
 
-                    # now calculate average fixation time and average dwelltime
-                    df_summary.loc['Average Fixation Time [ms]'] = df_summary.loc['Total Fixation Time [ms]'] / df_summary.loc['Hits'].replace({ 0 : np.nan })
-                    df_summary.loc['Average Dwelltime [ms]'] = df_summary.loc['Total Dwelltime [ms]'] / df_summary.loc['Revisits'].replace({ 0 : np.nan })
-
-                    # convert nans to 0 again
-                    df_summary.fillna(0, inplace=True)
-
-                    # save output per action 
+                    # save output per action: ooi-based ooi metrics
                     participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
-                    df_summary.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis_{}.csv'.format(trials[i][j][k], action))
+                    df_summary_ooi.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis_{}.csv'.format(trials[i][j][k], action))
+
+
+                    # get summary of ooi-based ooi metrics per action
+                    df_summary_ooi_gen = action_separation.summary_ooi_general_metrics_per_action(gen_ooi_metrics_action_df_list, idx_action_dfs, df_summary_ooi)
+
+
+                    # save output per action: ooi-based general metrics
+                    df_summary_ooi_gen.to_csv(participant_output_path / '{}_ooi-based_general_analysis_{}.csv'.format(trials[i][j][k], action))
+
+
                 print(i,j,k)            
                 k=k+1
-
-                
-            
+     
+      
     a=2
 
-                ### OOI-BASED ACTION-BASED ANALYSIS: 
-                # calculate without df_actions, but with ogd_final['action'] == xxx
-                # ah nope das gaht nöd
-                # wege dwelltime und so
 
-   
-
-
-                #### GENERAL ACTION-BASED ANALYSIS
-
-                # with df_actions that separates saccadesdata and fixationdata
-
-
-
-
-
-
-
-
-                    # save 
 
 
 
