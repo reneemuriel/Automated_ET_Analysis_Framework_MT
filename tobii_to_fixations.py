@@ -37,7 +37,7 @@ def reformat(file, trial_path):    #ouput file location added by renee
     df_out = df_out[["Recording timestamp", "Gaze event duration", "Fixation point X", "Fixation point Y"]]
 
 
-    ## tobii ouput file: in microseconds? since we divide it by 1000? (to get milliseconds?)
+    ## tobii ouput file: in microseconds
     df_out['Recording timestamp'] = df_out['Recording timestamp'].div(1000).round()
     df_out[['change_x', 'change_y']] = df_out[['Fixation point X', 'Fixation point Y']].diff()
     df_out = df_out[(df_out['change_x']!=0) & (df_out['change_y']!=0)]
@@ -58,7 +58,7 @@ def reformat(file, trial_path):    #ouput file location added by renee
     # changed location where file is saved and filename
     df_out.to_csv(trial_path + '_fixations.txt', sep='\t', index=False) 
 
-    print("file: {} was reformatted successfully".format(file_string))
+    print("file: {} was reformatted succeslsfully".format(file_string))
 
 
 

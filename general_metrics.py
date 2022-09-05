@@ -1,3 +1,4 @@
+from numpy import fix
 import pandas as pd
 import statistics
 
@@ -25,6 +26,10 @@ def first_fixation_gen(fixationdata):
     return fixationdata.iloc[1]['Event Start Trial Time [ms]']
 
 
+# total fixation duration
+def tot_fixation_duration(fixationdata):
+    return sum(fixationdata['Event Duration [ms]'])
+
 
 
 #endregion
@@ -40,6 +45,9 @@ def avg_saccade_duration_gen(saccadedata):
 # number of saccades
 def tot_saccades_gen(saccadedata):
     return len(saccadedata)
+
+def tot_saccade_duration(saccadedata):
+    return sum(saccadedata['Event Duration [ms]'])
 
 
 #endregion
@@ -71,10 +79,13 @@ def calculate_general_metrics(fixationdata, saccadedata, trialname):
     df_general_metrics['Average Fixation Duration [ms]'] = [avg_fixation_duration_gen(fixationdata)]
 
     # number of fixations
-    df_general_metrics['Total Number of Fixations'] = [tot_fixations_gen(fixationdata)]
+    df_general_metrics['Number of Fixations'] = [tot_fixations_gen(fixationdata)]
 
-    # total duration of the trial (divided by 1000 to get seconds)
-    df_general_metrics['Total Duration [s]'] = [tot_duration_gen(fixationdata)/1000]
+    # total fixation duration
+    df_general_metrics['Total Fixation Duration [ms]'] = [tot_fixation_duration(fixationdata)]
+
+    # total duration of the trial (maybe divide by 1000 to get seconds)
+    df_general_metrics['Total Duration [ms]'] = [tot_duration_gen(fixationdata)]  #/1000
 
     # time to first fixation 
     df_general_metrics['Time to First Fixation [ms]'] = [first_fixation_gen(fixationdata)]
@@ -85,8 +96,11 @@ def calculate_general_metrics(fixationdata, saccadedata, trialname):
     # number of saccades
     df_general_metrics['Number of Saccades'] = [tot_saccades_gen(saccadedata)]
 
+    # total saccade duration
+    df_general_metrics['Total Saccade Duration [ms]'] = [tot_saccade_duration(saccadedata)]
+
     # fixation/saccade ratio (percent)
-    df_general_metrics['Relative Fixation/Saccade Time [%]'] = [fix_sac_ratio(fixationdata, saccadedata)]
+    df_general_metrics['Relative Fixation/Saccade Duration [%]'] = [fix_sac_ratio(fixationdata, saccadedata)]
 
     df_general_metrics.index = [trialname]
 
@@ -94,7 +108,41 @@ def calculate_general_metrics(fixationdata, saccadedata, trialname):
 
 
 
+def calculate_general_metrics_per_action(fixationdata, saccadedata, trialname):
+     
+    df_general_metrics = pd.DataFrame()
 
+    # average fixation duration 
+    df_general_metrics['Average Fixation Duration [ms]'] = [avg_fixation_duration_gen(fixationdata)]
+
+    # number of fixations
+    df_general_metrics['Number of Fixations'] = [tot_fixations_gen(fixationdata)]
+
+    # total duration of the trial (maybe later: divide by 1000 to get seconds)
+    df_general_metrics['Total Duration [ms]'] = [tot_duration_gen(fixationdata)]
+
+    # total fixation duration
+    df_general_metrics['Total Fixation Duration [ms]'] = [tot_fixation_duration(fixationdata)]
+
+
+    # time to first fixation 
+    #df_general_metrics['Time to First Fixation [ms]'] = [first_fixation_gen(fixationdata)]
+
+    # average saccade duration
+    df_general_metrics['Average Saccade Duration [ms]'] = [avg_saccade_duration_gen(saccadedata)]
+
+    # number of saccades
+    df_general_metrics['Number of Saccades'] = [tot_saccades_gen(saccadedata)]
+
+    # total saccade duration
+    df_general_metrics['Total Saccade Duration [ms]'] = [tot_saccade_duration(saccadedata)]
+
+    # fixation/saccade ratio (percent)
+    df_general_metrics['Relative Fixation/Saccade Duration [%]'] = [fix_sac_ratio(fixationdata, saccadedata)]
+
+    df_general_metrics.index = [trialname]
+
+    return df_general_metrics   
 
 
     
