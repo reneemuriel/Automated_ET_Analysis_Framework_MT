@@ -315,10 +315,12 @@ def calculate_ooi_metrics_per_action(data, all_ooi):
 
 # calculate average dwell time (with df_dwelltime)
 def avg_dwell_time(all_ooi):
-    all_dwell_times = []
+    all_dwell_times_zeroes = []
     for i in range(len(all_ooi)):
         for j in range (len(df_dwelltime.iloc[0][i])):
-            all_dwell_times.append((df_dwelltime.iloc[0][i][j]))
+            all_dwell_times_zeroes.append((df_dwelltime.iloc[0][i][j]))
+    # remove zeroes from list, otherwise they are used to calculate mean
+    all_dwell_times = [x for x in all_dwell_times_zeroes if x != 0]
     return statistics.mean(all_dwell_times)
 
 

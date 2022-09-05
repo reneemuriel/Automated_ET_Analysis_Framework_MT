@@ -49,13 +49,13 @@ def get_variables_gui():
     output_path = Path(ui_output_path)
 
     # general analysis
-    general_analysis = True
+    general_analysis = False
 
     # action-based analysis
     action_analysis = True
 
     # ooi-based analysis
-    ooi_analysis = True
+    ooi_analysis = False
 
     # import ogd file if it already exists
     if ooi_analysis == True:
@@ -283,11 +283,11 @@ if action_analysis == True:
                 general_metrics_action_df_list = action_separation.get_general_metrics_per_action_df_list(df_actions, fixationdata, saccadedata, trials[i][j][k])
                 
 
-                # ooi-based ooi metrics
-                ooi_metrics_action_df_list = action_separation.get_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi)
+                # calculate ooi-based metrics
+                ooi_metrics_action_df_list, gen_ooi_metrics_action_df_list = action_separation.get_all_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
 
                 # ooi-based general metrics (based on ooi-based ooi metrics, so must be after their calculation)
-                gen_ooi_metrics_action_df_list = action_separation.get_general_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
+                # gen_ooi_metrics_action_df_list = action_separation.get_general_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
 
                 # combine all dfs to one summary df per action
                 for action in all_actions:

@@ -25,7 +25,7 @@ def action_times(data, fixationdata, all_actions) -> pd.DataFrame():
     # remove rows where the event did not change:
     df_actions = df_actions.loc[df_actions['change'] !=0 ,:]
 
-    # 
+    # add rows for start and end time of the event and make them continous 
     df_actions['start_time_action'] = df_actions['start_time']
     df_actions['end_time_action'] = df_actions['start_time'].shift(-1)
 
@@ -50,16 +50,16 @@ def action_times(data, fixationdata, all_actions) -> pd.DataFrame():
 ### OGD DATA (ooi-based analysis)
 #region
 
-# separate ogd dataframe into new dataframes and calculate ooi_metrics
-def get_ooi_metrics_per_action_df_list(df_actions, data, all_ooi):
+# separate ogd dataframe into new dataframes and calculate ooi_metrics and general_ooi_metrics
+def get_all_ooi_metrics_per_action_df_list(df_actions, data, all_ooi, trialname):
         
     ooi_metrics_action_df_list = []
+
+    general_ooi_metrics_action_df_list = []
 
     step=0
     for step in range(0,len(df_actions)):
     
-        ### OOI-based action-based analysis
-
         # create dataframe for one step
 
         # if last row of df_action, ogd_final from last change index until end
@@ -78,9 +78,15 @@ def get_ooi_metrics_per_action_df_list(df_actions, data, all_ooi):
         # append to df list
         ooi_metrics_action_df_list.append(df_ooi_metrics_action)
 
-    return ooi_metrics_action_df_list
+        # calculate general metrics             
+        df_general_ooi_metrics_action = ooi_metrics.calculate_general_ooi_metrics_per_action(ogd_action, all_ooi, trialname)
+        # append to df list
+        general_ooi_metrics_action_df_list.append(df_general_ooi_metrics_action)
+
+    return ooi_metrics_action_df_list, general_ooi_metrics_action_df_list
 
 # separate ogd dataframe into new dataframes per action and calculate general_ooi_metrics
+# to delete
 def get_general_ooi_metrics_per_action_df_list(df_actions, data, all_ooi, trialname):
     
     general_ooi_metrics_action_df_list = []
