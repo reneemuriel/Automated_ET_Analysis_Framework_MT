@@ -41,7 +41,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, group_names, action_analysis, ooi_analysis, general_analysis
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/gaze_input_tobii_and_ogd'
+    ui_input_path =  'Data/gaze_input_tobii_and_ogd_short'
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -49,13 +49,13 @@ def get_variables_gui():
     output_path = Path(ui_output_path)
 
     # general analysis
-    general_analysis = False
+    general_analysis = True
 
     # action-based analysis
     action_analysis = True
 
     # ooi-based analysis
-    ooi_analysis = False
+    ooi_analysis = True
 
     # import ogd file if it already exists
     if ooi_analysis == True:
@@ -248,6 +248,7 @@ if action_analysis == True:
             k=0
             for trial_path in trial_paths[i][j]:
 
+                # import ogd data
                 ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
 
                 # extract all OOIs
@@ -259,45 +260,65 @@ if action_analysis == True:
                 # import fixationdata 
                 fixationdata = pd.read_csv(trial_path + '_fixations.txt', sep='\t')
 
+                # import saccadedata
+                saccadedata = pd.read_csv(trial_path + '_saccades.txt', sep='\t')
+
                 # extract actions
                 all_actions = ogd_final['action'].unique().tolist()
-
                
                 # get dataframe with actions + time from ogd dataframe
                 df_actions = action_separation.action_times(ogd_final, fixationdata, all_actions)
 
-                # save a list with the subsequent actioons
+                # save a list with the subsequent actions
                 action_sequence = df_actions['action'].tolist()
 
-                # general metrics
                 
+                # general metrics
+                # add change idx of fixationdata df to df_action
+                df_actions = action_separation.fix_sac_data_per_action(df_actions, fixationdata, 'fixations')
+                # add change idx of saccadedata df to df_action
+                df_actions = action_separation.fix_sac_data_per_action(df_actions, saccadedata, 'saccades')
 
+                # calculate general metrics with fixationdata and saccadedata
+                general_metrics_action_df_list = action_separation.get_general_metrics_per_action_df_list(df_actions, fixationdata, saccadedata, trials[i][j][k])
+                
 
                 # ooi-based ooi metrics
                 ooi_metrics_action_df_list = action_separation.get_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi)
 
-                # ooi-based general metrics
+                # ooi-based general metrics (based on ooi-based ooi metrics, so must be after their calculation)
                 gen_ooi_metrics_action_df_list = action_separation.get_general_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
 
                 # combine all dfs to one summary df per action
                 for action in all_actions:
 
-                    # extract index of the current action in the action_sequence (from df_actions)
-                    # to know which actions we need to 
-                    idx_action_dfs = [action_sequence.index(action)]
+                    # extract indeces of the current action in the action_sequence (from df_actions)
+                    idx_action_dfs = [ind for ind, ele in enumerate(action_sequence) if ele == action]
+
+                    # output path to save dfs
+                    participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
+
+                    
+                    ### summary of general metrics
+
+                    # get summary of general metrics per action
+                    df_summary_gen = action_separation.summary_general_metrics_per_action(general_metrics_action_df_list, idx_action_dfs)
+
+                    # save output per action: general metrics
+                    df_summary_gen.to_csv(participant_output_path / '{}_general_analysis_{}.csv'.format(trials[i][j][k], action))
+                    
+
+                    ### summary of ooi metrics
 
                     # get summary of ooi-based ooi metrics per action
                     df_summary_ooi = action_separation.summary_ooi_metrics_per_action(ooi_metrics_action_df_list, idx_action_dfs)
 
-
                     # save output per action: ooi-based ooi metrics
-                    participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
+                    
                     df_summary_ooi.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis_{}.csv'.format(trials[i][j][k], action))
 
-
                     # get summary of ooi-based ooi metrics per action
-                    df_summary_ooi_gen = action_separation.summary_ooi_general_metrics_per_action(gen_ooi_metrics_action_df_list, idx_action_dfs, df_summary_ooi)
-
+                    df_summary_ooi_gen = action_separation.summary_ooi_general_metrics_per_action(gen_ooi_metrics_action_df_list, idx_action_dfs, df_summary_ooi, general_metrics_action_df_list)
 
                     # save output per action: ooi-based general metrics
                     df_summary_ooi_gen.to_csv(participant_output_path / '{}_ooi-based_general_analysis_{}.csv'.format(trials[i][j][k], action))

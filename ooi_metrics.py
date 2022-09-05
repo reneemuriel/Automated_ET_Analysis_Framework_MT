@@ -151,6 +151,8 @@ def revisits_per_ooi(df_dwelltime, all_ooi):
             revisits.append(0)  
         else:
             revisits.append(len(df_dwelltime[ooi][0]))
+    # count revisits to check
+    print(revisits)
     return revisits
 
 
@@ -324,9 +326,9 @@ def avg_dwell_time(all_ooi):
 def tot_hits():
     return sum(hits)
 
-
 # calculate total dwells (with revisits)
 def tot_dwells(revisits_per_ooi):
+    total_dwelllls = sum(revisits_per_ooi)
     return sum(revisits_per_ooi)
 
 # transition matrix for GTE
@@ -498,7 +500,7 @@ def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
     df_general_ooi_metrics['Normalised Stationary Gaze Entropy'] = [stationary_gaze_entropy(all_ooi, data)]
 
     # calculate transition gaze entropy
-    df_general_ooi_metrics['Normalised Transition Gaze Entropy'] = [gaze_transition_entropy(all_ooi, data)]
+    df_general_ooi_metrics['Normalised Gaze Transition Entropy'] = [gaze_transition_entropy(all_ooi, data)]
 
     df_general_ooi_metrics.index = [trialname]
 
