@@ -13,11 +13,13 @@ import matplotlib.pyplot as plt
 import shutil
 from glob import glob
 from pathlib import Path
+import statistics
 # from os import path
 import os
 # import glob
 from IPython.display import display
 import math
+
 
 # make requirements.txt that lists all packages that need to be installed in environment -
 
@@ -28,6 +30,7 @@ import general_metrics
 import tobii_to_fixations
 import tobii_to_saccades
 import action_separation
+import kcoefficient_analysis
 # import make_gaze_OGD
 
 #endregion
@@ -38,7 +41,7 @@ import action_separation
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, group_names, action_analysis, ooi_analysis, general_analysis
+    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, group_names, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis
 
     # choose input path (where group folders lie)
     ui_input_path =  'Data/gaze_input_tobii_and_ogd_short'
@@ -51,8 +54,11 @@ def get_variables_gui():
     # general analysis
     general_analysis = False
 
+    # calculate k-coefficient
+    kcoeff_analysis = True
+
     # action-based analysis
-    action_analysis = True
+    action_analysis = False
 
     # ooi-based analysis
     ooi_analysis = False
@@ -76,7 +82,6 @@ def get_variables_gui():
 
     # others
     pixel_distance = 20
-
     
 get_variables_gui()
 
@@ -158,7 +163,7 @@ if general_analysis == True:
                 # transform tobii into (not)cgom file 
                 tobii_to_fixations.reformat(tobiipath, trial_path) # new: saved as _fixations.txt (not _cgom.txt anymore)
 
-                # read newly created cgom file 
+                # read newly created fixation file 
                 fixationdata = pd.read_csv(trial_path + '_fixations.txt', sep='\t')
 
                 # transform tobii into saccade file
@@ -179,6 +184,97 @@ if general_analysis == True:
 
 
 #endregion
+
+
+# _____________ K-COEFFICIENT ANALYSIS 
+#region
+
+if kcoeff_analysis == True:
+      
+    # iterate through groups
+    fixation_durations = []
+    saccade_amplitudes = []
+
+    for i in range(len(group_names)):
+        # iterate through participants
+        for j in range(len(participants[i])):
+            # iterate through each trial
+            k=0
+            for trial_path in trial_paths[i][j]:
+                
+                kcoeff_path = trial_path + '_tobii_kcoeff.tsv'
+
+                # filter for whole fixations and saccades 
+                kcoefficient_analysis.reformat(kcoeff_path, trial_path)
+                
+                # read newly created kcoeff file 
+                kcoeff_data = pd.read_csv(trial_path + '_kcoeff.txt', sep='\t')
+
+                # add all fixation durations to list (over all trials of all participants of all groups)
+                fixation_durations = fixation_durations + kcoeff_data[kcoeff_data['event_type']=='Fixation']['duration'].to_list()
+
+                # add all saccade amplitudes to list (over all trials of all participants of all groups)
+                saccade_amplitudes = saccade_amplitudes + kcoeff_data[kcoeff_data['event_type']=='Saccade']['saccade_amplitude'].to_list()
+ 
+
+
+
+
+    # calculate mean and standard deviation of fixation duration and saccade amplitude of all trials (of both groups)
+    mean_fix_dur = statistics.mean(fixation_durations)
+    stdv_fix_dur = statistics.pstdev(fixation_durations)
+    mean_sac_amp = statistics.mean(saccade_amplitudes)
+    stdv_sac_amp = statistics.pstdev(saccade_amplitudes)
+
+    # now, iterate again through trials to calculate k-coefficient per fixation and save in df
+    # iterate through groups
+
+    for i in range(len(group_names)):
+        # iterate through participants
+        for j in range(len(participants[i])):
+            # iterate through each trial
+            k=0
+            for trial_path in trial_paths[i][j]:
+                kcoeff_data = pd.read_csv(trial_path + '_kcoeff.txt', sep='\t')
+
+                # fill list in length of df with K-coefficient at every fixation                
+                kcoeff_column = []
+                for row in range(len(kcoeff_data)):
+                    # calculate K-coefficient for all fixations and subsequent saccades
+                    if kcoeff_data['event_type'][row] == 'Fixation':
+                            # if fixation is in last row, append np.nan
+                            if row == (len(kcoeff_data)-1):
+                                kcoeff_column.append(np.nan)
+                            # if there is no saccade after the fixation, append np.nan
+                            elif kcoeff_data['event_type'][row+1] != 'Saccade':
+                                kcoeff_column.append(np.nan)
+                            else:
+                                fixdur = kcoeff_data['duration'][row] 
+                                sacamp = kcoeff_data['saccade_amplitude'][row+1]
+                                z_score_fix = (fixdur - mean_fix_dur) / stdv_fix_dur
+                                z_score_amp = (sacamp - mean_sac_amp) / stdv_sac_amp
+                                kcoeff_row = z_score_fix - z_score_amp
+                                kcoeff_column.append(kcoeff_row)
+                    else:
+                        kcoeff_column.append(np.nan)
+                
+                kcoeff_data['K-coefficient'] = kcoeff_column
+
+                # take two columns to create new dataframe
+                df_kcoeff = kcoeff_data[['K-coefficient', 'start_time']]
+                
+                # remove rows where K-coefficient is np.nan
+                df_kcoeff.dropna(inplace=True)
+
+                # save df to csv
+                participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
+                df_kcoeff.to_csv(participant_output_path / '{}_k-coefficient_analysis.csv'.format(trials[i][j][k]))
+
+                k=k+1
+         
+
+#endregion
+
 
 
 # _____________ OOI-BASED ANALYSIS
@@ -286,9 +382,6 @@ if action_analysis == True:
                 # calculate ooi-based metrics
                 ooi_metrics_action_df_list, gen_ooi_metrics_action_df_list = action_separation.get_all_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
 
-                # ooi-based general metrics (based on ooi-based ooi metrics, so must be after their calculation)
-                # gen_ooi_metrics_action_df_list = action_separation.get_general_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
-
                 # combine all dfs to one summary df per action
                 for action in all_actions:
 
@@ -338,9 +431,23 @@ if action_analysis == True:
     
 
 #endregion
+
 e=2
 
+# _____________ SUMMARY PER PARTICIPANTS / TRIAL NUMBERS / GROUPS 
+#region
 
+
+#endregion
+
+
+# _____________ VISUALIZATIONS 
+#region
+
+
+
+
+#endregion
 
 
 
