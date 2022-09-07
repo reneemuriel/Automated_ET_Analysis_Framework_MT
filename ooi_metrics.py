@@ -151,8 +151,6 @@ def revisits_per_ooi(df_dwelltime, all_ooi):
             revisits.append(0)  
         else:
             revisits.append(len(df_dwelltime[ooi][0]))
-    # count revisits to check
-    print(revisits)
     return revisits
 
 

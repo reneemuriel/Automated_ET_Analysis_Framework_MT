@@ -31,6 +31,7 @@ import tobii_to_fixations
 import tobii_to_saccades
 import action_separation
 import kcoefficient_analysis
+import visualisations
 # import make_gaze_OGD
 
 #endregion
@@ -44,7 +45,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, group_names, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/gaze_input_tobii_and_ogd_short'
+    ui_input_path =  'Data/gaze_input_tobii_ogd_kcoeff'
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -52,16 +53,16 @@ def get_variables_gui():
     output_path = Path(ui_output_path)
 
     # general analysis
-    general_analysis = False
+    general_analysis = True
 
     # calculate k-coefficient
     kcoeff_analysis = True
 
     # action-based analysis
-    action_analysis = False
+    action_analysis = True
 
     # ooi-based analysis
-    ooi_analysis = False
+    ooi_analysis = True
 
     # import ogd file if it already exists
     if ooi_analysis == True:
@@ -121,7 +122,7 @@ for i in range (len(group_names)):
     j=0
     for j in range(len(participants[i])):
 
-        # create folder for participant[i][j]
+        # create ouput folder for participant[i][j]
         os.makedirs(output_path / Path(group_names[i]) / Path(participants[i][j]), exist_ok=True)
         
         # list all trials of participant[i][j]
@@ -132,10 +133,12 @@ for i in range (len(group_names)):
                 trial_path_list.append(trial_name)
                 #trial_paths[i][j] = [file]
         trials_list = [os.path.basename(trial) for trial in trial_path_list]
+        
+        # create ouput folder for trial
+        [os.makedirs(output_path / Path(group_names[i]) / Path(participants[i][j]) / trial, exist_ok = True) for trial in trials_list]
 
         # add to trial list
         trials[i].insert(j,trials_list)
-        #trials[i].insert(j,trials_list)
         # add to trial_paths list
         trial_paths[i].insert(j,trial_path_list) # for some reason adds a new empty element
 
@@ -175,9 +178,17 @@ if general_analysis == True:
                 # calculations of general metrics
                 df_general_metrics = general_metrics.calculate_general_metrics(fixationdata, saccadedata,trials[i][j][k])
 
-                # save df_general_metrics to csv
-                participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
-                df_general_metrics.to_csv(participant_output_path / '{}_general_analysis.csv'.format(trials[i][j][k]))
+                # define trial output path
+                trial_output_path = output_path / Path(group_names[i]) / Path(participants[i][j] / Path(trials[i][j][k]))
+
+                # create folder for general analysis in trial folder
+                os.makedirs(trial_output_path / Path('general_analysis'), exist_ok = True)
+
+                # define final output path
+                analysispath = trial_output_path / Path('general_analysis')
+
+                # save to folder
+                df_general_metrics.to_csv(analysispath / '{}_general_analysis.csv'.format(trials[i][j][k]))
             
                 k=k+1
         
@@ -266,9 +277,17 @@ if kcoeff_analysis == True:
                 # remove rows where K-coefficient is np.nan
                 df_kcoeff.dropna(inplace=True)
 
-                # save df to csv
-                participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
-                df_kcoeff.to_csv(participant_output_path / '{}_k-coefficient_analysis.csv'.format(trials[i][j][k]))
+                # define trial output path
+                trial_output_path = output_path / Path(group_names[i]) / Path(participants[i][j] / Path(trials[i][j][k]))
+
+                # create folder for kcoefficient analysis in trial folder
+                os.makedirs(trial_output_path / Path('k-coefficient_analysis'), exist_ok = True)
+
+                # define final output path
+                analysispath = trial_output_path / Path('k-coefficient_analysis')
+
+                # save to folder
+                df_kcoeff.to_csv(analysispath / '{}_k-coefficient_analysis.csv'.format(trials[i][j][k]))
 
                 k=k+1
          
@@ -311,21 +330,44 @@ if ooi_analysis == True:
                 # preprocess ogd data and add columns (fixation object and fixation time)
                 ogd_final = ooi_metrics.prepare_ogd_file(ogd_data, pixel_distance)
 
+                ##° prepare output folders
+
+                # define trial output path
+                trial_output_path = output_path / Path(group_names[i]) / Path(participants[i][j] / Path(trials[i][j][k]))
+
+                # create folder for ooi analysis in trial folder
+                os.makedirs(trial_output_path / Path('ooi_analysis'), exist_ok = True)
+
+                # define final output path
+                analysispath = trial_output_path / Path('ooi_analysis')
+
+                # create folder for visualisations
+                os.makedirs(analysispath / Path('visualisations'), exist_ok=True)
+                vis_path = analysispath / Path('visualisations')
+
+
 
                 # calculate all ooi-based metrics
                 df_ooi_metrics = ooi_metrics.calculate_ooi_metrics(ogd_final, all_ooi)
 
-                # save df_ooi_metrics to csv
-                participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
-                df_ooi_metrics.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis.csv'.format(trials[i][j][k]))
-            
-                # calculate all general ooi-based metrics
+                # save ooi metrics
+                df_ooi_metrics.to_csv(analysispath / '{}_ooi_analysis.csv'.format(trials[i][j][k]))
+
+                # visualisations of ooi metrics
+                specification = 'Whole Trial'   # add this to title in figure (will be respective actin for action plots)
+                visualisations.vis_ooi_metrics(df_ooi_metrics, vis_path, trials[i][j][k], specification)
+
+
+                # calculate all ooi-based general metrics
                 df_general_ooi_metrics = ooi_metrics.calculate_general_ooi_metrics(ogd_final, all_ooi, trials[i][j][k])
 
-                # save df_general_ooi_metrics
-                df_general_ooi_metrics.to_csv(participant_output_path / '{}_ooi-based_general_analysis.csv'.format(trials[i][j][k]))
+                # save ooi-based general
+                df_general_ooi_metrics.to_csv(analysispath / '{}_ooi-based_general_analysis.csv'.format(trials[i][j][k]))
+
+                # visualisations of ooi-based general
 
                 k=k+1
+
 
 #endregion
 
@@ -389,7 +431,7 @@ if action_analysis == True:
                     idx_action_dfs = [ind for ind, ele in enumerate(action_sequence) if ele == action]
 
                     # output path to save dfs
-                    participant_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) 
+                    trial_output_path = output_path / Path(group_names[i]) / Path(participants[i][j]) / Path(trials[i][j][k])
 
                     
                     ### summary of general metrics
@@ -398,23 +440,31 @@ if action_analysis == True:
                     df_summary_gen = action_separation.summary_general_metrics_per_action(general_metrics_action_df_list, idx_action_dfs)
 
                     # save output per action: general metrics
-                    df_summary_gen.to_csv(participant_output_path / '{}_general_analysis_{}.csv'.format(trials[i][j][k], action))
+                    analysispath = trial_output_path / Path('general_analysis')
+                    df_summary_gen.to_csv(analysispath / '{}_general_analysis_{}.csv'.format(trials[i][j][k], action))
                     
 
                     ### summary of ooi metrics
+
 
                     # get summary of ooi-based ooi metrics per action
                     df_summary_ooi = action_separation.summary_ooi_metrics_per_action(ooi_metrics_action_df_list, idx_action_dfs)
 
                     # save output per action: ooi-based ooi metrics
-                    
-                    df_summary_ooi.to_csv(participant_output_path / '{}_ooi-based_ooi_analysis_{}.csv'.format(trials[i][j][k], action))
+                    analysispath = trial_output_path / Path('ooi_analysis')
+                    df_summary_ooi.to_csv(analysispath / '{}_ooi_analysis_{}.csv'.format(trials[i][j][k], action))
 
-                    # get summary of ooi-based ooi metrics per action
+                    # visualisations of ooi metrics per action
+                    vis_path = analysispath / Path('visualisations')
+                    specification = action   # add this to title in figure and file name
+                    visualisations.vis_ooi_metrics(df_summary_ooi, vis_path, trials[i][j][k], specification)
+
+
+                    # get summary of ooi-based general metrics per action
                     df_summary_ooi_gen = action_separation.summary_ooi_general_metrics_per_action(gen_ooi_metrics_action_df_list, idx_action_dfs, df_summary_ooi, general_metrics_action_df_list)
 
                     # save output per action: ooi-based general metrics
-                    df_summary_ooi_gen.to_csv(participant_output_path / '{}_ooi-based_general_analysis_{}.csv'.format(trials[i][j][k], action))
+                    df_summary_ooi_gen.to_csv(analysispath / '{}_ooi-based_general_analysis_{}.csv'.format(trials[i][j][k], action))
 
 
                 print(i,j,k)            
@@ -438,7 +488,13 @@ e=2
 #region
 
 
+# summarize per participant
+
+
+
+
 #endregion
+
 
 
 # _____________ VISUALIZATIONS 
