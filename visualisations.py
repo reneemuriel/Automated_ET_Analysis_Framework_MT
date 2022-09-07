@@ -35,6 +35,15 @@ def vis_ooi_metrics(df, outputpath, trialname, specification):
     plt.title('Relative Dwelltime [%] per OOI ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
 
- 
 
-        
+# output transition matrix
+def vis_transition_matrix(transition_matrix, dict_ooi):
+    # switch key and value in dict_ooi
+    dict_ooi_switched = {y: x for x, y in dict_ooi.items()}
+    df_tm = pd.DataFrame(transition_matrix)
+    df_tm.columns = df_tm.columns.map(dict_ooi_switched)
+    df_tm.index = df_tm.index.map(dict_ooi_switched)
+    plt.clf()
+    sns.heatmap(df_tm, annot=True)
+    plt.show()
+    e=3

@@ -359,12 +359,13 @@ if ooi_analysis == True:
 
 
                 # calculate all ooi-based general metrics
-                df_general_ooi_metrics = ooi_metrics.calculate_general_ooi_metrics(ogd_final, all_ooi, trials[i][j][k])
+                df_general_ooi_metrics, transition_matrix,dict_ooi = ooi_metrics.calculate_general_ooi_metrics(ogd_final, all_ooi, trials[i][j][k])
 
                 # save ooi-based general
                 df_general_ooi_metrics.to_csv(analysispath / '{}_ooi-based_general_analysis.csv'.format(trials[i][j][k]))
 
-                # visualisations of ooi-based general
+                # visualisation of transition matrix
+                visualisations.vis_transition_matrix(transition_matrix, dict_ooi)
 
                 k=k+1
 
@@ -465,6 +466,9 @@ if action_analysis == True:
 
                     # save output per action: ooi-based general metrics
                     df_summary_ooi_gen.to_csv(analysispath / '{}_ooi-based_general_analysis_{}.csv'.format(trials[i][j][k], action))
+
+                    # visualisations of transition_matrix per action
+                    # ? averaged per action? for each step? or not at all?
 
 
                 print(i,j,k)            

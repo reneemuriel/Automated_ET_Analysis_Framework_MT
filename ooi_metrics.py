@@ -1,3 +1,4 @@
+from glob import glob
 import pandas as pd
 import statistics
 import math
@@ -331,28 +332,6 @@ def tot_dwells(revisits_per_ooi):
     total_dwelllls = sum(revisits_per_ooi)
     return sum(revisits_per_ooi)
 
-# transition matrix for GTE
-def transition_matrix(transitions, number_of_states):
-
-    # from https://gist.github.com/tg12/d7efa579ceee4afbeaec97eb442a6b72 
-
-    #the following code takes a list such as
-    #[1,1,2,6,8,5,5,7,8,8,1,1,4,5,5,0,0,0,1,1,4,4,5,1,3,3,4,5,4,1,1]
-    #with states labeled as successive integers starting with 0
-    #and returns a transition matrix, M,
-    #where M[i][j] is the probability of transitioning from i to j
-
-    M = [[0]*number_of_states for _ in range(number_of_states)]
-
-    for (x,y) in zip(transitions,transitions[1:]):
-        M[x][y] += 1
-
-    #now convert to probabilities:
-    for row in M:
-        s = sum(row)
-        if s > 0:
-            row[:] = [f/s for f in row]
-    return M
 
 # calculate stationary gaze entropy (inclusive Non-OOI / BG)
 def stationary_gaze_entropy(all_ooi, data):
@@ -388,7 +367,11 @@ def stationary_gaze_entropy(all_ooi, data):
 
 # calculate transition gaze entropy (inclusive Non-OOI / BG)
 def gaze_transition_entropy(all_ooi, data):
-         
+
+    # make transition matrix global variable so that it can be saved as ouput
+    global transition_matrix
+    global dict_ooi
+
     # add
     # all_ooi_BG = all_ooi + ['Non-OOI']
 
@@ -403,21 +386,26 @@ def gaze_transition_entropy(all_ooi, data):
     transitions_series = (pd.Series(transitions)).map(dict_ooi)
     transitions = transitions_series.to_list()
 
-    # without function
+
+    # from https://gist.github.com/tg12/d7efa579ceee4afbeaec97eb442a6b72 
+
+    #the following code takes a list such as
+    #[1,1,2,6,8,5,5,7,8,8,1,1,4,5,5,0,0,0,1,1,4,4,5,1,3,3,4,5,4,1,1]
+    #with states labeled as successive integers starting with 0
+    #and returns a transition matrix, M,
+    #where M[i][j] is the probability of transitioning from i to j
+
     # calculate matrix m
-    m = [[0]*number_of_states for _ in range(number_of_states)]
+    transition_matrix = [[0]*number_of_states for _ in range(number_of_states)]
 
     for (x,y) in zip(transitions,transitions[1:]):
-        m[x][y] += 1
+        transition_matrix[x][y] += 1
 
     #now convert to probabilities:
-    for row in m:
+    for row in transition_matrix:
         s = sum(row)
         if s > 0:
             row[:] = [f/s for f in row]
-
-    #m = transition_matrix(transitions_list, number_of_states)
-    #for row in m: print(' '.join('{0:.2f}'.format(x) for x in row))
 
     # create new matrix with same size as m
     n= len(data['fixation_object'].unique())
@@ -428,10 +416,10 @@ def gaze_transition_entropy(all_ooi, data):
     j=0
     for i in range (len(ooi_recognised)):
         for j in range(len(ooi_recognised)):
-            if m[i][j] <= 0.0001: # or = 0 ?
+            if transition_matrix[i][j] <= 0.0001: # or = 0 ?
                 m2[i][j] = 0
             else:
-                m2[i][j] = math.log2(m[i][j]) * m[i][j]
+                m2[i][j] = math.log2(transition_matrix[i][j]) * transition_matrix[i][j]
 
     # conduct inner summation (each row) and multiply by stationary distribution value (from sge)
     inner_summation = []
@@ -478,7 +466,7 @@ def calculate_general_ooi_metrics(data, all_ooi, trialname):
 
     df_general_ooi_metrics.index = [trialname]
 
-    return df_general_ooi_metrics
+    return df_general_ooi_metrics, transition_matrix, dict_ooi
 
     e=2
 
