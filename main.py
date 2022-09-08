@@ -289,6 +289,12 @@ if kcoeff_analysis == True:
                 # save to folder
                 df_kcoeff.to_csv(analysispath / '{}_k-coefficient_analysis.csv'.format(trials[i][j][k]))
 
+                # visualise k-coefficient 
+                os.makedirs(analysispath / Path('visualisations'), exist_ok=True)
+                vis_path = analysispath / 'visualisations'
+                specification = 'Whole Trial'
+                visualisations.vis_kcoeff(df_kcoeff, vis_path, trials[i][j][k], specification)
+                
                 k=k+1
          
 
@@ -365,8 +371,9 @@ if ooi_analysis == True:
                 df_general_ooi_metrics.to_csv(analysispath / '{}_ooi-based_general_analysis.csv'.format(trials[i][j][k]))
 
                 # visualisation of transition matrix
-                visualisations.vis_transition_matrix(transition_matrix, dict_ooi)
-
+                specification = 'Whole Trial'
+                visualisations.vis_transition_matrix(transition_matrix, dict_ooi, vis_path, trials[i][j][k], specification)
+                
                 k=k+1
 
 

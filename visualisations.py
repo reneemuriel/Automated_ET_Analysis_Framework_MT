@@ -32,18 +32,47 @@ def vis_ooi_metrics(df, outputpath, trialname, specification):
     clrs = sns.color_palette('pastel')[0:number_cols]
     lbls = piedata.index
     plt.pie(piedata, labels = lbls, colors = clrs, autopct='%.0f%%' )
+    plt.text(1.3,1.1, trialname, transform=plt.gca().transAxes)
     plt.title('Relative Dwelltime [%] per OOI ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
+    #plt.tight_layout()
     plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
+    plt.clf()
 
 
-# output transition matrix
-def vis_transition_matrix(transition_matrix, dict_ooi):
+# visualisation transition matrix
+def vis_transition_matrix(transition_matrix, dict_ooi, outputpath, trialname, specification):
     # switch key and value in dict_ooi
     dict_ooi_switched = {y: x for x, y in dict_ooi.items()}
     df_tm = pd.DataFrame(transition_matrix)
     df_tm.columns = df_tm.columns.map(dict_ooi_switched)
     df_tm.index = df_tm.index.map(dict_ooi_switched)
-    plt.clf()
+
+    # create path to save
+    savepath=outputpath /'Transition Matrix (GTE)_{}.jpg'.format(specification)
+
+    
+    sns.color_palette('pastel')[0:len(df_tm)]
     sns.heatmap(df_tm, annot=True)
-    plt.show()
+    sns.axes_style({'ytick.top': True})
+    plt.tick_params(axis='both', which='major', labelsize=10, labelbottom = False, bottom=False, top = False, labeltop=True)
+    plt.text(1.3,1.1, trialname, transform=plt.gca().transAxes)
+    plt.title('Transition Matrix ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
+    #plt.tight_layout()
+    plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
+    plt.clf()
+
     e=3
+
+
+# visualisation of k-coefficient
+def vis_kcoeff(df, outputpath, trialname, specification):
+        savepath=outputpath /'K-Coefficient_{}.jpg'.format(specification)
+        sns.set_theme(style='whitegrid')
+        lineplot = sns.lineplot(df['start_time'], df['K-coefficient'], color='mediumseagreen')
+        plt.title('K-Coefficient ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
+        plt.text(1.1,1.1, trialname, transform=plt.gca().transAxes)
+        plt.ylabel('K-Coefficient',  labelpad=20)
+        plt.xlabel('Time [ms]',  labelpad=20)
+        fig = lineplot.get_figure()
+        fig.savefig(savepath, bbox_inches='tight', dpi=300)
+        plt.clf()

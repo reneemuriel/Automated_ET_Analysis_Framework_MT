@@ -83,8 +83,8 @@ def avg_dwell_time_ooi(data, all_ooi):
     global df_dwelltime
 
     # create df to fill in dwelltimes
-    cols = all_ooi + ['Non-OOI']
-    #cols.append('Non-OOI') 
+    cols = all_ooi + ['BG']
+    #cols.append('BG') 
     dwelltimes = pd.DataFrame(columns=cols) 
     dwelltimes.loc[len(dwelltimes)] = 0
 
@@ -111,7 +111,7 @@ def avg_dwell_time_ooi(data, all_ooi):
             start_dwell_row = row+1
 
 
-    df_dwelltime = pd.DataFrame(columns=all_ooi) # do not include Non-OOI
+    df_dwelltime = pd.DataFrame(columns=all_ooi) # do not include BG
     df_dwelltime.loc[len(df_dwelltime)] = 0 # add new row
 
     for ooi in all_ooi:
@@ -333,15 +333,15 @@ def tot_dwells(revisits_per_ooi):
     return sum(revisits_per_ooi)
 
 
-# calculate stationary gaze entropy (inclusive Non-OOI / BG)
+# calculate stationary gaze entropy (inclusive BG / BG)
 def stationary_gaze_entropy(all_ooi, data):
 
     global proportions # for tge calculation
 
     hits_with_BG = []
-    all_ooi_BG = all_ooi + ['Non-OOI']
+    all_ooi_BG = all_ooi + ['BG']
     
-    # calculate hits per OOI, inclusive Non-OOI/BG
+    # calculate hits per OOI, inclusive BG/BG
     for ooi in all_ooi_BG:
         hits_with_BG.append(sum(x.count(ooi) for x in data['fixation_object']))
     
@@ -353,7 +353,7 @@ def stationary_gaze_entropy(all_ooi, data):
     # stationary gaze entropy (Shannon's equation)
     sge_list = []
     i=0
-    for i in range(len(all_ooi_BG)): #only here -1, because non-ooi is in there
+    for i in range(len(all_ooi_BG)): #only here -1, because BG is in there
         if proportions[i] == 0:
             sge_list.append(0)
         else:
@@ -365,7 +365,7 @@ def stationary_gaze_entropy(all_ooi, data):
     sge_normalised = sge / max_entropy
     return sge_normalised # 1 = max entropy, 0 = minimum entropy
 
-# calculate transition gaze entropy (inclusive Non-OOI / BG)
+# calculate transition gaze entropy (inclusive BG / BG)
 def gaze_transition_entropy(all_ooi, data):
 
     # make transition matrix global variable so that it can be saved as ouput
@@ -373,7 +373,7 @@ def gaze_transition_entropy(all_ooi, data):
     global dict_ooi
 
     # add
-    # all_ooi_BG = all_ooi + ['Non-OOI']
+    # all_ooi_BG = all_ooi + ['BG']
 
     # number of states as input for transition_matrix() -> only take objects that are looked at in this timeframe -> maybe change
     number_of_states = len(data['fixation_object'].unique())
