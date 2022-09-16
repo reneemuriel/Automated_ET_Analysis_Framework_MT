@@ -1,0 +1,5 @@
+,Average Dwelltime [ms],Normalised Gaze Transition Entropy,Normalised Stationary Gaze Entropy,Total Dwells,Total Hits
+participant02_trial01,1219.75,0.0,0.28865511663323656,4.0,47.0
+participant02_trial02,474.78571428571416,0.0,0.530236578596837,14.0,64.0
+Mean participant02,847.2678571428571,0.0,0.4094458476150368,9.0,55.5
+Standard Deviation participant02,526.7692981703642,0.0,0.1708238899634219,7.0710678118654755,12.020815280171307

@@ -1,0 +1,5 @@
+,Average Fixation Duration [ms],Average Saccade Duration [ms],Number of Fixations,Number of Saccades,Relative Fixation/Saccade Duration [%],Total Duration [ms],Total Fixation Duration [ms],Total Saccade Duration [ms]
+participant03_trial01,480.3529411764706,42.5,17.0,8.0,96/4,89868.0,8166.0,340.0
+participant03_trial02,318.0,27.333333333333332,27.0,30.0,91/9,116342.0,8586.0,820.0
+Mean participant03,399.1764705882353,34.916666666666664,22.0,19.0,94/6,103105.0,8376.0,580.0
+Standard Deviation participant03,114.80086565146303,10.724452847995972,7.0710678118654755,15.556349186104045,4,18719.94492513266,296.98484809834997,339.4112549695428

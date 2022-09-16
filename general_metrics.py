@@ -60,10 +60,12 @@ def tot_saccade_duration(saccadedata):
 def fix_sac_ratio(fixationdata, saccadedata):
     tot_fix = sum(fixationdata['Event Duration [ms]'])
     tot_sac = sum(saccadedata['Event Duration [ms]'])
-    percent_fix = tot_fix / (tot_fix + tot_sac) * 100
-    percent_sac = tot_sac / (tot_fix + tot_sac) * 100
+
+    percent_fix = round(tot_fix / (tot_fix + tot_sac) * 100)
+    percent_sac = round(tot_sac / (tot_fix + tot_sac) * 100)
+
     percentages = '{}/{}'.format(round(percent_fix), round(percent_sac))
-    #ratio_a_string = '{}:{}'.format(round(percent_fix), round(percent_sac))
+    #ratio_as_string = '{}:{}'.format(round(percent_fix), round(percent_sac)) # does not work since excel converts it to time format
     
     return percentages
 
@@ -107,7 +109,6 @@ def calculate_general_metrics(fixationdata, saccadedata, trialname):
     return df_general_metrics
 
 
-
 def calculate_general_metrics_per_action(fixationdata, saccadedata, trialname):
      
     df_general_metrics = pd.DataFrame()
@@ -143,10 +144,6 @@ def calculate_general_metrics_per_action(fixationdata, saccadedata, trialname):
     df_general_metrics.index = [trialname]
 
     return df_general_metrics   
-
-
-    
-
 
 
 

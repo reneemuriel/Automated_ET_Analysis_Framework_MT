@@ -220,7 +220,7 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
     #   average fixation time per OOI
     #   time to first fixation per OOI
 
-    df_ooi_metrics = pd.DataFrame(columns=all_ooi)
+    df_ooi_metrics = pd.DataFrame(columns=all_ooi, dtype=float)
 
 
     # count total hits per OOI & add to df_ooi_metrics
@@ -264,7 +264,7 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
 
 def calculate_ooi_metrics_per_action(data, all_ooi):
     
-    df_ooi_metrics = pd.DataFrame(columns=all_ooi)
+    df_ooi_metrics = pd.DataFrame(columns=all_ooi, dtype=float)
 
 
     # count total hits per OOI & add to df_ooi_metrics
@@ -320,7 +320,10 @@ def avg_dwell_time(all_ooi):
             all_dwell_times_zeroes.append((df_dwelltime.iloc[0][i][j]))
     # remove zeroes from list, otherwise they are used to calculate mean
     all_dwell_times = [x for x in all_dwell_times_zeroes if x != 0]
-    return statistics.mean(all_dwell_times)
+    if sum(all_dwell_times) == 0:
+        return 0
+    else:
+        return statistics.mean(all_dwell_times)
 
 
 # calculate total hits (with df_hits)
@@ -447,7 +450,7 @@ def gaze_transition_entropy(all_ooi, data):
 
 def calculate_general_ooi_metrics(data, all_ooi, trialname):
     
-    df_general_ooi_metrics = pd.DataFrame()
+    df_general_ooi_metrics = pd.DataFrame(dtype=float)
 
     # calculate average dwell time 
     df_general_ooi_metrics['Average Dwell Time [ms]'] = [avg_dwell_time(all_ooi)]
@@ -473,7 +476,7 @@ def calculate_general_ooi_metrics(data, all_ooi, trialname):
 
 def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
     
-    df_general_ooi_metrics = pd.DataFrame()
+    df_general_ooi_metrics = pd.DataFrame(dtype=float)
 
     # calculate average dwell time 
     df_general_ooi_metrics['Average Dwelltime [ms]'] = [avg_dwell_time(all_ooi)]

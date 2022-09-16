@@ -1,0 +1,5 @@
+,Average Dwelltime [ms],Normalised Gaze Transition Entropy,Normalised Stationary Gaze Entropy,Total Dwells,Total Hits
+Mean group_difficult,1764.2083333333333,0.0,0.2095000612548181,3.25,29.25
+Mean group_easy,813.9761904761906,0.0,0.399506692219193,5.75,37.75
+Mean All Groups,1289.092261904762,0.0,0.30450337673700556,4.5,33.5
+Standard Deviation All Groups,671.9155919157097,0.0,0.13435497722531933,1.7677669529663689,6.010407640085654

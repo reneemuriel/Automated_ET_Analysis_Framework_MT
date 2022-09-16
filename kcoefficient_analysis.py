@@ -9,6 +9,7 @@ def reformat(filepath, trial_path):
 
     # filter for whole events (?) 
     df_out = df_raw[df_raw["Validity"]  == "Whole"]
+    #df_out = df_raw
 
     # select certain colums to keep
     # event-based tobii ouput file here: already in milliseconds
