@@ -4,15 +4,17 @@ from matplotlib.image import FigureImage
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import re
+
+### GENERAL METRICS
+
+#region
 
 
-# save general metrics from df_gen
-def vis_gen_metrics(df, sac_dur_list, fix_dur_list, outputpath, filename, specification, x_labels):
+def vis_gen_metrics_barplots(df, outputpath, filename, specification):
 
     # barplots: all general metrics except relative
-
     for col in range(len(df.columns)-1):    # -1 because of relative percentage (in last column) that cannot be plotted 
-
 
         savepath = outputpath / '{}_barplot_{}'.format(df.columns[col], specification)
         sns.set_theme(style='whitegrid')
@@ -24,8 +26,95 @@ def vis_gen_metrics(df, sac_dur_list, fix_dur_list, outputpath, filename, specif
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
 
+    # relative fixation/saccade duration pie chart
+    e = 3
 
-    # boxplots: saccade duration
+
+def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specification, metric, x_labels):
+
+    savepath=outputpath /'{}_boxplot_{}.jpg'.format(metric, specification)
+    sns.set_theme(style='whitegrid')
+    boxplot = sns.boxplot(data=nested_list, color='mediumseagreen')
+    boxplot.set_xticklabels(x_labels)
+    plt.title('{} ({})'.format(metric, specification), fontsize = 16, pad = 20, weight = 'bold')
+    plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
+    fig = boxplot.get_figure()
+    #plt.show()
+    fig.savefig(savepath, bbox_inches='tight', dpi=300)
+    plt.clf()
+
+
+def vis_gen_metrics_piechart(df, outputpath, filename, specification):
+
+    savepath=outputpath /'{}_piecharts_{}.jpg'.format('Relative Fixation Saccade Duration [%]', specification)
+
+    # extract numbers out of the string
+    perc_fixation_list = []
+    perc_saccade_list = []
+    for row in range(len(df)-1):
+        perc_string = df['Relative Fixation/Saccade Duration [%]'][row] # extract numbers from string
+        temp = re.findall(r'\d+', perc_string)
+        perc_list = list(map(int, temp))
+        perc_fixation_list.append(perc_list[0]) # extract fix percentage
+        perc_saccade_list.append(perc_list[1])  # extract saccade percentage
+
+    # different figure grid for different amount of trials/participants/groups  
+    number_figs = len(perc_fixation_list)
+
+    if number_figs % 3 == 0:
+        figure_rows = number_figs / 3
+    else:
+        figure_rows = number_figs / 3 + 1
+    
+    figure_rows = int(figure_rows)
+  
+    fig, axes = plt.subplots(figure_rows, 3, sharex=True, figsize=(10,5))
+    fig.suptitle('Relative Fixation/Saccade Duration [%] - {}'.format(filename))
+    clrs = sns.color_palette('pastel')[0:len(perc_fixation_list)]
+    lbls = ['Fixation', 'Saccade']
+
+    # if only one row of figures
+    if figure_rows == 1:
+        for fig_number in range(len(perc_fixation_list)):
+            piedata = [perc_fixation_list[fig_number], perc_saccade_list[fig_number]] 
+            axes[fig_number].set_title(df.index[fig_number])
+            axes[fig_number].pie(piedata, colors = clrs, autopct='%.0f%%' )
+        axes[0].legend(lbls, bbox_to_anchor=(0, 0.5))
+        plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
+        plt.clf()
+
+    # if multiple rows 
+    else:
+        fig_number = 0
+    
+        for fig_row in range(figure_rows): 
+            for fig_col in range(3): 
+                    piedata = [perc_fixation_list[fig_number], perc_saccade_list[fig_number]] 
+                    axes[fig_row, fig_col].set_title(df.index[fig_number], y=-0.1) # plot title below subplots
+                    axes[fig_row, fig_col].pie(piedata, colors = clrs, autopct='%.0f%%' )
+                    fig_number = fig_number + 1
+                    if fig_number == number_figs:
+                        break
+            else:
+                continue
+            break
+
+        axes[0,0].legend(lbls, bbox_to_anchor=(5, 0))
+        for ax in axes.flat[number_figs:]:
+            ax.remove()
+        
+        plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
+        plt.clf()
+    
+    #plt.text(1.3,1.1, filename, transform=plt.gca().transAxes)
+
+
+
+# boxplots for visualisation of single trials per participant 
+def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, filename, specification, x_labels):
+
+    ### boxplots: saccade duration
+
     savepath=outputpath /'Average Saccade Duration [ms]_boxplot_{}.jpg'.format(specification)
     sns.set_theme(style='whitegrid')
     boxplot = sns.boxplot(data=sac_dur_list, color='mediumseagreen')
@@ -47,19 +136,13 @@ def vis_gen_metrics(df, sac_dur_list, fix_dur_list, outputpath, filename, specif
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
 
-    # relative fixation/saccade duration pie chart
 
+#endregion
+
+   
     
-    
-
-    
-
-
-
-
-    
-
-
+### OOI-BASED ANALYSIS
+#region
 
 # save ooi-based ooi metrics from df_ooi 
 def vis_ooi_metrics(df, outputpath, filename, specification):
@@ -76,14 +159,14 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
 
-    # cake plot for Relative Dwelltime [%]:
+    # piechart for Relative Dwelltime [%]:
 
     # only plot if greater than 0% 
     piedata = df.loc['Relative Dwelltime [%]'] 
     piedata = piedata[piedata!=0]
 
     # make pie chart
-    savepath=outputpath /'{}_pieplot_{}.jpg'.format('Relative Dwelltime [%]', specification)
+    savepath=outputpath /'{}_piechart_{}.jpg'.format('Relative Dwelltime [%]', specification)
     number_cols = len(piedata)
     clrs = sns.color_palette('pastel')[0:number_cols]
     lbls = piedata.index
@@ -93,8 +176,6 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
     #plt.tight_layout()
     plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
     plt.clf()
-
-
 
 
 
@@ -124,8 +205,15 @@ def vis_transition_matrix(transition_matrix, dict_ooi, outputpath, trialname, sp
     e=3
 
 
+#endregion
+
+
+### K-COEFFICIENT
+#region
+
 # visualisation of k-coefficient
 def vis_kcoeff(df, outputpath, trialname, specification):
+
         savepath=outputpath /'K-Coefficient_{}.jpg'.format(specification)
         sns.set_theme(style='whitegrid')
         lineplot = sns.lineplot(df['start_time'], df['K-coefficient'], color='mediumseagreen')
@@ -136,3 +224,6 @@ def vis_kcoeff(df, outputpath, trialname, specification):
         fig = lineplot.get_figure()
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
+
+
+#endregion

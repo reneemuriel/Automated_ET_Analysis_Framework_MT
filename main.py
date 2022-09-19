@@ -6,6 +6,7 @@ from ntpath import join
 #from pprint import pp
 from re import A
 from tkinter.tix import DirSelectBox
+from tokenize import group
 from zlib import DEF_BUF_SIZE
 from matplotlib import test
 import pandas as pd
@@ -103,6 +104,7 @@ get_variables_gui()
 #region
 
 trials = []
+trials_only = []
 trial_paths = []
 participants = []
 participant_paths = []
@@ -131,6 +133,7 @@ for i in range (len(group_names)):
 
     # iterate through participants to save trial paths per participants
     trials.append([])
+    trials_only.append([])
     trial_paths.append([])
     j=0
     for j in range(len(participants[i])):
@@ -146,12 +149,15 @@ for i in range (len(group_names)):
                 trial_path_list.append(trial_name)
                 #trial_paths[i][j] = [file]
         trials_list = [os.path.basename(trial) for trial in trial_path_list]
+        trials_only_list = [trial[14:] for trial in trials_list]
         
         # create ouput folder for each trial
         [os.makedirs(output_path / Path(group_names[i]) / Path(participants[i][j]) / trial, exist_ok = True) for trial in trials_list]
 
         # add to trial list
         trials[i].insert(j,trials_list)
+        # add to trials_only list
+        trials_only[i].insert(j, trials_only_list)
         # add to trial_paths list
         trial_paths[i].insert(j,trial_path_list) # for some reason adds a new empty element
 
@@ -166,22 +172,21 @@ for i in range (len(group_names)):
 if general_analysis == True:
 
     # to save data for plots & summary dfs
-    allgroups_sac_dur_list = []
-    allgroups_fix_dur_list = []
     allgroups_list_dfs = []
 
     # iterate through groups
     for i in range(len(group_names)):
-        
-        
+
 
         # to save data for plots & summary dfs
-        group_sac_dur_list = []
-        group_fix_dur_list = []
         group_list_dfs = []
+
+
+        
 
         # iterate through participants
         for j in range(len(participants[i])):
+
 
             # to save data for plots & summary dfs
             pp_sac_dur_list = []
@@ -246,20 +251,48 @@ if general_analysis == True:
             pp_df_average = pp_df_summary.iloc[[-2]]
             group_list_dfs.append(pp_df_average)
             
-            # visualisations per participant
+            ### visualisations per participant
+
             vis_path = save_path / Path('visualisation')
             os.makedirs(vis_path, exist_ok=True)
-            x_labels = trials[i][j]
-            visualisations.vis_gen_metrics(pp_df_summary, pp_sac_dur_list, pp_fix_dur_list, vis_path , participants[i][j], 'Whole Trial', x_labels)
+            
+            # boxplots for avg fixation and saccade duration
+            # add a list of trial means to list
+            pp_sac_dur_list.append([statistics.mean(pp_sac_dur_list[i]) for i in range(len(pp_sac_dur_list))])
+            pp_fix_dur_list.append([statistics.mean(pp_fix_dur_list[i]) for i in range(len(pp_fix_dur_list))])
+            # add mean to labels
+            x_labels = trials[i][j] + ['Mean {}'.format(participants[i][j])]
+            # get boxplots
+            visualisations.vis_gen_metrics_boxplots_trials(pp_sac_dur_list, pp_fix_dur_list, vis_path , participants[i][j], 'Whole Trial', x_labels)
+
+            # barplots from summary df
+            visualisations.vis_gen_metrics_barplots(pp_df_summary, vis_path , participants[i][j], 'Whole Trial')
+
+            # piechart relative sacc/fix duration
+            visualisations.vis_gen_metrics_piechart(pp_df_summary, vis_path, group_names[i], 'Whole Trial')
 
 
-            # append all saccade durations as one list to group_list
-            group_sac_dur_list.append(list(np.concatenate(pp_sac_dur_list)))
-            # append all fixation durations as one list to group_list
-            group_fix_dur_list.append(list(np.concatenate(pp_fix_dur_list)))
+            # if first participant
+            if j == 0:
+                group_boxplot_df = pd.DataFrame(columns=pp_df_summary.columns[:-1])
+                group_boxplot_df.loc[0] =  np.empty((len(group_boxplot_df.columns), 0)).tolist()  
+            # add row of empty list for new participant
+         
+            for metric in group_boxplot_df.columns:
+                # add a list to list 
+                inner_list = []
+                for x in range(len(trials[i][j])):
+                    inner_list.append(pp_df_summary[metric][x])
+                group_boxplot_df[metric][0].append(inner_list)
+
+
             
 
 
+            #pp_df_means = pp_df_summary.iloc[:-2,:-1] # -2 to only get the trial means and -1 to leave out relative fix/sac duration
+            #group_boxplot_df = pd.concat([group_boxplot_df, pp_df_means])  
+
+    
         ### summary of general analysis per group
 
         # create path for general analysis in group folder
@@ -274,18 +307,40 @@ if general_analysis == True:
         group_df_average = group_df_summary.iloc[[-2]]
         allgroups_list_dfs.append(group_df_average)
 
-        # visualisations per group
+        ### visualisations per group
         vis_path = save_path / Path('visualisation')
         os.makedirs(vis_path, exist_ok=True)
-        x_labels = participants[i]
-        visualisations.vis_gen_metrics(group_df_summary, group_sac_dur_list, group_fix_dur_list, vis_path , group_names[i], 'Whole Trial', x_labels)
-
-        # append all saccade durations as one list to group_list
-        allgroups_sac_dur_list.append(list(np.concatenate(group_sac_dur_list)))  
-        # append all fixation durations as one list to group_list
-        allgroups_fix_dur_list.append(list(np.concatenate(group_fix_dur_list)))
 
 
+
+        # boxplots
+        # (for allgroups_boxplot_df) if first group: make df with one empty column to fill 
+        if i == 0:
+            allgroups_boxplot_df = pd.DataFrame(columns=group_df_summary.columns[:-1])
+            allgroups_boxplot_df.loc[0] =  np.empty((len(allgroups_boxplot_df.columns), 0)).tolist()  
+        
+        # define x labels
+        x_labels = participants[i] + ['Mean {}'.format(group_names[i])]
+
+        for metric in group_boxplot_df.columns:
+            group_nested_list = group_boxplot_df[metric][0]
+            list_means = [statistics.mean(group_nested_list[x]) for x in range(len(group_nested_list))]
+            group_nested_list.append(list_means)
+            visualisations.vis_gen_metrics_boxplots_group(group_nested_list, vis_path, group_names[i], 'Whole Trial', metric, x_labels)
+
+            # append to boxplot_allgroups_df 
+            inner_list = []
+            for x in range(len(participants[i])):
+                inner_list.append(group_df_summary[metric][x])
+            allgroups_boxplot_df[metric][0].append(inner_list)
+
+
+
+        # barplots
+        visualisations.vis_gen_metrics_barplots(group_df_summary, vis_path , group_names[i], 'Whole Trial')
+
+        # piechart
+        visualisations.vis_gen_metrics_piechart(group_df_summary, vis_path, group_names[i], 'Whole Trial')
 
     ### summary of general analysis of all groups
 
@@ -299,8 +354,26 @@ if general_analysis == True:
     # visualisations per group
     vis_path = save_path / Path('visualisation')
     os.makedirs(vis_path, exist_ok=True)
-    x_labels = group_names
-    visualisations.vis_gen_metrics(allgroups_df_summary, allgroups_sac_dur_list, allgroups_fix_dur_list, vis_path , 'All Groups', 'Whole Trial', x_labels)
+    x_labels = group_names + ['Mean All Groups']
+
+    # boxplots
+    for metric in allgroups_boxplot_df.columns:
+        allgroups_nested_list = allgroups_boxplot_df[metric][0]
+        list_means = [statistics.mean(allgroups_nested_list[x]) for x in range(len(allgroups_nested_list))]
+        allgroups_nested_list.append(list_means)
+        visualisations.vis_gen_metrics_boxplots_group(allgroups_nested_list, vis_path, 'All Groups', 'Whole Trial', metric, x_labels)
+
+
+    # barplots
+    visualisations.vis_gen_metrics_barplots(allgroups_df_summary, vis_path , 'All Groups', 'Whole Trial')
+
+
+    # piecharts
+    visualisations.vis_gen_metrics_piechart(allgroups_df_summary, vis_path, 'All Groups', 'Whole Trial')
+
+
+
+    #visualisations.vis_gen_metrics(allgroups_df_summary, allgroups_sac_dur_list, allgroups_fix_dur_list, vis_path , 'All Groups', 'Whole Trial', x_labels)
 
 e=3
 #endregion
