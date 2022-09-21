@@ -10,7 +10,7 @@ import re
 
 #region
 
-
+# barplots for all metrics (apart from relative fix / sac duration)
 def vis_gen_metrics_barplots(df, outputpath, filename, specification):
 
     # barplots: all general metrics except relative
@@ -26,10 +26,9 @@ def vis_gen_metrics_barplots(df, outputpath, filename, specification):
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
 
-    # relative fixation/saccade duration pie chart
-    e = 3
 
 
+# boxplots for all metrics (distributions per participant, group, all groups)
 def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specification, metric, x_labels):
 
     savepath=outputpath /'{}_boxplot_{}.jpg'.format(metric, specification)
@@ -39,11 +38,10 @@ def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specificat
     plt.title('{} ({})'.format(metric, specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
     fig = boxplot.get_figure()
-    #plt.show()
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
 
-
+# piechart for relative fix / sac duration
 def vis_gen_metrics_piechart(df, outputpath, filename, specification):
 
     savepath=outputpath /'{}_piecharts_{}.jpg'.format('Relative Fixation Saccade Duration [%]', specification)
@@ -67,9 +65,8 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
         figure_rows = number_figs / 3 + 1
     
     figure_rows = int(figure_rows)
-  
     fig, axes = plt.subplots(figure_rows, 3, sharex=True, figsize=(10,5))
-    fig.suptitle('Relative Fixation/Saccade Duration [%] - {}'.format(filename))
+    fig.suptitle('Relative Fixation/Saccade Duration [%]')
     clrs = sns.color_palette('pastel')[0:len(perc_fixation_list)]
     lbls = ['Fixation', 'Saccade']
 
@@ -80,6 +77,7 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
             axes[fig_number].set_title(df.index[fig_number])
             axes[fig_number].pie(piedata, colors = clrs, autopct='%.0f%%' )
         axes[0].legend(lbls, bbox_to_anchor=(0, 0.5))
+        plt.text(1.1,1.5, filename, transform=plt.gca().transAxes)
         plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
         plt.clf()
 
@@ -99,17 +97,15 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
                 continue
             break
 
+
         axes[0,0].legend(lbls, bbox_to_anchor=(5, 0))
+        axes[0,0].text(4.5,2.5, filename, transform=plt.gca().transAxes) 
+        # remove empty grid
         for ax in axes.flat[number_figs:]:
-            ax.remove()
-        
+            ax.remove()       
         plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
         plt.clf()
     
-    #plt.text(1.3,1.1, filename, transform=plt.gca().transAxes)
-
-
-
 # boxplots for visualisation of single trials per participant 
 def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, filename, specification, x_labels):
 
@@ -144,12 +140,12 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
 ### OOI-BASED ANALYSIS
 #region
 
-# save ooi-based ooi metrics from df_ooi 
+# barplots and piecharts from trial level to all groups level
 def vis_ooi_metrics(df, outputpath, filename, specification):
     
     # barplots for all metrics
     for i in range(len(df)):
-        savepath=outputpath /'{}_barplot_{}.jpg'.format(df.index[i], specification)
+        savepath=outputpath /'{} per OOI_barplot_{}.jpg'.format(df.index[i], specification)
         sns.set_theme(style='whitegrid')
         barplot = sns.barplot(df.columns, df.iloc[i], color='mediumseagreen')
         plt.title('{} per OOI ({})'.format(df.index[i], specification), fontsize = 16, pad = 20, weight = 'bold')
@@ -166,7 +162,7 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
     piedata = piedata[piedata!=0]
 
     # make pie chart
-    savepath=outputpath /'{}_piechart_{}.jpg'.format('Relative Dwelltime [%]', specification)
+    savepath=outputpath /'{} per OOI_piechart_{}.jpg'.format('Relative Dwelltime [%]', specification)
     number_cols = len(piedata)
     clrs = sns.color_palette('pastel')[0:number_cols]
     lbls = piedata.index
@@ -177,7 +173,47 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
     plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
     plt.clf()
 
+# boxplot for distributions per participant, group, all groups
+def vis_ooi_boxplots(nested_list_series, outputpath, filename, specification, metric, x_labels):
+    
+      
+    savepath=outputpath /'{} per OOI_boxplot_{}.jpg'.format(metric, specification)
+    sns.set_theme(style='whitegrid', palette='pastel')
 
+    fig, axes = plt.subplots(1,len(nested_list_series), sharey=True)
+
+    for i in range (len(nested_list_series)):
+        # make dataframe out of nested list
+        df = pd.DataFrame(data=nested_list_series[i], index=x_labels)
+        df = df.transpose()
+        nested_list=nested_list_series[i]
+        df_melted = df.melt()
+
+        # make boxplot
+        sns.boxplot(x='variable', y='value', hue='variable', data = df_melted, ax=axes[i]) # kind = 'count', labels=df.index,
+
+        # remove redundant y labels and  x ticks
+        axes[i].set_xticklabels('')
+        axes[i].set_ylabel('')
+        axes[i].get_legend().remove()
+               
+        # add title 
+        axes[i].set_xlabel(nested_list_series.index[i])
+        #boxplots.append(bxplt)
+        
+
+    #axes[0].get_shared_x_axes().join(axes) 
+    
+    #axes.set_xscale()
+    axes[0].set_ylabel(metric, fontsize=16)
+    axes[i].legend(bbox_to_anchor=(1.04, 1), loc="upper left")
+
+    #fig.legend(boxplots[0], x_labels) # , bbox_to_anchor=(0, 0.5)
+    plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
+    fig.suptitle('{} ({})'.format(metric, specification), fontsize = 16, weight = 'bold')
+    #plt.show()
+    fig.savefig(savepath, bbox_inches='tight', dpi=300)
+    plt.clf()
 
 
 # visualisation transition matrix
@@ -204,6 +240,21 @@ def vis_transition_matrix(transition_matrix, dict_ooi, outputpath, trialname, sp
 
     e=3
 
+
+def vis_ooigen_barplots(df, outputpath, filename, specification):
+    # barplots: all general metrics except relative
+    for col in range(len(df.columns)):  
+
+        savepath = outputpath / '{}_barplot_{}'.format(df.columns[col], specification)
+        sns.set_theme(style='whitegrid')
+        barplot = sns.barplot(x=df.index.values[:-1], y=df.iloc[:-1,col], color='mediumseagreen') # -1 becaues last row is standard deviation
+        plt.title('{} ({})'.format(df.columns[col], specification), fontsize = 16, pad = 20, weight = 'bold')
+        plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
+        plt.ylabel(df.columns[col],  labelpad=20)
+        fig = barplot.get_figure()
+        fig.savefig(savepath, bbox_inches='tight', dpi=300)
+        #plt.show()
+        plt.clf()
 
 #endregion
 
