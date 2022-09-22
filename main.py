@@ -51,7 +51,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/gaze_input_tobii_and_ogd'
+    ui_input_path =  'Data/gaze_input_tobii_ogd_kcoeff'
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -415,10 +415,12 @@ if kcoeff_analysis == True:
    
     summary_df_kcoeff = pd.DataFrame(index = trials[i])
     df_kcoeff_participant_list = []
+    df_kcoeff_group_list = []
 
     # iterate through groups
     for i in range(len(groups)):
-
+        
+        mean_kcoeff_groups = []
 
         df_kcoeff_group = pd.DataFrame() 
         # iterate through participants
@@ -486,8 +488,52 @@ if kcoeff_analysis == True:
 
         indeces_group_kcoeff = ['trial0{}'.format(number+1) for number in range(len(df_kcoeff_group))]
         df_kcoeff_group.index = indeces_group_kcoeff
-        df_kcoeff_group.to_csv(output_path_groups[i] / 'K-Coefficient Group Summary.csv' )
-        e=2 
+        # add group df (without mean) to list 
+        df_kcoeff_group_list.append(df_kcoeff_group.copy())
+        # add column with mean per participant and save to csv
+        df_kcoeff_group_withmean = df_kcoeff_group.copy()
+        df_kcoeff_group_withmean.loc['mean'] = df_kcoeff_group_withmean.mean()
+        os.makedirs(output_path_groups[i] / Path('k-coefficient_analysis'))
+        df_kcoeff_group_withmean.to_csv(output_path_groups[i] / Path('k-coefficient_analysis') /'K-Coefficient Group Summary.csv' )
+
+
+     
+
+    # calculate overall mean kcoefficient and its std dev: join dfs and calculate over resulting df
+    #mean_kcoefficient = statistics.mean(mean_kcoeff_groups)
+    all_kcoeffs = pd.concat(df_kcoeff_group_list)
+    mean_kcoeff_all = all_kcoeffs.stack().mean()
+    stdev_kcoeff_all = all_kcoeffs.stack().std()
+    
+
+    # go through each value and check if it is > 2 std dev away from mean
+    trials_outside_stdev = pd.DataFrame(columns=['Trial', 'K-Coefficient', 'Focal/Ambient' ])
+    count=0
+    for i in range(len(groups)):
+        for row in range(len(df_kcoeff_group_list[i])):
+            for col in range(len(df_kcoeff_group_list[i].columns)):
+                # if k-coefficient is outside 2x stdev, name of trial to list
+                kcoeff = df_kcoeff_group_list[i].iloc[row][col] 
+                if kcoeff > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff < mean_kcoeff_all - 2*stdev_kcoeff_all:
+                    # add empty row
+                    trials_outside_stdev.loc[0] = pd.Series([])
+                    # extract trial number and participant 
+                    trial_name= df_kcoeff_group_list[i].columns[col] + df_kcoeff_group_list[i].index[row]
+                    # add to df
+                    trials_outside_stdev['Trial'][count] = trial_name
+                    trials_outside_stdev['K-Coefficient'][count] = kcoeff
+                    if kcoeff >=0:
+                        trials_outside_stdev['Focal/Ambient'][count] = 'Focal'
+                    else:
+                        trials_outside_stdev['Focal/Ambient'][count] = 'Ambient'
+                    count=count+1
+
+    # create directory for overall k-coefficient analysis 
+    os.makedirs(output_path / Path('k-coefficient_analysis'))
+    trials_outside_stdev.to_csv(output_path / Path('k-coefficient_analysis') / 'Summary_Outliers_Kcoefficient')
+
+e=3
+
 
 #endregion
 

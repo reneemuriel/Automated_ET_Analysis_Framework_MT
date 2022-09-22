@@ -1,0 +1,220 @@
+Recording	Participant	TOI	Interval	Media	Event_type	Validity	EventIndex	Start	Stop	Duration	AOI	Hit_proportion	FixationPointX	FixationPointY	Average_pupil_diameter	Saccade_direction	Average_velocity	Peak_velocity	Saccade_amplitude	Start_AOI	Landing_AOI	Start_position_X	Start_position_Y	Landing_position_X	Landing_position_Y
+TK06	Thomas	Entire Recording	1		Saccade	Partial	1	45	85	40							422.44	542.05							
+TK06	Thomas	Entire Recording	1		Saccade	Partial	2	275	305	30							382.57	507.2							
+TK06	Thomas	Entire Recording	1		Saccade	Partial	3	315	335	20							107.07	108.06						0.40975	0.47246
+TK06	Thomas	Entire Recording	1		Fixation	Partial	1	335	425	90			0.40975	0.47246	2.85586										
+TK06	Thomas	Entire Recording	1		Saccade	Partial	4	475	495	20							215.69	240.77							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	2	545	914	370			0.49131	0.47614	2.69995										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	3	954	1264	310			0.48836	0.4768	2.55534										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	5	1264	1294	30						353.41	286.14	373.32	10.66			0.48836	0.4768	0.61214	0.49111
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	4	1294	1504	210			0.61214	0.49111	2.62009										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	5	1674	1784	110			0.60711	0.44848	2.64535										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	6	1784	1804	20							187.15	187.15				0.60711	0.44848		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	6	1824	2014	190			0.49926	0.45406	2.59373										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	7	2014	2034	20						169.72	129.64	155.5	3.9			0.49926	0.45406	0.45548	0.44613
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	7	2034	2314	280			0.45548	0.44613	2.56764										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	8	2354	2753	400			0.45508	0.46266	2.55806										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	9	2773	2933	160			0.46038	0.49272	2.54772										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	10	2953	3273	320			0.46867	0.52901	2.5315										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	11	3293	3493	200			0.46983	0.54091	2.47716										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	8	3493	3513	20							133.17	135.44				0.46983	0.54091		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	12	3593	3663	70			0.51428	0.49621	2.58934										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	13	3703	3953	250			0.50225	0.50294	2.59696										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	14	3973	4163	190			0.49858	0.52424	2.60873										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	9	4163	4213	50							314.47	423.09				0.49858	0.52424		
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	10	4273	4303	30							198.48	242.59						0.24106	0.68481
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	15	4303	4432	130			0.24106	0.68481	2.74004										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	16	4452	4552	100			0.27951	0.66716	2.59303										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	17	4572	4672	100			0.28398	0.67909	2.59042										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	18	4692	4822	130			0.2897	0.68477	2.5651										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	11	4962	4982	20							151.72	151.72						0.51248	0.53884
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	19	4982	5222	240			0.51248	0.53884	2.58753										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	20	5262	5502	240			0.46604	0.47578	2.58707										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	21	5542	5952	410			0.44166	0.43383	2.51222										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	22	6012	6121	110			0.45285	0.40104	2.51618										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	12	6171	6201	30							160.15	160.15							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	23	6291	6441	150			0.5793	0.39159	2.53165										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	24	6571	6821	250			0.54654	0.43888	2.57392										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	25	6861	7101	240			0.56672	0.4254	2.62104										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	26	7121	7241	120			0.58095	0.42496	2.64719										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	27	7261	7401	140			0.57013	0.44796	2.65127										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	13	7421	7451	30							297.18	297.18							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	28	7521	7641	120			0.47009	0.48434	2.57082										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	29	7691	8390	700			0.48428	0.4768	2.55997										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	30	8410	9969	1559			0.49777	0.49037	2.56488										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	31	10009	10909	899			0.50645	0.51579	2.59877										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	32	10979	11508	530			0.50644	0.50559	2.60589										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	33	11528	11638	110			0.50132	0.51693	2.58713										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	34	11658	11898	240			0.49451	0.52231	2.55923										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	35	11938	12208	270			0.48769	0.52761	2.55459										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	36	12228	12298	70			0.48956	0.51005	2.55383										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	37	12338	12568	230			0.4918	0.49902	2.5384										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	38	12628	12738	110			0.50668	0.49223	2.54327										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	39	12758	13067	310			0.48656	0.43722	2.59636										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	40	13087	13237	150			0.47984	0.44345	2.58489										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	41	13277	13537	260			0.45509	0.41102	2.50094										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	42	13557	13667	110			0.44876	0.35916	2.48177										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	43	13687	13787	100			0.47147	0.31662	2.5352										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	44	13827	13937	110			0.49277	0.33822	2.52387										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	14	13957	13997	40							281.7	307.1						0.45056	0.578
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	45	13997	14087	90			0.45056	0.578	2.45198										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	46	14107	14337	230			0.46003	0.55647	2.51407										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	15	14337	14357	20							237.46	237.46				0.46003	0.55647		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	47	14377	14487	110			0.50623	0.59615	2.47603										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	48	14527	14966	440			0.47318	0.48892	2.52934										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	49	14986	16016	1029			0.45288	0.38639	2.5215										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	50	16056	16415	360			0.45661	0.40073	2.57257										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	51	16455	16605	150			0.45776	0.41853	2.5866										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	52	16655	16815	160			0.47819	0.47005	2.55903										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	16	16815	16865	50							190.11	224.25				0.47819	0.47005		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	53	17045	17205	160			0.46606	0.31892	2.5661										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	54	17305	19983	2678			0.47058	0.33583	2.54452										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	55	20003	20233	230			0.47888	0.31896	2.66311										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	17	20293	20313	20							114.62	114.62						0.47551	0.47234
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Whole	56	20313	20463	150			0.47551	0.47234	2.6449										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	18	20463	20493	30							191.55	268.26				0.47551	0.47234		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	57	20553	20743	190			0.47521	0.58058	2.61868										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	19	20743	20823	80							295.35	387.74				0.47521	0.58058		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	58	20973	21113	140			0.25888	0.39269	2.61834										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	59	21313	21403	90			0.38692	0.42926	2.47887										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	60	21443	21842	400			0.39903	0.44359	2.51272										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	61	21862	23391	1529			0.39347	0.44809	2.50408										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	62	23411	28528	5117			0.40598	0.42589	2.6208										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	20	28638	28688	50							423.59	743.97							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	21	28788	28808	20							289.84	289.84							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	22	28818	28838	20							222.84	222.84							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	23	28858	28878	20							132.12	132.12						0.60878	0.58434
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	63	28878	28968	90			0.60878	0.58434	2.74645										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	64	28988	29138	150			0.55672	0.54365	2.69399										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	65	29158	29258	100			0.4958	0.46929	2.65016										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	66	29278	29708	430			0.44331	0.4311	2.47669										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	67	29728	30088	360			0.43149	0.41817	2.38542										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	68	30128	31117	989			0.43812	0.39998	2.4871										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	69	31227	32206	979			0.43888	0.40099	2.65037										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	70	32226	32676	450			0.44872	0.39645	2.69893										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	24	32676	32706	30						202.35	196.74	225.19	5.58			0.44872	0.39645	0.38397	0.42307
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Whole	71	32706	32886	180			0.38397	0.42307	2.6466										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	25	32886	32896	10							140.64	140.64				0.38397	0.42307		
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	26	32986	33006	20							133.12	133.12							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	27	33046	33076	30							117.51	117.51							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	28	33096	33156	60							298.17	393.57							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	29	33216	33226	10							117.29	117.29							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	30	33246	33266	20							114.18	114.18							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	72	33306	33416	110			0.3354	0.50391	2.48793										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	73	33456	33556	100			0.37896	0.48816	2.45343										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	74	33725	33805	80			0.42194	0.4331	2.46894										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	75	33845	33955	110			0.43767	0.41805	2.45499										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	76	33975	34125	150			0.45096	0.38629	2.45086										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	77	34245	34355	110			0.47754	0.32363	2.44313										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	78	34375	34485	110			0.47398	0.28698	2.47956										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	79	34505	34875	370			0.47778	0.25448	2.50124										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	80	34955	35225	270			0.4754	0.24134	2.46666										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	81	35245	35375	130			0.47074	0.22116	2.45887										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	82	35394	35934	540			0.47145	0.20075	2.43868										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	83	36094	36174	80			0.46792	0.2382	2.48479										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	84	36194	36264	70			0.46434	0.2639	2.4839										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	85	36324	36434	110			0.45408	0.3051	2.47187										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	86	36454	36574	120			0.45148	0.35165	2.48812										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	87	36594	36684	90			0.44978	0.38462	2.46522										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	88	36724	36954	230			0.44589	0.44683	2.43131										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	89	36994	37253	260			0.45389	0.47635	2.45321										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	90	37273	37883	610			0.46084	0.47272	2.4735										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	31	37883	37913	30							252.97	328.56				0.46084	0.47272		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	91	37953	38123	170			0.4756	0.16968	2.56836										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	92	38143	38523	380			0.48235	0.16117	2.49383										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	93	38543	40362	1819			0.48759	0.15409	2.49871										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	32	40362	40412	50						265.81	221.02	317.08	13.26			0.48759	0.15409	0.468	0.42147
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	94	40412	40542	130			0.468	0.42147	2.5315										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	33	40661	40671	10							105.9	105.9						0.46334	0.47012
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Whole	95	40671	41601	929			0.46334	0.47012	2.47796										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	34	41601	41641	40						29.08	212.98	266.49	9.99			0.46334	0.47012	0.57142	0.41002
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Whole	96	41641	41741	100			0.57142	0.41002	2.56334										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	35	41741	41761	20							148.91	166.73				0.57142	0.41002		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	97	41841	41971	130			0.57357	0.35202	2.59539										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	98	41991	42091	100			0.54023	0.35958	2.57292										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	99	42161	42450	290			0.5015	0.37105	2.54863										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	100	42470	42620	150			0.48301	0.37455	2.5471										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	101	42720	42970	250			0.47161	0.3841	2.54545										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	102	42990	43250	260			0.46516	0.40017	2.53349										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	103	43290	45179	1889			0.44942	0.41295	2.59207										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	104	45259	46408	1149			0.44371	0.41345	2.6013										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	105	46508	48367	1859			0.43988	0.41903	2.57103										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	106	48457	48907	450			0.4409	0.42371	2.59396										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	36	48907	48947	40							224.53	255.2				0.4409	0.42371		
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	37	49007	49037	30							123.78	131.31						0.41382	0.55815
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Whole	107	49037	49176	140			0.41382	0.55815	2.58604										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	38	49176	49236	60						94.77	162.45	272.7	4.61			0.41382	0.55815	0.40813	0.49003
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	108	49236	49516	280			0.40813	0.49003	2.51035										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	109	49556	49646	90			0.42814	0.48105	2.3856										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	110	49686	49936	250			0.44435	0.46985	2.38205										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	111	49956	50226	270			0.45389	0.4482	2.40154										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	112	50376	50656	280			0.46	0.41803	2.42425										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	113	50676	50935	260			0.4608	0.39661	2.41755										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	114	50995	51115	120			0.46271	0.35052	2.40739										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	115	51155	51265	110			0.48982	0.30565	2.42611										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	116	51305	51555	250			0.52678	0.35185	2.38655										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	117	51575	52065	490			0.53126	0.44674	2.39412										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	39	52065	52075	10						236.11	104.72	104.72	5.1			0.53126	0.44674	0.48923	0.50931
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	118	52075	52275	200			0.48923	0.50931	2.40421										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	119	52295	52535	240			0.47314	0.46906	2.46422										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	40	52604	52654	50							377.39	513.29							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	120	52694	52834	140			0.68698	0.46201	2.58166										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	41	52854	52884	30							130.21	130.21							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	121	52954	53064	110			0.61023	0.45671	2.57243										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	122	53104	53274	170			0.58799	0.50632	2.46566										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	123	53294	53374	80			0.59536	0.51028	2.46062										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	42	53414	53474	60							241.04	349.24							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	124	53544	54084	540			0.43676	0.51373	2.44564										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	125	54154	54224	70			0.4627	0.47131	2.45204										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	126	54244	55433	1189			0.47177	0.47032	2.47917										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	127	55473	55903	430			0.47707	0.47914	2.46786										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	128	55923	56142	220			0.46354	0.47337	2.46921										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	129	56162	56552	390			0.46708	0.45308	2.48678										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	130	56572	57382	810			0.47294	0.45703	2.48422										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	131	57442	58591	1149			0.46398	0.4681	2.53114										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	132	58671	59590	919			0.4644	0.47176	2.56017										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	133	59610	60390	780			0.46547	0.47525	2.55012										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	134	60410	60580	170			0.4575	0.49064	2.51713										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	43	60580	60620	40							184.33	267.8				0.4575	0.49064		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	135	60690	60930	240			0.41473	0.56088	2.42436										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	136	60970	61140	170			0.43811	0.51451	2.45635										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	44	61160	61200	40							231.77	340.16							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	45	61259	61279	20							346.25	346.25							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	46	61299	61309	10							103.28	103.28							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	47	61349	61359	10							102.01	102.01						0.3475	0.70854
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	137	61359	61509	150			0.3475	0.70854	2.48868										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	138	61529	61619	90			0.37722	0.68708	2.39572										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	48	61659	61679	20							123.38	123.38						0.35197	0.68185
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Whole	139	61679	61769	90			0.35197	0.68185	2.45732										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	49	61769	61789	20							134.93	134.93				0.35197	0.68185		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	140	61979	62109	130			0.44673	0.48334	2.38405										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	141	62129	62199	70			0.49299	0.44407	2.46896										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	142	62239	62459	220			0.51956	0.4358	2.5027										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	143	62529	62679	150			0.53988	0.42838	2.51512										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Whole	50	62679	62709	30						208.96	227.99	307.65	7.19			0.53988	0.42838	0.46117	0.47193
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	144	62709	63168	460			0.46117	0.47193	2.51548										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	145	63208	63298	90			0.45762	0.49173	2.49444										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	146	63338	63438	100			0.43187	0.52058	2.469										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	147	63478	64088	610			0.44881	0.51033	2.44328										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	148	64178	64338	160			0.45447	0.49635	2.42983										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	51	64338	64368	30							304.64	328.97				0.45447	0.49635		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	149	64458	64618	160			0.33821	0.4935	2.3985										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	52	64747	64777	30							207.52	257.22						0.44313	0.5117
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	150	64777	64987	210			0.44313	0.5117	2.40858										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	151	65007	65137	130			0.45783	0.51256	2.38887										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	53	65217	65227	10							130.47	130.47							
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	152	65287	65437	150			0.422	0.45497	2.46433										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	153	65457	65587	130			0.39811	0.4548	2.50449										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	54	65587	65617	30							246.03	303.24				0.39811	0.4548		
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	154	65707	65947	240			0.48384	0.51096	2.47792										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	155	65987	66087	100			0.47984	0.53456	2.46496										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	156	66177	66287	110			0.48412	0.48504	2.52785										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	157	66386	66466	80			0.47597	0.46641	2.58186										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	158	66486	66706	220			0.45636	0.477	2.55957										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	159	66726	66806	80			0.4454	0.46764	2.60193										
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	55	66806	66826	20							150.31	150.31				0.4454	0.46764		
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	56	67066	67096	30							1173.29	1173.29							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	57	67596	67626	30							757.1	1057.17							
+TK06	Thomas	Entire Recording	1	fullstream	Saccade	Partial	58	68325	68385	60							269.06	350.54						0.81106	0.66689
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	160	68385	68575	190			0.81106	0.66689	2.57428										
+TK06	Thomas	Entire Recording	1	fullstream	Fixation	Partial	161	68595	68835	240			0.79898	0.64048	2.57171										

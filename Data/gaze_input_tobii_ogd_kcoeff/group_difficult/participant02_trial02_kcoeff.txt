@@ -1,0 +1,9 @@
+event_type	start_time	end_time	duration	saccade_amplitude
+Saccade	1644	1664	20	1.97
+Saccade	3613	3623	10	1.69
+Fixation	3623	3753	130	
+Saccade	13967	14017	50	12.83
+Fixation	16795	16915	120	
+Saccade	38623	38673	50	13.74
+Saccade	60600	60640	40	6.38
+Saccade	61140	61160	20	3.72
