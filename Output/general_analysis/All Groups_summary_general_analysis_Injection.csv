@@ -1,0 +1,5 @@
+,Average Fixation Duration [ms],Average Saccade Duration [ms],Number of Fixations,Number of Saccades,Relative Fixation/Saccade Duration [%],Total Duration [ms],Total Fixation Duration [ms],Total Saccade Duration [ms]
+Mean group_difficult,364.0090965069414,31.645833333333332,39.25,25.75,94/6,88601.25,13984.0,835.0
+Mean group_easy,352.86709302325585,41.669550755757655,39.5,33.75,90/10,91494.5,13039.0,1397.5
+Mean All Groups,358.43809476509864,36.65769204454549,39.375,29.75,92/8,90047.875,13511.5,1116.25
+Standard Deviation All Groups,7.878586219318173,7.08783856209398,0.1767766952966369,5.656854249492381,3,2045.8366946679787,668.2159082212875,397.74756441743295

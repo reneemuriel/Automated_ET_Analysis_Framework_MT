@@ -7,6 +7,7 @@ from ntpath import join
 from re import A
 from tkinter.tix import DirSelectBox
 from tokenize import group
+from xmlrpc.client import boolean
 from zlib import DEF_BUF_SIZE
 from matplotlib import test
 import pandas as pd
@@ -38,6 +39,7 @@ import action_separation
 import kcoefficient_analysis
 import visualisations
 import summary_calculations
+import distance_algorithms
 # import make_gaze_OGD
 
 #endregion
@@ -48,7 +50,7 @@ import summary_calculations
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions
+    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, distance_algs, opt_sequence, algrthm
 
     # choose input path (where group folders lie)
     ui_input_path =  'Data/gaze_input_tobii_ogd_kcoeff'
@@ -59,16 +61,20 @@ def get_variables_gui():
     output_path = Path(ui_output_path)
 
     # general analysis
-    general_analysis = False
+    general_analysis = True
 
     # calculate k-coefficient
     kcoeff_analysis = True
 
-    # action-based analysis (needs ooi-based analysis to be ran first, because dirs are created, will be changed!)
-    action_analysis = False
+    # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, will be changed!)
+    action_analysis = True
 
     # ooi-based analysis
-    ooi_analysis = False
+    ooi_analysis = True
+
+    # distance algorithms
+    distance_algs = True
+       
 
     # import ogd file if it already exists
     if ooi_analysis == True:
@@ -79,6 +85,10 @@ def get_variables_gui():
     if action_analysis == True:
         all_actions = ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Injection', 'Remove Tip', 'Cap On']
 
+    # if distance should be calculated between sequences, ask for optimal sequence
+    if distance_algs == True:
+        opt_sequence =  ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Injection', 'Remove Tip', 'Cap On']
+        algrthm = 'levenshtein_distance' 
 
     ## groups
 
@@ -192,22 +202,21 @@ if general_analysis == True:
             participant_list_dfs = []
 
             # iterate through each trial
-            k=0
-            for trial_path in trial_paths[i][j]:
+            for k in range(len(trials[i][j])):
                 
-                tobiipath = trial_path + '_tobii.tsv' 
+                tobiipath = trial_paths[i][j][k] + '_tobii.tsv' 
 
                 # transform tobii into (not)cgom file 
-                tobii_to_fixations.reformat(tobiipath, trial_path)
+                tobii_to_fixations.reformat(tobiipath, trial_paths[i][j][k])
                 
                 # read newly created fixation file 
-                fixationdata = pd.read_csv(trial_path + '_fixations.txt', sep='\t')
+                fixationdata = pd.read_csv(trial_paths[i][j][k] + '_fixations.txt', sep='\t')
 
                 # transform tobii into saccade file
-                tobii_to_saccades.reformat(tobiipath, trial_path)
+                tobii_to_saccades.reformat(tobiipath, trial_paths[i][j][k])
                 
                 # read saccade data
-                saccadedata = pd.read_csv(trial_path + '_saccades.txt', sep='\t')
+                saccadedata = pd.read_csv(trial_paths[i][j][k] + '_saccades.txt', sep='\t')
 
                 # calculations of general metrics with fixationdata & saccadedata
                 df_general_metrics = general_metrics.calculate_general_metrics(fixationdata, saccadedata,trials[i][j][k])
@@ -232,8 +241,7 @@ if general_analysis == True:
                 pp_sac_dur_list.append(saccadedata['Event Duration [ms]'].to_list())
                 # append fixation duration to list
                 pp_fix_dur_list.append(fixationdata['Event Duration [ms]'].to_list())
-           
-                k=k+1
+
 
         
             ### summary of general analysis per participant
@@ -363,9 +371,6 @@ if general_analysis == True:
     visualisations.vis_gen_metrics_piechart(allgroups_df_summary, vis_path, 'All Groups', 'Whole Trial')
 
 
-
-    #visualisations.vis_gen_metrics(allgroups_df_summary, allgroups_sac_dur_list, allgroups_fix_dur_list, vis_path , 'All Groups', 'Whole Trial', x_labels)
-
 e=3
 #endregion
 
@@ -385,16 +390,15 @@ if kcoeff_analysis == True:
         for j in range(len(participants[i])):
 
             # iterate through each trial
-            k=0
-            for trial_path in trial_paths[i][j]:
+            for k in range(len(trials[i][j])):
                 
-                kcoeff_path = trial_path + '_tobii_kcoeff.tsv'
+                kcoeff_path = trial_paths[i][j][k] + '_tobii_kcoeff.tsv'
 
                 # filter for whole fixations and saccades 
-                kcoefficient_analysis.reformat(kcoeff_path, trial_path)
+                kcoefficient_analysis.reformat(kcoeff_path, trial_paths[i][j][k])
                 
                 # read newly created kcoeff file 
-                kcoeff_data = pd.read_csv(trial_path + '_kcoeff.txt', sep='\t')
+                kcoeff_data = pd.read_csv(trial_paths[i][j][k] + '_kcoeff.txt', sep='\t')
 
                 # add all fixation durations to list (over all trials of all participants of all groups)
                 fixation_durations = fixation_durations + kcoeff_data[kcoeff_data['event_type']=='Fixation']['duration'].to_list()
@@ -415,22 +419,26 @@ if kcoeff_analysis == True:
    
     summary_df_kcoeff = pd.DataFrame(index = trials[i])
     df_kcoeff_participant_list = []
-    df_kcoeff_group_list = []
+    all_kcoeffs_list = []
+    df_allgroups_kcoeff = pd.DataFrame(index=['All Groups'], columns = groups + ['Mean All Groups']) 
 
     # iterate through groups
     for i in range(len(groups)):
-        
-        mean_kcoeff_groups = []
 
-        df_kcoeff_group = pd.DataFrame() 
+        df_group_kcoeff = pd.DataFrame(index=[groups[i]], columns = participants[i] + ['Mean {}'.format(groups[i])]) 
+
         # iterate through participants
         for j in range(len(participants[i])):
 
-            participant_list = []
+            
+            df_pp_kcoeff = pd.DataFrame(columns = trials[i][j] + ['Mean {}'.format(participants[i][j])])
+            df_list_kcoeff_lineplot = []
+            pp_kcoeff_list = [] 
+
             # iterate through each trial
-            k=0
-            for trial_path in trial_paths[i][j]:
-                kcoeff_data = pd.read_csv(trial_path + '_kcoeff.txt', sep='\t')
+            for k in range(len(trials[i][j])):
+
+                kcoeff_data = pd.read_csv(trial_paths[i][j][k] + '_kcoeff.txt', sep='\t')
 
                 # fill list in length of df with K-coefficient at every fixation                
                 kcoeff_column = []
@@ -458,8 +466,9 @@ if kcoeff_analysis == True:
                 # take two columns to create new dataframe
                 df_kcoeff = kcoeff_data[['K-coefficient', 'start_time']]
                 
-                # remove rows where K-coefficient is np.nan
+                # remove rows where K-coefficient is np.nan and re-index
                 df_kcoeff.dropna(inplace=True)
+                df_kcoeff.reset_index(drop=True, inplace=True)
 
                 # define trial output path
                 trial_output_path = output_path / Path(groups[i]) / Path(participants[i][j] / Path(trials[i][j][k]))
@@ -468,71 +477,164 @@ if kcoeff_analysis == True:
                 os.makedirs(trial_output_path / Path('k-coefficient_analysis'), exist_ok = True)
                 analysispath = trial_output_path / Path('k-coefficient_analysis')
                 df_kcoeff.to_csv(analysispath / '{}_k-coefficient_analysis.csv'.format(trials[i][j][k]))
-                
-                # calculate average k-coefficient of entire trial and append to list per participant
-                participant_list.append(statistics.mean(df_kcoeff['K-coefficient']))
+
+                # append df to list of dfs of participant to get lineplots
+                df_list_kcoeff_lineplot.append(df_kcoeff)
          
                 # visualise k-coefficient 
-                os.makedirs(analysispath / Path('visualisations'), exist_ok=True)
-                vis_path = analysispath / 'visualisations'
+                vis_path = output_path / Path(groups[i]) / Path(participants[i][j]) / Path('k-coefficient_analysis') / Path('visualisations')
+                os.makedirs(vis_path, exist_ok=True)
                 spec = 'Whole Trial'
-                visualisations.vis_kcoeff(df_kcoeff, vis_path, trials[i][j][k], spec)
-                
-                k=k+1
-
-            # for each participant, add one column with avg Kcoeff per trial as rows
-            col_header = participants[i][j]
-            df_kcoeff_group[col_header] = participant_list
-            e=2
+                visualisations.vis_kcoeff_lineplot_trial(df_kcoeff, vis_path, trials[i][j][k], spec)
+                                
+                # calculate average k-coefficient of entire trial and append to list per participant
+                pp_kcoeff_list.append(statistics.mean(df_kcoeff['K-coefficient']))
+                # also add to list that saves all k-coefficents in one list to calculate mean and stdev over all trials
+                all_kcoeffs_list.append(statistics.mean(df_kcoeff['K-coefficient']))
 
 
-        indeces_group_kcoeff = ['trial0{}'.format(number+1) for number in range(len(df_kcoeff_group))]
-        df_kcoeff_group.index = indeces_group_kcoeff
-        # add group df (without mean) to list 
-        df_kcoeff_group_list.append(df_kcoeff_group.copy())
-        # add column with mean per participant and save to csv
-        df_kcoeff_group_withmean = df_kcoeff_group.copy()
-        df_kcoeff_group_withmean.loc['mean'] = df_kcoeff_group_withmean.mean()
-        os.makedirs(output_path_groups[i] / Path('k-coefficient_analysis'))
-        df_kcoeff_group_withmean.to_csv(output_path_groups[i] / Path('k-coefficient_analysis') /'K-Coefficient Group Summary.csv' )
+
+            ## pp summary 
+
+            pp_kcoeff_mean = statistics.mean(pp_kcoeff_list)
+            df_pp_kcoeff.loc[participants[i][j]] = pp_kcoeff_list + [pp_kcoeff_mean]
+            # save and add focal/ambient and 2*stdev/not later after mean kcoeff is calculated
+            analysispath =  output_path / Path(groups[i]) / Path(participants[i][j]) / Path('k-coefficient_analysis') 
+            os.makedirs(analysispath, exist_ok = True)
+            df_pp_kcoeff.to_csv(analysispath / '{} K-Coefficient Summary.csv'.format(participants[i][j]))
 
 
-     
+            # append mean to group summary
+            df_group_kcoeff[participants[i][j]] = [df_pp_kcoeff.iloc[0,-1]]
 
-    # calculate overall mean kcoefficient and its std dev: join dfs and calculate over resulting df
-    #mean_kcoefficient = statistics.mean(mean_kcoeff_groups)
-    all_kcoeffs = pd.concat(df_kcoeff_group_list)
-    mean_kcoeff_all = all_kcoeffs.stack().mean()
-    stdev_kcoeff_all = all_kcoeffs.stack().std()
+            # visualisation 
+            vis_path = analysispath / Path('visualisations')
+            os.makedirs(vis_path, exist_ok = True)
+            # lineplot per participant
+            legends_lineplot = trials[i][j]
+            spec = 'Whole Trial'
+            visualisations.vis_kcoeff_lineplot_pp(df_list_kcoeff_lineplot, vis_path, participants[i][j], legends_lineplot, spec)
+
+
+
+        ## group summary
+
+        # calculate mean (yep, this complicated somehow)
+        group_kcoeff_mean = df_group_kcoeff.astype(float).stack().dropna().mean()
+        # add mean to last columns of the df
+        df_group_kcoeff.iloc[0,-1] = group_kcoeff_mean
+        # save and add focal/ambient and 2*stdev/not later after mean kcoeff is calculated
+        analysispath =  output_path / Path(groups[i]) / Path('k-coefficient_analysis') 
+        os.makedirs(analysispath, exist_ok = True)
+        df_group_kcoeff.to_csv(analysispath / '{} K-Coefficient Summary.csv'.format(groups[i]))
+
+        # append mean to all groups summary
+        df_allgroups_kcoeff[groups[i]] = [df_group_kcoeff.iloc[0,-1]]
+    
+    ## all groups summary
+    
+    # calculate mean
+    allgroups_kcoeff_mean = df_allgroups_kcoeff.astype(float).stack().dropna().mean()
+    # add mean to last columns of the df
+    df_allgroups_kcoeff.iloc[0,-1] = allgroups_kcoeff_mean
+    # save and add focal/ambient and 2*stdev/not later after mean kcoeff is calculated
+    analysispath =  output_path / Path('k-coefficient_analysis') 
+    os.makedirs(analysispath, exist_ok = True)
+    df_allgroups_kcoeff.to_csv(analysispath / 'All Groups K-Coefficient Summary.csv')
+
+
+
+    # calculate overall mean kcoefficient and its std dev from list that collected all k-coefficients of each trial
+    mean_kcoeff_all = statistics.mean(all_kcoeffs_list)
+    stdev_kcoeff_all = statistics.stdev(all_kcoeffs_list)
+
+
+    # append focal/ambient and outlier/not to dfs per allgroups, groups, participants
+    
+    # iterate through groups
+    for i in range(len(groups)):
+        # iterate through participants
+        for j in range(len(participants[i])):
+
+            # import pp summary 
+            analysispath = output_path / Path(groups[i]) / Path(participants[i][j]) / Path('k-coefficient_analysis')
+            df_pp_kcoeff_2 = pd.read_csv(analysispath / '{} K-Coefficient Summary.csv'.format(participants[i][j]), index_col=[0])
+
+            # append rows 
+            df_pp_kcoeff_2.loc['Outside 2x Stdev'] = 'No'
+            df_pp_kcoeff_2.loc['Focal/Ambient'] =  'Ambient' 
+
+            # iterate through each trial mean
+            x=0
+            for kcoeff in df_pp_kcoeff_2.iloc[0]:
+                # check if any of the means are outside 2x standard deviation of overall mean and change to yes if the case
+                if kcoeff > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff < mean_kcoeff_all - 2*stdev_kcoeff_all:
+                    df_pp_kcoeff_2.loc['Outside 2x Stdev'][x] = 'Yes'
+                # change if mean is focal
+                if kcoeff > 0:
+                    df_pp_kcoeff_2.loc['Focal/Ambient'][x] = 'Focal'
+                x=x+1
+            # save again (and overwrite old file)
+            df_pp_kcoeff_2.to_csv(analysispath / '{} K-Coefficient Summary.csv'.format(participants[i][j]))
+
+            # visualisation
+            vis_path = analysispath / Path('visualisations')
+            visualisations.vis_kcoeff_barplot(df_pp_kcoeff_2,vis_path, participants[i][j], 'Whole Trial' )
+
+        
+
+        # import group summary 
+        analysispath = output_path / Path(groups[i]) / Path('k-coefficient_analysis')
+        df_group_kcoeff_2 = pd.read_csv(analysispath / '{} K-Coefficient Summary.csv'.format(groups[i]), index_col=[0])
+
+        # append rows
+        df_group_kcoeff_2.loc['Outside 2x Stdev'] = 'No'
+        df_group_kcoeff_2.loc['Focal/Ambient'] = 'Ambient'
+
+        # iterate through each participant mean
+        x=0
+        for kcoeff in df_group_kcoeff_2.iloc[0]:
+            # check if any of the means are outside 2x standard deviation of overall mean and change to yes if the case
+            if kcoeff > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff < mean_kcoeff_all - 2*stdev_kcoeff_all:
+                df_group_kcoeff_2.loc['Outside 2x Stdev'][x] = 'Yes'
+            # change if mean is focal
+            if kcoeff > 0:
+                df_group_kcoeff_2.loc['Focal/Ambient'][x] = 'Focal'
+            x=x+1
+        # save again (and overwrite old file)
+        df_group_kcoeff_2.to_csv(analysispath / '{} K-Coefficient Summary.csv'.format(groups[i]))
+
+        # visualisation
+        vis_path = analysispath / Path('visualisations')
+        os.makedirs(vis_path, exist_ok=True)
+        visualisations.vis_kcoeff_barplot(df_group_kcoeff_2,vis_path, groups[i], 'Whole Trial' )
     
 
-    # go through each value and check if it is > 2 std dev away from mean
-    trials_outside_stdev = pd.DataFrame(columns=['Trial', 'K-Coefficient', 'Focal/Ambient' ])
-    count=0
-    for i in range(len(groups)):
-        for row in range(len(df_kcoeff_group_list[i])):
-            for col in range(len(df_kcoeff_group_list[i].columns)):
-                # if k-coefficient is outside 2x stdev, name of trial to list
-                kcoeff = df_kcoeff_group_list[i].iloc[row][col] 
-                if kcoeff > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff < mean_kcoeff_all - 2*stdev_kcoeff_all:
-                    # add empty row
-                    trials_outside_stdev.loc[0] = pd.Series([])
-                    # extract trial number and participant 
-                    trial_name= df_kcoeff_group_list[i].columns[col] + df_kcoeff_group_list[i].index[row]
-                    # add to df
-                    trials_outside_stdev['Trial'][count] = trial_name
-                    trials_outside_stdev['K-Coefficient'][count] = kcoeff
-                    if kcoeff >=0:
-                        trials_outside_stdev['Focal/Ambient'][count] = 'Focal'
-                    else:
-                        trials_outside_stdev['Focal/Ambient'][count] = 'Ambient'
-                    count=count+1
+    # import all groups summary
+    analysispath = output_path / Path('k-coefficient_analysis')
+    df_allgroups_kcoeff_2 = pd.read_csv(analysispath / 'All Groups K-Coefficient Summary.csv', index_col=[0])
 
-    # create directory for overall k-coefficient analysis 
-    os.makedirs(output_path / Path('k-coefficient_analysis'))
-    trials_outside_stdev.to_csv(output_path / Path('k-coefficient_analysis') / 'Summary_Outliers_Kcoefficient')
+    # append rows
+    df_allgroups_kcoeff_2.loc['Outside 2x Stdev'] = 'No'
+    df_allgroups_kcoeff_2.loc['Focal/Ambient'] = 'Ambient'
 
-e=3
+    # iterate through each participant mean
+    x=0
+    for kcoeff in df_allgroups_kcoeff_2.iloc[0]:
+        # check if any of the means are outside 2x standard deviation of overall mean and change to yes if the case
+        if kcoeff > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff < mean_kcoeff_all - 2*stdev_kcoeff_all:
+            df_allgroups_kcoeff_2.loc['Outside 2x Stdev'][x] = 'Yes'
+        # change if mean is focal
+        if kcoeff > 0:
+            df_allgroups_kcoeff_2.loc['Focal/Ambient'][x] = 'Focal'
+        x=x+1
+    # save again (and overwrite old file)
+    df_allgroups_kcoeff_2.to_csv(analysispath / 'All Groups K-Coefficient Summary.csv')
+
+    # visualisation
+    vis_path = analysispath / Path('visualisations')
+    os.makedirs(vis_path, exist_ok=True)
+    visualisations.vis_kcoeff_barplot(df_allgroups_kcoeff_2,vis_path, 'All Groups', 'Whole Trial' )
 
 
 #endregion
@@ -574,10 +676,9 @@ if ooi_analysis == True:
             participant_list_dfs_ooigen = []
 
             # iterate through each trial
-            k=0
-            for trial_path in trial_paths[i][j]:
+            for k in range(len(trials[i][j])):
 
-                ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
+                ogd_data = pd.read_csv(trial_paths[i][j][k] + '_ogd.txt', sep='\t')
 
                 # extract all OOIs
                 all_ooi = ooi_metrics.extract_oois(ogd_data)
@@ -632,7 +733,6 @@ if ooi_analysis == True:
                 # visualisation of ooi-based general metrics
                 # boxplots of avg fixation duration and avg dwelltime (not priority)
 
-                k=k+1
 
 
             ### summary of ooi analysis per participant
@@ -867,6 +967,8 @@ if action_analysis == True:
     df_allgroups_ooi_action_dfs = pd.DataFrame(columns=all_actions)
     df_allgroups_ooigen_action_dfs = pd.DataFrame(columns=all_actions)
 
+    df_allgroups_kcoeff_per_action = pd.DataFrame(columns = all_actions)
+
     # iterate though groups
     for i in range(len(groups)):
 
@@ -877,11 +979,13 @@ if action_analysis == True:
         df_group_ooigen_action_dfs = pd.DataFrame(columns=all_actions)
 
         # add row of empty lists for participant to group summary dfs (why list: dfs can only be stored in other dfs in a list)
-        df_allgroups_gen_action_dfs.loc['{}'.format(groups[i])] =  np.empty((len(all_actions), 0)).tolist()           
-        df_allgroups_ooi_action_dfs.loc['{}'.format(groups[i])] =  np.empty((len(all_actions), 0)).tolist()
-        df_allgroups_ooigen_action_dfs.loc['{}'.format(groups[i])] =  np.empty((len(all_actions), 0)).tolist()
+        df_allgroups_gen_action_dfs.loc[groups[i]] =  np.empty((len(all_actions), 0)).tolist()           
+        df_allgroups_ooi_action_dfs.loc[groups[i]] =  np.empty((len(all_actions), 0)).tolist()
+        df_allgroups_ooigen_action_dfs.loc[groups[i]] =  np.empty((len(all_actions), 0)).tolist()
 
-        
+        df_group_kcoeff_per_action = pd.DataFrame(columns = all_actions)
+
+
         # iterate through participants
         for j in range(len(participants[i])):
 
@@ -889,20 +993,22 @@ if action_analysis == True:
             df_pp_gen_action_dfs = pd.DataFrame(columns=all_actions)
             df_pp_ooi_action_dfs = pd.DataFrame(columns=all_actions)
             df_pp_ooigen_action_dfs = pd.DataFrame(columns=all_actions)
-
         
             # add row of empty lists for participant to group summary df (why list: dfs can only be stored in other dfs in a list)
-            df_group_gen_action_dfs.loc['{}'.format(participants[i][j])] =  np.empty((len(all_actions), 0)).tolist()
-            df_group_ooi_action_dfs.loc['{}'.format(participants[i][j])] =  np.empty((len(all_actions), 0)).tolist()
-            df_group_ooigen_action_dfs.loc['{}'.format(participants[i][j])] =  np.empty((len(all_actions), 0)).tolist()
+            df_group_gen_action_dfs.loc[participants[i][j]] =  np.empty((len(all_actions), 0)).tolist()
+            df_group_ooi_action_dfs.loc[participants[i][j]] =  np.empty((len(all_actions), 0)).tolist()
+            df_group_ooigen_action_dfs.loc[participants[i][j]] =  np.empty((len(all_actions), 0)).tolist()
 
-        
+            df_pp_kcoeff_per_action = pd.DataFrame(columns = all_actions)
+
             # iterate through each trial
-            k=0
-            for trial_path in trial_paths[i][j]:
+            for k in range(len(trial_paths[i][j])):
+
+                # define trial output path
+                trial_output_path = output_path / Path(groups[i]) / Path(participants[i][j] / Path(trials[i][j][k]))
 
                 # import ogd data
-                ogd_data = pd.read_csv(trial_path + '_ogd.txt', sep='\t')
+                ogd_data = pd.read_csv(trial_paths[i][j][k] + '_ogd.txt', sep='\t')
 
                 # extract all OOIs
                 all_ooi = ooi_metrics.extract_oois(ogd_data)
@@ -911,10 +1017,10 @@ if action_analysis == True:
                 ogd_final = ooi_metrics.prepare_ogd_file(ogd_data, pixel_distance)
 
                 # import fixationdata 
-                fixationdata = pd.read_csv(trial_path + '_fixations.txt', sep='\t')
+                fixationdata = pd.read_csv(trial_paths[i][j][k] + '_fixations.txt', sep='\t')
 
                 # import saccadedata
-                saccadedata = pd.read_csv(trial_path + '_saccades.txt', sep='\t')
+                saccadedata = pd.read_csv(trial_paths[i][j][k] + '_saccades.txt', sep='\t')
 
                 # extract actions -> new: defined in the beginning, since not all actions may occur in all trials
                 #all_actions = ogd_final['action'].unique().tolist()
@@ -922,11 +1028,97 @@ if action_analysis == True:
                 # get dataframe with actions + time from ogd dataframe
                 df_actions = action_separation.action_times(ogd_final, fixationdata, all_actions)
 
-                # save a list with the subsequent actions
+                # save a list with the actions
                 action_sequence = df_actions['action'].tolist()
 
+
+                ## distance algorithm
+                if distance_algs == True:
+                    distance_algorithms.calculate_difference(opt_sequence, action_sequence, algrthm)
+
+
+
+                ## k-coefficient
+                if kcoeff_analysis == True:
+                    
+                    ### (maybe put in separate function)
+      
+                    # import df_kcoeff of trial
+                    analysispath = trial_output_path / Path('k-coefficient_analysis')
+                    df_kcoeff_action = pd.read_csv(analysispath / '{}_k-coefficient_analysis.csv'.format(trials[i][j][k]), index_col=[0])
+                    # add a column with action
+                    df_kcoeff_action['Action'] = [0 for x in range(len(df_kcoeff_action))]
+                    df_kcoeff_action['Outside 2x Stdev'] = [0 for x in range(len(df_kcoeff_action))]
+                    df_kcoeff_action['Focal/Ambient'] = [0 for x in range(len(df_kcoeff_action))]
+
+                    # add empty row to kcoeff per action df
+                    df_trial_kcoeff_per_action = pd.DataFrame(columns=all_actions)
+                    df_trial_kcoeff_per_action.loc['K-Coefficient per action'] =  np.empty((len(all_actions), 0)).tolist()
+
+
+                    row_kcoeff=0
+                    action_list_focal = []
+                    action_list_ambient = []
+                    for kcoeff in df_kcoeff_action['K-coefficient']:
+                        time = df_kcoeff_action['start_time'][row_kcoeff]
+                        for row_action in range(len(df_actions)):
+                            if time > df_actions['start_time_action'][row_action] and time < df_actions['end_time_action'][row_action]:
+                                df_kcoeff_action['Action'][row_kcoeff] = df_actions['action'][row_action]
+                                # add if kcoeff is focal or ambient
+                                if kcoeff > 0:
+                                    df_kcoeff_action['Focal/Ambient'][row_kcoeff] = 'Focal'
+                                else:
+                                    df_kcoeff_action['Focal/Ambient'][row_kcoeff] = 'Ambient'
+                                # add if kcoeff is outside 2x standard deviation
+                                if kcoeff > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff < mean_kcoeff_all - 2*stdev_kcoeff_all:
+                                    df_kcoeff_action['Outside 2x Stdev'][row_kcoeff] = True
+                                else:
+                                    df_kcoeff_action['Outside 2x Stdev'][row_kcoeff] = False
+                                # also add to df_trial_kcoeff_per_action
+                                df_trial_kcoeff_per_action[df_actions['action'][row_action]]['K-Coefficient per action'].append(kcoeff)
+
+                                                    
+                        row_kcoeff = row_kcoeff + 1     
+
+                    df_kcoeff_action.to_csv(analysispath / '{}_k-coefficient_analysis_with_actions.csv'.format(trials[i][j][k]))
+
+                    # add rows with calculated average k-coeff per action per trial, if outside stdev or not and if focal or ambient
+                    # add empty rows first
+                    df_trial_kcoeff_per_action.loc['Mean {}'.format(trials[i][j][k])] = pd.Series([])
+                    df_trial_kcoeff_per_action.loc['Outside 2x Stdev'] = 'No' 
+                    df_trial_kcoeff_per_action.loc['Focal/Ambient'] =  'Ambient' 
+                    # iterate through each acction
+                    for x in range(len(df_trial_kcoeff_per_action.columns)):
+                        kcoeff_list = df_trial_kcoeff_per_action.loc['K-Coefficient per action'][x] 
+                        # if no kcoeffs for this action, assign np.nan
+                        if kcoeff_list == []:
+                            df_trial_kcoeff_per_action.loc['Mean {}'.format(trials[i][j][k])][x] =  np.nan 
+                            df_trial_kcoeff_per_action.loc['Outside 2x Stdev'][x] =  np.nan 
+                        # otherwise calculate mean
+                        else:
+                            kcoeff_mean = statistics.mean(df_trial_kcoeff_per_action.loc['K-Coefficient per action'][x])
+                            df_trial_kcoeff_per_action.loc['Mean {}'.format(trials[i][j][k])][x] = kcoeff_mean
+                            # check if any of the means are outside 2x standard deviation of overall mean and change to yes if the case
+                            if kcoeff_mean > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff_mean < mean_kcoeff_all - 2*stdev_kcoeff_all:
+                                df_trial_kcoeff_per_action.loc['Outside 2x Stdev'][x] = 'Yes'
+                            # change if mean is focal
+                            if kcoeff_mean > 0:
+                                df_trial_kcoeff_per_action.loc['Focal/Ambient'][x] = 'Focal'
+
+                    # save trial df to csv
+                    df_trial_kcoeff_per_action.to_csv(analysispath / Path('{} K-Coefficient per Action.csv'.format(trials[i][j][k])))
+
+                    # visualisation of df
+                    vis_path = analysispath / Path('visualisations')
+                    os.makedirs(vis_path, exist_ok=True)
+                    visualisations.vis_kcoeff_barplot_action(df_trial_kcoeff_per_action,vis_path, trials[i][j][k], 'Whole Trial' )
                 
-                # general metrics
+                    # add new column to pp df with trial mean
+                    df_pp_kcoeff_per_action.loc['Mean {}'.format(trials[i][j][k])] = df_trial_kcoeff_per_action.iloc[1]
+                           
+
+                
+                ## general metrics
                 # add change idx of fixationdata df to df_action
                 df_actions = action_separation.fix_sac_data_per_action(df_actions, fixationdata, 'fixations')
                 # add change idx of saccadedata df to df_action
@@ -936,24 +1128,24 @@ if action_analysis == True:
                 general_metrics_action_df_list = action_separation.get_general_metrics_per_action_df_list(df_actions, fixationdata, saccadedata, trials[i][j][k])
                 
 
-                # calculate ooi-based metrics
+                ## ooi-based metrics
                 ooi_metrics_action_df_list, gen_ooi_metrics_action_df_list = action_separation.get_all_ooi_metrics_per_action_df_list(df_actions, ogd_final, all_ooi, trials[i][j][k])
 
 
                 # add row of empty lists for trial to participant summary df 
-                df_pp_gen_action_dfs.loc['{}'.format(trials[i][j][k])] =  np.empty((len(all_actions), 0)).tolist()
-                df_pp_ooi_action_dfs.loc['{}'.format(trials[i][j][k])] =  np.empty((len(all_actions), 0)).tolist()
-                df_pp_ooigen_action_dfs.loc['{}'.format(trials[i][j][k])] =  np.empty((len(all_actions), 0)).tolist()
+                df_pp_gen_action_dfs.loc[trials[i][j][k]] =  np.empty((len(all_actions), 0)).tolist()
+                df_pp_ooi_action_dfs.loc[trials[i][j][k]] =  np.empty((len(all_actions), 0)).tolist()
+                df_pp_ooigen_action_dfs.loc[trials[i][j][k]] =  np.empty((len(all_actions), 0)).tolist()
 
 
-                # combine all dfs to one summary df per action
+                ## combine all dfs to one summary df per action
                 for action in all_actions:
 
                     # extract indeces of the current action in the action_sequence (from df_actions)
                     idx_action_dfs = [ind for ind, ele in enumerate(action_sequence) if ele == action]
 
                     # output path to save dfs
-                    trial_output_path = output_path / Path(groups[i]) / Path(participants[i][j]) / Path(trials[i][j][k])
+                    #trial_output_path = output_path / Path(groups[i]) / Path(participants[i][j]) / Path(trials[i][j][k])
 
                     
                     ### summary of general metrics
@@ -1007,8 +1199,7 @@ if action_analysis == True:
                     # for each step!
 
 
-                print(i,j,k)            
-                k=k+1
+                print(i,j,k)           
             
 
 
@@ -1061,7 +1252,36 @@ if action_analysis == True:
                 pp_df_average = df_summary_pp_action.iloc[[-2]]
                 df_group_ooigen_action_dfs[action][j].append(pp_df_average)
         
-                            
+
+            ## k-coefficient
+            save_path = output_path / Path(groups[i]) / Path(participants[i][j]) / Path('k-coefficient_analysis')
+            os.makedirs(save_path, exist_ok = True)
+            # add row to participant df with mean 
+            df_pp_kcoeff_per_action.loc['Mean {}'.format(participants[i][j])] = df_pp_kcoeff_per_action.mean()
+            # add rows for std dev and focal/ambient
+            df_pp_kcoeff_per_action.loc['Outside 2x Stdev'] = ['No']*len(df_pp_kcoeff_per_action.columns)
+            df_pp_kcoeff_per_action.loc['Focal/Ambient'] = ['ambient']*len(df_pp_kcoeff_per_action.columns)
+
+            # go through each action
+            for x in range(len(df_pp_kcoeff_per_action.columns)):
+                kcoeff_mean = df_pp_kcoeff_per_action.loc['Mean {}'.format(participants[i][j])][x]
+                # check if mean is outside 2x standard deviation of overall mean and change to True if the case
+                if kcoeff_mean > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff_mean < mean_kcoeff_all - 2*stdev_kcoeff_all:
+                    df_pp_kcoeff_per_action.loc['Outside 2x Stdev'][x] = 'Yes'
+                # change to focal if > 0
+                else:
+                    df_pp_kcoeff_per_action.loc['Focal/Ambient'][x] = 'Ambient'
+
+            # save pp df to csv
+            df_pp_kcoeff_per_action.to_csv(save_path / Path('{} K-Coefficient per Action.csv'.format(participants[i][j])))
+
+            # visualisation of df
+            vis_path = save_path / Path('visualisations')
+            os.makedirs(vis_path, exist_ok=True)
+            visualisations.vis_kcoeff_barplot_action(df_pp_kcoeff_per_action,vis_path, participants[i][j], 'Whole Trial' )
+           
+            # take df_pp_action_kcoeff to group level -> visualisations        
+            df_group_kcoeff_per_action.loc['Mean {}'.format(participants[i][j])] = df_pp_kcoeff_per_action.loc['Mean {}'.format(participants[i][j])]                     
 
 
 
@@ -1114,6 +1334,38 @@ if action_analysis == True:
             group_df_average = df_summary_group_action.iloc[[-2]]
             df_allgroups_ooigen_action_dfs[action][i].append(group_df_average)
 
+        
+        ## k-coefficient
+        save_path = output_path / Path(groups[i]) / Path('k-coefficient_analysis')
+        os.makedirs(save_path, exist_ok = True)
+        # add row to participant df with mean 
+        df_group_kcoeff_per_action.loc['Mean {}'.format(groups[i])] = df_group_kcoeff_per_action.mean()
+        # add empty rows 
+        df_group_kcoeff_per_action.loc['Outside 2x Stdev'] = ['No']*len(df_group_kcoeff_per_action.columns)
+        df_group_kcoeff_per_action.loc['Focal/Ambient'] = ['ambient']*len(df_group_kcoeff_per_action.columns)
+
+        # go through each action
+        for x in range(len(df_group_kcoeff_per_action.columns)):
+            kcoeff_mean = df_group_kcoeff_per_action.loc['Mean {}'.format(groups[i])][x]
+            # check if mean is outside 2x standard deviation of overall mean and change to True if the case
+            if kcoeff_mean > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff_mean < mean_kcoeff_all - 2*stdev_kcoeff_all:
+                df_group_kcoeff_per_action.loc['Outside 2x Stdev'][x] = 'Yes'
+            # change to focal if > 0
+            if kcoeff_mean > 0:
+                df_group_kcoeff_per_action.loc['Focal/Ambient'][x] = 'Focal'
+
+        # save pp df to csv
+        df_group_kcoeff_per_action.to_csv(save_path / Path('{} K-Coefficient per Action.csv'.format(groups[i])))
+
+        # visualisation of df
+        vis_path = save_path / Path('visualisations')
+        os.makedirs(vis_path, exist_ok=True)
+        visualisations.vis_kcoeff_barplot_action(df_group_kcoeff_per_action,vis_path, groups[i], 'Whole Trial' )
+
+        # take df_pp_action_kcoeff to group level -> visualisations        
+        df_allgroups_kcoeff_per_action.loc['Mean {}'.format(groups[i])] = df_group_kcoeff_per_action.loc['Mean {}'.format(groups[i])]                
+
+
     
     ### summary of all groups
 
@@ -1152,6 +1404,36 @@ if action_analysis == True:
         df_allgroups_action_list = [df_allgroups_ooigen_action_dfs[action][x][0] for x in range(len(df_allgroups_ooigen_action_dfs))]
         df_summary_allgroups_action = summary_calculations.summary_ooigen_analysis(df_allgroups_action_list,'All Groups', save_path, action)
 
+
+
+    ## k-coefficient
+    save_path = output_path / Path('k-coefficient_analysis')
+    os.makedirs(save_path, exist_ok = True)
+    # add row to participant df with mean 
+    df_allgroups_kcoeff_per_action.loc['Mean All Groups'] = df_allgroups_kcoeff_per_action.mean()
+    # add empty rows 
+    df_allgroups_kcoeff_per_action.loc['Outside 2x Stdev'] = ['No']*len(df_allgroups_kcoeff_per_action.columns)
+    df_allgroups_kcoeff_per_action.loc['Focal/Ambient'] = ['ambient']*len(df_allgroups_kcoeff_per_action.columns)
+
+    # go through each action
+    for x in range(len(df_allgroups_kcoeff_per_action.columns)):
+        kcoeff_mean = df_allgroups_kcoeff_per_action.loc['Mean All Groups'][x]
+        # check if mean is outside 2x standard deviation of overall mean and change to True if the case
+        if kcoeff_mean > (mean_kcoeff_all + 2*stdev_kcoeff_all) or kcoeff_mean < mean_kcoeff_all - 2*stdev_kcoeff_all:
+            df_allgroups_kcoeff_per_action.loc['Outside 2x Stdev'][x] = 'Yes'
+        # change to focal if > 0
+        if kcoeff_mean > 0:
+            df_allgroups_kcoeff_per_action.loc['Focal/Ambient'][x] = 'Focal'
+
+    # save pp df to csv
+    df_allgroups_kcoeff_per_action.to_csv(save_path / Path('All Groups K-Coefficient per Action.csv'))
+
+
+    # visualisation of df
+    vis_path = save_path / Path('visualisations')
+    os.makedirs(vis_path, exist_ok=True)
+    visualisations.vis_kcoeff_barplot_action(df_allgroups_kcoeff_per_action,vis_path, groups[i], 'Whole Trial' )
+
 e=3
 
 
@@ -1162,9 +1444,6 @@ e=3
     
 
 #endregion
-
-
-
 
 
 

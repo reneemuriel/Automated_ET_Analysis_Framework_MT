@@ -5,6 +5,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import re
+import numpy as np
+
 
 ### GENERAL METRICS
 
@@ -262,8 +264,8 @@ def vis_ooigen_barplots(df, outputpath, filename, specification):
 ### K-COEFFICIENT
 #region
 
-# visualisation of k-coefficient
-def vis_kcoeff(df, outputpath, trialname, specification):
+# visualisation of k-coefficient per trial: line plot
+def vis_kcoeff_lineplot_trial(df, outputpath, trialname, specification):
 
         savepath=outputpath /'K-Coefficient_{}.jpg'.format(specification)
         sns.set_theme(style='whitegrid')
@@ -275,6 +277,113 @@ def vis_kcoeff(df, outputpath, trialname, specification):
         fig = lineplot.get_figure()
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
+
+
+# visualisation of k-coefficient line graph per participant -> overlay multiple trials
+def vis_kcoeff_lineplot_pp(df_list, outputpath, trialname, legend_names, specification):
+    savepath = outputpath / '{} K-Coefficients per time'.format(trialname)
+    sns.set_theme(style = 'whitegrid')
+    clrs = sns.color_palette('pastel')[0:len(df_list)]
+    # go through all trials per participant
+    for l in range(len(df_list)):
+        sns.lineplot(x=df_list[l]['start_time'], y=df_list[l]['K-coefficient'], color = clrs[l])
+
+    plt.legend(legend_names)
+    plt.title('K-Coefficient ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
+    plt.text(1.1,1.1, trialname, transform=plt.gca().transAxes)
+    plt.ylabel('K-Coefficient',  labelpad=20)
+    plt.xlabel('Time [ms]',  labelpad=20)
+    plt.savefig(savepath, bbox_inches='tight', dpi=300)
+    plt.clf()
+
+
+
+
+# barplot of mean k-coefficients per participant/group/allgroups and mark >2stdv mean with other color
+def vis_kcoeff_barplot(df, outputpath, trialname, specification):
+    savepath = outputpath / '{} K-Coefficients Summary'.format(trialname)
+    # slightly adapt df 
+    df = df.transpose()
+    if 'Yes' in df['Outside 2x Stdev'].values:
+        df['Outside 2x Stdev'].replace('Yes', 'Outside 2x stdev', inplace = True)
+    if 'No' in df['Outside 2x Stdev'].values:
+        df['Outside 2x Stdev'].replace('No', 'Not outside 2x stdev', inplace = True)
+    
+    # create hue for coloring of barplots
+    hue_1 = df['Outside 2x Stdev'].astype(str) + ', ' + df['Focal/Ambient'].astype(str) + ' vision'
+    #create a paired color palette
+    sns.set_palette(sns.color_palette("Paired"))
+    
+    # create custom palette
+    custom_palette = {}
+    for x in range(len(df)):
+        if df[trialname][x] < 0:
+            custom_palette[df.index[x]] = 'mediumseagreen'
+            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+                custom_palette[df.index[x]] = 'springgreen'
+        else:
+            custom_palette[df.index[x]] = 'cadetblue'
+            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+                custom_palette[df.index[x]] = 'cyan'
+        x=x+1
+    
+    # create customised legend
+    color_list = ['mediumseagreen','springgreen', 'cadetblue', 'cyan' ]
+    label_list = ['Ambient viewing / Not outside 2x stdev','Ambient viewing / Outside 2x stdev',  'Focal viewing / Not outside 2x stdev', 'Focal viewing / Outside 2x stdev']
+    handlelist = [plt.plot([], marker='o', ls='', color = color)[0] for color in color_list]
+    
+    
+    # create barplot
+    barplot = sns.barplot(x=df.index, y=df[trialname], palette=custom_palette, dodge = False, data = df) 
+    plt.title('K-Coefficient ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
+    plt.text(1.1,1.1, trialname, transform=plt.gca().transAxes)
+    plt.ylabel('K-Coefficient',  labelpad=20)
+    barplot.set_xticklabels(labels = df.index, rotation=90)
+    plt.legend(handlelist, label_list, bbox_to_anchor=(1, 1), loc="upper left")
+    plt.savefig(savepath, bbox_inches='tight', dpi=300)
+    plt.clf()
+
+
+
+# barplot of mean k-coefficients per participant/group/allgroups and mark >2stdv mean with other color
+def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
+    savepath = outputpath / '{} K-Coefficients Summary per action'.format(trialname)
+    # transpose df
+    df = df.transpose()
+    # delete nan rows
+    df.dropna(inplace = True)
+
+    # create a custom palette
+    custom_palette = {}
+
+    for x in range(len(df)):
+
+        if df['Mean {}'.format(trialname)][x] < 0:
+            custom_palette[df.index[x]] = 'mediumseagreen'
+            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+                custom_palette[df.index[x]] = 'springgreen'
+        else:
+            custom_palette[df.index[x]] = 'cadetblue'
+            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+                custom_palette[df.index[x]] = 'cyan'
+        x=x+1
+    
+    # create customised legend
+    color_list = ['mediumseagreen','springgreen', 'cadetblue', 'cyan' ]
+    label_list = ['Ambient viewing / Not outside 2x stdev','Ambient viewing / Outside 2x stdev',  'Focal viewing / Not outside 2x stdev', 'Focal viewing / Outside 2x stdev']
+    handlelist = [plt.plot([], marker='o', ls='', color = color)[0] for color in color_list]
+
+    # create barplot
+    barplot = sns.barplot(x=df.index, y=df['Mean {}'.format(trialname)], palette=custom_palette, dodge = False, data = df)
+    plt.title('K-Coefficient ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
+    plt.text(1.1,1.1, trialname, transform=plt.gca().transAxes)
+    plt.ylabel('K-Coefficient',  labelpad=20)
+    barplot.set_xticklabels(labels = df.index, rotation=90)
+    plt.legend(handlelist, label_list, bbox_to_anchor=(1, 1), loc="upper left")
+    plt.savefig(savepath, bbox_inches='tight', dpi=300)
+    plt.clf()
+
+
 
 
 #endregion

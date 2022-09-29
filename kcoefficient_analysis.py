@@ -7,9 +7,9 @@ def reformat(filepath, trial_path):
 
     df_raw = pd.read_csv(filepath, sep='\t')
 
-    # filter for whole events (?) 
-    df_out = df_raw[df_raw["Validity"]  == "Whole"]
-    #df_out = df_raw
+    # filter for whole or partial events 
+    #df_out = df_raw[df_raw["Validity"]  == "Whole"]
+    df_out = df_raw
 
     # select certain colums to keep
     # event-based tobii ouput file here: already in milliseconds
