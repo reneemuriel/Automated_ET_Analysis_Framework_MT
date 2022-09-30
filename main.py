@@ -51,7 +51,7 @@ import sequence_comparisons
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm
+    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, entropy_stats
 
     # choose input path (where group folders lie)
     ui_input_path =  'Data/gaze_input_tobii_ogd_kcoeff'
@@ -68,13 +68,16 @@ def get_variables_gui():
     kcoeff_analysis = False
 
     # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, will be changed!)
-    action_analysis = True
+    action_analysis = False
 
     # ooi-based analysis
-    ooi_analysis = False
+    ooi_analysis =  False
 
     # sequence comparison
-    sequence_comp = True
+    sequence_comp = False
+
+    # stats (entropy)
+    entropy_stats = True
        
 
     # import ogd file if it already exists
@@ -483,7 +486,7 @@ if kcoeff_analysis == True:
                 df_list_kcoeff_lineplot.append(df_kcoeff)
          
                 # visualise k-coefficient 
-                vis_path = output_path / Path(groups[i]) / Path(participants[i][j]) / Path('k-coefficient_analysis') / Path('visualisations')
+                vis_path = output_path / Path(groups[i]) / Path(participants[i][j]) / Path(trials[i][j][k]) / Path('k-coefficient_analysis') / Path('visualisations')
                 os.makedirs(vis_path, exist_ok=True)
                 spec = 'Whole Trial'
                 visualisations.vis_kcoeff_lineplot_trial(df_kcoeff, vis_path, trials[i][j][k], spec)
@@ -1466,4 +1469,66 @@ e=3
 #endregion
 
 
+# _____________ STATISTICS (only entropy yet)
+
+if entropy_stats == True:
+    
+    # save overall mean and overall standard deviation of all trials (not stdev of means of group, similar to k-coefficient)
+    
+    # iterate through each trial and append to one list
+    list_sge = []
+    list_gte = []
+
+    for i in range(len(groups)):
+        for j in range(len(participants[i])):
+            for k in range(len(trials[i][j])):
+                # define path to csv file
+                analysispath = output_path / Path(groups[i]) / Path(participants[i][j] / Path(trials[i][j][k])) / Path('ooi_analysis')
+                df_ooi_gen_metrics_2 = pd.read_csv(analysispath / Path('{}_ooi-based_general_analysis.csv'.format(trials[i][j][k])))
+                list_sge.append(df_ooi_gen_metrics_2['Normalised Stationary Gaze Entropy'][0])
+                list_gte.append(df_ooi_gen_metrics_2['Normalised Gaze Transition Entropy'][0])
+
+    # calculate mean and standard deviation
+    mean_sge = statistics.mean(list_sge)
+    stdev_sge= statistics.pstdev(list_sge)
+    mean_gte = statistics.mean(list_gte)
+    stdev_gte = statistics.pstdev(list_gte)
+
+
+    # go through summaries and make barplots per participants and mark >2stdev
+    for i in range(len(groups)):
+        for j in range(len(participants[i])):
+            
+            analysispath = output_path / Path(groups[i]) / Path(participants[i][j]) / Path('ooi_analysis')
+            pp_summary = pd.read_csv(analysispath / Path('{}_summary_ooi-based_general_analysis_Whole Trial.csv'.format(participants[i][j])), index_col=[0])
+            
+            # add col that states whether trial was outside 2x stdev or not 
+            # can be made into a loop through  all metrics later
+
+            vis_path = analysispath / Path('visualisations')
+
+            metrics = ['Normalised Stationary Gaze Entropy', 'Normalised Gaze Transition Entropy' ]
+            means = [mean_sge, mean_gte]
+            stdevs = [stdev_sge, stdev_sge]
+
+            y=0
+            for metric in metrics:
+                df_stats = pp_summary[[metric]]
+                df_stats.drop(df_stats.tail(1).index,inplace=True)
+                df_stats['Outside 2x Stdev'] = 'No' 
+                for x in range(len(df_stats)):
+                    val = df_stats[metric][x] 
+                    if val > (mean_sge + 2*stdev_sge) or val < (mean_sge - 2*stdev_sge):
+                        df_stats['Outside 2x Stdev'][x] = 'Yes'
+                
+                visualisations.vis_stats_ooi_gen(df_stats, vis_path, participants[i][j][k], metric, 'Whole Trial')
+                
+                y=y+1
+
+
+    
+   
+
+
+    
 

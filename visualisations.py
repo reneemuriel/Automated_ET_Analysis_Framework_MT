@@ -9,7 +9,6 @@ import numpy as np
 
 
 ### GENERAL METRICS
-
 #region
 
 # barplots for all metrics (apart from relative fix / sac duration)
@@ -33,7 +32,7 @@ def vis_gen_metrics_barplots(df, outputpath, filename, specification):
 # boxplots for all metrics (distributions per participant, group, all groups)
 def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specification, metric, x_labels):
 
-    savepath=outputpath /'{}_boxplot_{}.jpg'.format(metric, specification)
+    savepath=outputpath /'{}_boxplot_{}'.format(metric, specification)
     sns.set_theme(style='whitegrid')
     boxplot = sns.boxplot(data=nested_list, color='mediumseagreen')
     boxplot.set_xticklabels(x_labels)
@@ -46,7 +45,7 @@ def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specificat
 # piechart for relative fix / sac duration
 def vis_gen_metrics_piechart(df, outputpath, filename, specification):
 
-    savepath=outputpath /'{}_piecharts_{}.jpg'.format('Relative Fixation Saccade Duration [%]', specification)
+    savepath=outputpath /'{}_piecharts_{}'.format('Relative Fixation Saccade Duration [%]', specification)
 
     # extract numbers out of the string
     perc_fixation_list = []
@@ -113,7 +112,7 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
 
     ### boxplots: saccade duration
 
-    savepath=outputpath /'Average Saccade Duration [ms]_boxplot_{}.jpg'.format(specification)
+    savepath=outputpath /'Average Saccade Duration [ms]_boxplot_{}'.format(specification)
     sns.set_theme(style='whitegrid')
     boxplot = sns.boxplot(data=sac_dur_list, color='mediumseagreen')
     boxplot.set_xticklabels(x_labels)
@@ -125,7 +124,7 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
 
 
     # boxplots: fixation duration
-    savepath=outputpath /'Average Fixation Duration [ms]_boxplot_{}.jpg'.format(specification)
+    savepath=outputpath /'Average Fixation Duration [ms]_boxplot_{}'.format(specification)
     boxplot = sns.boxplot(data=fix_dur_list, color='mediumseagreen')
     boxplot.set_xticklabels(x_labels)
     plt.title('Average Fixation Duration ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
@@ -147,7 +146,7 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
     
     # barplots for all metrics
     for i in range(len(df)):
-        savepath=outputpath /'{} per OOI_barplot_{}.jpg'.format(df.index[i], specification)
+        savepath=outputpath /'{} per OOI_barplot_{}'.format(df.index[i], specification)
         sns.set_theme(style='whitegrid')
         barplot = sns.barplot(df.columns, df.iloc[i], color='mediumseagreen')
         plt.title('{} per OOI ({})'.format(df.index[i], specification), fontsize = 16, pad = 20, weight = 'bold')
@@ -164,7 +163,7 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
     piedata = piedata[piedata!=0]
 
     # make pie chart
-    savepath=outputpath /'{} per OOI_piechart_{}.jpg'.format('Relative Dwelltime [%]', specification)
+    savepath=outputpath /'{} per OOI_piechart_{}'.format('Relative Dwelltime [%]', specification)
     number_cols = len(piedata)
     clrs = sns.color_palette('pastel')[0:number_cols]
     lbls = piedata.index
@@ -179,7 +178,7 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
 def vis_ooi_boxplots(nested_list_series, outputpath, filename, specification, metric, x_labels):
     
       
-    savepath=outputpath /'{} per OOI_boxplot_{}.jpg'.format(metric, specification)
+    savepath=outputpath /'{} per OOI_boxplot_{}'.format(metric, specification)
     sns.set_theme(style='whitegrid', palette='pastel')
 
     fig, axes = plt.subplots(1,len(nested_list_series), sharey=True)
@@ -227,7 +226,7 @@ def vis_transition_matrix(transition_matrix, dict_ooi, outputpath, trialname, sp
     df_tm.index = df_tm.index.map(dict_ooi_switched)
 
     # create path to save
-    savepath=outputpath /'Transition Matrix (GTE)_{}.jpg'.format(specification)
+    savepath=outputpath /'Transition Matrix (GTE)_{}'.format(specification)
 
     
     sns.color_palette('pastel')[0:len(df_tm)]
@@ -261,13 +260,14 @@ def vis_ooigen_barplots(df, outputpath, filename, specification):
 #endregion
 
 
+
 ### K-COEFFICIENT
 #region
 
 # visualisation of k-coefficient per trial: line plot
 def vis_kcoeff_lineplot_trial(df, outputpath, trialname, specification):
 
-        savepath=outputpath /'K-Coefficient_{}.jpg'.format(specification)
+        savepath=outputpath /'K-Coefficient_{}'.format(specification)
         sns.set_theme(style='whitegrid')
         lineplot = sns.lineplot(df['start_time'], df['K-coefficient'], color='mediumseagreen')
         plt.title('K-Coefficient ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
@@ -298,19 +298,12 @@ def vis_kcoeff_lineplot_pp(df_list, outputpath, trialname, legend_names, specifi
 
 
 
-
 # barplot of mean k-coefficients per participant/group/allgroups and mark >2stdv mean with other color
 def vis_kcoeff_barplot(df, outputpath, trialname, specification):
     savepath = outputpath / '{} K-Coefficients Summary'.format(trialname)
     # slightly adapt df 
     df = df.transpose()
-    if 'Yes' in df['Outside 2x Stdev'].values:
-        df['Outside 2x Stdev'].replace('Yes', 'Outside 2x stdev', inplace = True)
-    if 'No' in df['Outside 2x Stdev'].values:
-        df['Outside 2x Stdev'].replace('No', 'Not outside 2x stdev', inplace = True)
-    
-    # create hue for coloring of barplots
-    hue_1 = df['Outside 2x Stdev'].astype(str) + ', ' + df['Focal/Ambient'].astype(str) + ' vision'
+
     #create a paired color palette
     sns.set_palette(sns.color_palette("Paired"))
     
@@ -318,20 +311,18 @@ def vis_kcoeff_barplot(df, outputpath, trialname, specification):
     custom_palette = {}
     for x in range(len(df)):
         if df[trialname][x] < 0:
-            custom_palette[df.index[x]] = 'mediumseagreen'
-            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+            custom_palette[df.index[x]] = 'seagreen'
+            if df['Outside 2x Stdev'][x] == 'Yes':
                 custom_palette[df.index[x]] = 'springgreen'
         else:
-            custom_palette[df.index[x]] = 'cadetblue'
-            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+            custom_palette[df.index[x]] = 'teal'
+            if df['Outside 2x Stdev'][x] == 'Yes':
                 custom_palette[df.index[x]] = 'cyan'
-        x=x+1
     
     # create customised legend
-    color_list = ['mediumseagreen','springgreen', 'cadetblue', 'cyan' ]
+    color_list = ['seagreen','springgreen', 'teal', 'cyan' ]
     label_list = ['Ambient viewing / Not outside 2x stdev','Ambient viewing / Outside 2x stdev',  'Focal viewing / Not outside 2x stdev', 'Focal viewing / Outside 2x stdev']
     handlelist = [plt.plot([], marker='o', ls='', color = color)[0] for color in color_list]
-    
     
     # create barplot
     barplot = sns.barplot(x=df.index, y=df[trialname], palette=custom_palette, dodge = False, data = df) 
@@ -359,17 +350,16 @@ def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
     for x in range(len(df)):
 
         if df['Mean {}'.format(trialname)][x] < 0:
-            custom_palette[df.index[x]] = 'mediumseagreen'
-            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+            custom_palette[df.index[x]] = 'seagreen'
+            if df['Outside 2x Stdev'][x] == 'Yes': # 'Yes'
                 custom_palette[df.index[x]] = 'springgreen'
         else:
-            custom_palette[df.index[x]] = 'cadetblue'
-            if df['Outside 2x Stdev'][x] == 'Outside 2x stdev':
+            custom_palette[df.index[x]] = 'teal'
+            if df['Outside 2x Stdev'][x] == 'Yes': # 'Yes'
                 custom_palette[df.index[x]] = 'cyan'
-        x=x+1
     
     # create customised legend
-    color_list = ['mediumseagreen','springgreen', 'cadetblue', 'cyan' ]
+    color_list = ['seagreen','springgreen', 'teal', 'cyan' ]
     label_list = ['Ambient viewing / Not outside 2x stdev','Ambient viewing / Outside 2x stdev',  'Focal viewing / Not outside 2x stdev', 'Focal viewing / Outside 2x stdev']
     handlelist = [plt.plot([], marker='o', ls='', color = color)[0] for color in color_list]
 
@@ -383,7 +373,39 @@ def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
     plt.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
 
-
-
-
 #endregion
+
+
+### STATISTICS 
+#region
+
+# mark trials outside 2x 
+
+# ooi gen barplots for 
+def vis_stats_ooi_gen(df, outputpath, trialname, metric, specification):
+    savepath = outputpath / '{} {} Statistics'.format(trialname, metric) # or overwrite existing barplots?
+
+    # create custom palette
+    custom_palette = {}
+    for x in range(len(df)):
+        if df['Outside 2x Stdev'][x] == 'Yes':
+                custom_palette[df.index[x]] = 'springgreen'
+        else:
+            custom_palette[df.index[x]] = 'seagreen'
+    
+    # create customised legend
+    color_list = ['seagreen','springgreen' ]
+    label_list = ['Not outside 2x stdev','Outside 2x stdev']
+    handlelist = [plt.plot([], marker='o', ls='', color = color)[0] for color in color_list]
+    
+    # create barplot
+    barplot = sns.barplot(x=df.index, y=df[metric], palette=custom_palette, dodge = False, data = df) 
+    plt.title('{} ({})'.format(metric, specification), fontsize = 16, pad = 20, weight = 'bold')
+    plt.text(1.1,1.1, trialname, transform=plt.gca().transAxes)
+    plt.ylabel(metric,  labelpad=20)
+    barplot.set_xticklabels(labels = df.index, rotation=90)
+    plt.legend(handlelist, label_list, bbox_to_anchor=(1, 1), loc="upper left")
+    plt.savefig(savepath, bbox_inches='tight', dpi=300)
+    plt.show()
+    plt.clf()
+
