@@ -254,7 +254,6 @@ def vis_ooigen_barplots(df, outputpath, filename, specification):
         plt.ylabel(df.columns[col],  labelpad=20)
         fig = barplot.get_figure()
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
-        #plt.show()
         plt.clf()
 
 #endregion
@@ -404,8 +403,8 @@ def vis_stats_ooi_gen(df, outputpath, trialname, metric, specification):
     plt.text(1.1,1.1, trialname, transform=plt.gca().transAxes)
     plt.ylabel(metric,  labelpad=20)
     barplot.set_xticklabels(labels = df.index, rotation=90)
-    plt.legend(handlelist, label_list, bbox_to_anchor=(1, 1), loc="upper left")
+    plt.legend(handlelist, label_list, bbox_to_anchor=(1.2, 1), loc="upper left")
     plt.savefig(savepath, bbox_inches='tight', dpi=300)
-    plt.show()
+    #plt.show()
     plt.clf()
 
