@@ -1,0 +1,11 @@
+,action,start_time_action,end_time_action
+0,Cap Off,0.0,6296.0
+1,Apply Tip,6296.0,14382.0
+2,Setting Units,14382.0,17050.0
+3,Priming,17050.0,28883.000000000004
+4,Setting Units,28883.000000000004,32711.0
+5,Injection,32711.0,37958.0
+6,Setting Units,37958.0,40417.0
+7,Injection,40417.0,51580.0
+8,Remove Tip,51580.0,61364.0
+9,Cap On,61364.0,68840.0

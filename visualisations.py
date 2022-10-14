@@ -28,7 +28,6 @@ def vis_gen_metrics_barplots(df, outputpath, filename, specification):
         plt.clf()
 
 
-
 # boxplots for all metrics (distributions per participant, group, all groups)
 def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specification, metric, x_labels):
 
@@ -67,7 +66,7 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
     
     figure_rows = int(figure_rows)
     fig, axes = plt.subplots(figure_rows, 3, sharex=True, figsize=(10,5))
-    fig.suptitle('Relative Fixation/Saccade Duration [%]')
+    fig.suptitle('Relative Fixation/Saccade Duration [%]', fontweight = 'bold')
     clrs = sns.color_palette('pastel')[0:len(perc_fixation_list)]
     lbls = ['Fixation', 'Saccade']
 
@@ -133,6 +132,20 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
 
+
+# barplot for duration per action
+def vis_gen_metrics_duration_per_action(df, outputpath, filename):
+    savepath = outputpath / '{} Duration per Action [ms]'.format(filename)
+    sns.set_theme(style='whitegrid')
+    barplot = sns.barplot(df.columns, df.iloc[-1], color='mediumseagreen')
+    plt.title('Duration per Action [ms]', fontsize = 16, pad = 20, weight = 'bold')
+    plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
+    plt.ylabel('Duration per Action [ms]',  labelpad=20)
+    barplot.set_xticklabels(labels = df.columns, rotation=90)
+    #plt.show()  
+    fig = barplot.get_figure()
+    fig.savefig(savepath, bbox_inches='tight', dpi=300)
+    plt.clf()
 
 #endregion
 
