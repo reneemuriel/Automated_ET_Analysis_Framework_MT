@@ -53,7 +53,7 @@ import result_summaries
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, entropy_stats, novice_results
+    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, entropy_stats, results_summary_report
 
     # choose input path (where group folders lie)
     ui_input_path =  'Data/gaze_input_tobii_ogd_kcoeff'
@@ -64,25 +64,25 @@ def get_variables_gui():
     output_path = Path(ui_output_path)
 
     # general analysis
-    general_analysis = False
+    general_analysis = True
 
     # calculate k-coefficient
-    kcoeff_analysis = True
+    kcoeff_analysis = False
 
     # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, should be changed)
-    action_analysis = True
+    action_analysis = False
 
     # ooi-based analysis
-    ooi_analysis =  True
+    ooi_analysis =  False
 
     # sequence comparison
     sequence_comp = False
 
     # stats (entropy) (needs ooi-based analysis to be run first)
-    entropy_stats = True
+    entropy_stats = False
 
     # results
-    novice_results = False
+    results_summary_report = True
        
 
     # import ogd file if it already exists
@@ -285,6 +285,7 @@ if general_analysis == True:
 
             # piechart relative sacc/fix duration
             visualisations.vis_gen_metrics_piechart(pp_df_summary, vis_path, participants[i][j], 'Whole Trial')
+
 
             # for boxplots per group
 
@@ -1045,7 +1046,7 @@ if action_analysis == True:
                 df_actions = action_separation.action_times(ogd_final, fixationdata, all_actions)
                 # save duration per step to trial folder
                 df_duration_per_step = df_actions[['action', 'start_time_action', 'end_time_action']]
-                df_duration_per_step.to_csv(trial_output_path / Path('{} Duration per Step.csv'.format(trials[i][j][k])))
+                df_duration_per_step.to_csv(trial_output_path / general_analysis / Path('{} Duration per Step.csv'.format(trials[i][j][k])))
                 
                 ##  make df with average duration per action (general analysis)
 
@@ -1272,7 +1273,7 @@ if action_analysis == True:
                 df_group_gen_action_dfs[action][j].append(pp_df_average)
                 e=3
 
-            # duration per step
+            # duration per action
             df_pp_duration_per_action.loc['Mean {}'.format(participants[i][j])] = df_pp_duration_per_action.mean()
             vis_path = save_path / Path('visualisations')
             os.makedirs(vis_path, exist_ok = True)
@@ -1640,12 +1641,35 @@ if entropy_stats == True:
 #endregion
     
    
-# _____________ RESULTS DISPLAY 
+# _____________ GET RESULTS SUMMARY REPORT
 #region
 
-if novice_results == True:
-    result_summaries.group_results(output_path, )
+if results_summary_report == True:
 
+    ### to delete, only for testing
+    ooi_analysis = True
+    kcoeff_analysis = True
+    action_analysis = True
+
+    
+    img_import_path = output_path
+    results_path = Path('Results')
+    os.makedirs(results_path, exist_ok = True)
+    result_summaries.allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, 'All Groups')
+
+    # iterate through groups    
+    for i in range(len(groups)):
+        img_import_path = output_path / Path(groups[i])
+        results_path = Path('Results') / Path(groups[i])
+        os.makedirs(results_path, exist_ok = True)
+        result_summaries.allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, groups[i])
+        
+        # iterate through participants
+        for j in range(len(participants[i])):
+            img_import_path = output_path / Path(groups[i]) / participants[i][j]
+            results_path = Path('Results') / Path(groups[i]) / participants[i][j]
+            os.makedirs(results_path, exist_ok = True)
+            result_summaries.participants_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, participants[i][j])
 
 
 #endregion

@@ -135,7 +135,7 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
 
 # barplot for duration per action
 def vis_gen_metrics_duration_per_action(df, outputpath, filename):
-    savepath = outputpath / '{} Duration per Action [ms]'.format(filename)
+    savepath = outputpath / 'Duration per Action [ms]'
     sns.set_theme(style='whitegrid')
     barplot = sns.barplot(df.columns, df.iloc[-1], color='mediumseagreen')
     plt.title('Duration per Action [ms]', fontsize = 16, pad = 20, weight = 'bold')
@@ -293,7 +293,7 @@ def vis_kcoeff_lineplot_trial(df, outputpath, trialname, specification):
 
 # visualisation of k-coefficient line graph per participant -> overlay multiple trials
 def vis_kcoeff_lineplot_pp(df_list, outputpath, trialname, legend_names, specification):
-    savepath = outputpath / '{} K-Coefficients per time'.format(trialname)
+    savepath = outputpath / 'K-Coefficients per time'
     sns.set_theme(style = 'whitegrid')
     clrs = sns.color_palette('pastel')[0:len(df_list)]
     # go through all trials per participant
@@ -312,7 +312,7 @@ def vis_kcoeff_lineplot_pp(df_list, outputpath, trialname, legend_names, specifi
 
 # barplot of mean k-coefficients per participant/group/allgroups and mark >2stdv mean with other color
 def vis_kcoeff_barplot(df, outputpath, trialname, specification):
-    savepath = outputpath / '{} K-Coefficients Summary'.format(trialname)
+    savepath = outputpath / 'K-Coefficients Summary'
     # slightly adapt df 
     df = df.transpose()
 
@@ -350,7 +350,7 @@ def vis_kcoeff_barplot(df, outputpath, trialname, specification):
 
 # barplot of mean k-coefficients per participant/group/allgroups and mark >2stdv mean with other color
 def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
-    savepath = outputpath / '{} K-Coefficients Summary per action'.format(trialname)
+    savepath = outputpath / 'K-Coefficients Summary per action'
     # transpose df
     df = df.transpose()
     # delete nan rows
@@ -395,7 +395,7 @@ def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
 
 # ooi gen barplots for 
 def vis_stats_ooi_gen(df, outputpath, trialname, metric, specification):
-    savepath = outputpath / '{} {} Statistics'.format(trialname, metric) # or overwrite existing barplots?
+    savepath = outputpath / '{}_barplot_Whole Trial.png'.format(metric) # overwrite the existing barplots
 
     # create custom palette
     custom_palette = {}

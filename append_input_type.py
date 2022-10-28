@@ -4,18 +4,15 @@ import os
 
 def append_input_type(filename, input_type):
     path = Path(filename)
-    os.rename(filename, path.with_stem(f"{path.stem}_{input_type}")) 
-    #return path.with_stem(f"{path.stem}_{input_type}")
-
-
-def remove_input_type(filename, input_type):
-    path = Path(filename)
-    os.rename() 
+    new_path = path.with_name(f'{path.stem}_{input_type}{path.suffix}')
+    os.rename(filename, new_path)
+    #os.rename(filename, path.with_stem(f"{path.stem}_{input_type}")) # for python versions >= 3.9
+    
 
 
 # set variables
-input_path = Path('Data/gaze_input/TrainSet')
-input_type = 'fixationdata'
+input_path = Path('Data/test_study_v1/group_1/files_to_rename')
+input_type = 'tobii' # without filename extension or _, just e.g. "tobii", "tobii_kcoeff", "ogd"
 
 
 filename_list = os.listdir(input_path)
@@ -25,4 +22,5 @@ if input('Do you want to append <_{}> to the filename? Then type yes:\n'.format(
     for i in range(len(filename_list)):
         filename1 = input_path / filename_list[i]
         append_input_type(filename1, input_type)
+    print('Successfully added the suffix <{}> to the filenames!'.format(input_type))
 

@@ -90,7 +90,7 @@ def calculate_general_metrics(fixationdata, saccadedata, trialname):
     df_general_metrics['Total Duration [ms]'] = [tot_duration_gen(fixationdata)]  #/1000
 
     # time to first fixation 
-    df_general_metrics['Time to First Fixation [ms]'] = [first_fixation_gen(fixationdata)]
+    #df_general_metrics['Time to First Fixation [ms]'] = [first_fixation_gen(fixationdata)]
 
     # average saccade duration
     df_general_metrics['Average Saccade Duration [ms]'] = [avg_saccade_duration_gen(saccadedata)]
