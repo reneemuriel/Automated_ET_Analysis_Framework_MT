@@ -30,8 +30,12 @@ def summary_general_analysis(df_list, spec, save_path, action):
     mean_ratio_string = '{}/{}'.format(round(perc_fixation_mean), round(perc_saccade_mean))
     df_summary.at['Mean {}'.format(spec),'Relative Fixation/Saccade Duration [%]'] = mean_ratio_string # replace nan with calculated value
     
-    # calculate standard deviation (in percent) and add to df
-    perc_fixation_stdv = round(statistics.stdev(perc_fixation_list))
+    # calculate standard deviation (in percent) and add to df / if only 1 sample, stdev = 0
+    if len(df_list) == 1:
+        perc_fixation_stdv = 0
+    else:
+        perc_fixation_stdv = round(statistics.stdev(perc_fixation_list))
+
     stdv_ratio_string = '{}'.format(perc_fixation_stdv)
     df_summary.at['Standard Deviation {}'.format(spec),'Relative Fixation/Saccade Duration [%]'] = stdv_ratio_string # replace nan with calculated value
 

@@ -63,12 +63,23 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
         figure_rows = number_figs / 3
     else:
         figure_rows = number_figs / 3 + 1
-    
-    figure_rows = int(figure_rows)
-    fig, axes = plt.subplots(figure_rows, 3, sharex=True, figsize=(10,5))
-    fig.suptitle('Relative Fixation/Saccade Duration [%]', fontweight = 'bold')
-    clrs = sns.color_palette('pastel')[0:len(perc_fixation_list)]
-    lbls = ['Fixation', 'Saccade']
+
+
+    if len(perc_fixation_list) >2 :    
+        figure_rows = int(figure_rows)
+        fig, axes = plt.subplots(figure_rows, 3, sharex=True, figsize=(10,5))
+        fig.suptitle('Relative Fixation/Saccade Duration [%]', fontweight = 'bold')
+        clrs = sns.color_palette('pastel')[0:len(perc_fixation_list)]
+        lbls = ['Fixation', 'Saccade']
+
+    # in case of only 1 sample + 1 mean -> 2 plots
+    else:
+        figure_rows = 1
+        fig, axes = plt.subplots(figure_rows, 2, sharex=True, figsize=(10,5))
+        fig.suptitle('Relative Fixation/Saccade Duration [%]', fontweight = 'bold')
+        clrs = sns.color_palette('pastel')[0:len(perc_fixation_list)]
+        lbls = ['Fixation', 'Saccade']
+
 
     # if only one row of figures
     if figure_rows == 1:

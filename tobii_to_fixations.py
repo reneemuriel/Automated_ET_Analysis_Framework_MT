@@ -1,9 +1,8 @@
 #Author Thomas Kreiner
 #Requires python3 and pandas
 
-# old name: tobii_to_cgom
-# changes by renee: changed location where file is saved and filename
-# tobii output: in microseconds, multiple standard files (meaning one .tsv file per recording)
+# new: takes event-based metrics export by tobii pro lab
+
 
 import pandas as pd
 import os
@@ -19,9 +18,9 @@ from pathlib import Path
 
 # place tobii files in subdirectory 'tobii_to_fixations' of where this .py file is located
 path = os.getcwd()
-filenames = glob.glob(path + '/tobii_to_fixations' + "/*.tsv")
+filenames = glob.glob(path + '/tobii_to_fixations_2' + "/*.tsv")
 # choose output path
-output_path = path + '/tobii_to_fixations/'
+output_path = path + '/tobii_to_fixations_2/'
 
 
 
@@ -40,24 +39,25 @@ def reformat(file, trial_path):    #ouput file location added by renee
     df_raw = pd.read_csv(file, sep='\t')
 
     #Filter by row e.g. only rows that are Fixations
-    df_out = df_raw[df_raw["Eye movement type"]  == "Fixation"]
+    df_out = df_raw[df_raw["Event_type"]  == "Fixation"]
 
     #Select certain colums
-    df_out = df_out[["Recording timestamp", "Gaze event duration", "Fixation point X", "Fixation point Y"]]
+    df_out = df_out[["Start", "Stop", "Duration", "FixationPointX", "FixationPointY"]]
+
+    # multiply normalised coordinates by resolution (1920 x 1080)
+    df_out['FixationPointX'] = df_out['FixationPointX']*1920
+    df_out['FixationPointY'] = df_out['FixationPointY']*1080
+    # and round to 1px
+    df_out['FixationPointX'] = df_out['FixationPointX'].round(0)
+    df_out['FixationPointY'] = df_out['FixationPointY'].round(0)
 
 
-    ## tobii ouput file: in microseconds
-    df_out['Recording timestamp'] = df_out['Recording timestamp'].div(1000).round()
-    df_out[['change_x', 'change_y']] = df_out[['Fixation point X', 'Fixation point Y']].diff()
+    # drop columns with no change in fixation coordinate(?)
+    df_out[['change_x', 'change_y']] = df_out[['FixationPointX', 'FixationPointY']].diff()
     df_out = df_out[(df_out['change_x']!=0) & (df_out['change_y']!=0)]
     df_out = df_out.drop(['change_x', 'change_y'], 1)
 
-    df_out.columns = ['Event Start Trial Time [ms]', 'Event Duration [ms]', 'Visual Intake Position X [px]', 'Visual Intake Position Y [px]']
-
-    sum_column = df_out["Event Start Trial Time [ms]"] + df_out["Event Duration [ms]"]
-    df_out["Event End Trial Time [ms]"] = sum_column
-
-    df_out = df_out[["Event Start Trial Time [ms]", "Event End Trial Time [ms]", "Event Duration [ms]", "Visual Intake Position X [px]", "Visual Intake Position Y [px]"]]
+    df_out.columns = ['Event Start Trial Time [ms]',"Event End Trial Time [ms]", 'Event Duration [ms]', 'Visual Intake Position X [px]', 'Visual Intake Position Y [px]']
 
 
     base = os.path.basename(file)
@@ -74,24 +74,25 @@ def reformat_sep(file, output_path):
     df_raw = pd.read_csv(file, sep='\t')
 
     #Filter by row e.g. only rows that are Fixations
-    df_out = df_raw[df_raw["Eye movement type"]  == "Fixation"]
+    df_out = df_raw[df_raw["Event_type"]  == "Fixation"]
 
     #Select certain colums
-    df_out = df_out[["Recording timestamp", "Gaze event duration", "Fixation point X", "Fixation point Y"]]
+    df_out = df_out[["Start", "Stop", "Duration", "FixationPointX", "FixationPointY"]]
+
+    # multiply normalised coordinates by resolution (1920 x 1080)
+    df_out['FixationPointX'] = df_out['FixationPointX']*1920
+    df_out['FixationPointY'] = df_out['FixationPointY']*1080
+    # and round to 1px
+    df_out['FixationPointX'] = df_out['FixationPointX'].round(0)
+    df_out['FixationPointY'] = df_out['FixationPointY'].round(0)
 
 
-    ## tobii ouput file: in microseconds
-    df_out['Recording timestamp'] = df_out['Recording timestamp'].div(1000).round()
-    df_out[['change_x', 'change_y']] = df_out[['Fixation point X', 'Fixation point Y']].diff()
+    # drop columns with no change in fixation coordinate(?)
+    df_out[['change_x', 'change_y']] = df_out[['FixationPointX', 'FixationPointY']].diff()
     df_out = df_out[(df_out['change_x']!=0) & (df_out['change_y']!=0)]
     df_out = df_out.drop(['change_x', 'change_y'], 1)
 
-    df_out.columns = ['Event Start Trial Time [ms]', 'Event Duration [ms]', 'Visual Intake Position X [px]', 'Visual Intake Position Y [px]']
-
-    sum_column = df_out["Event Start Trial Time [ms]"] + df_out["Event Duration [ms]"]
-    df_out["Event End Trial Time [ms]"] = sum_column
-
-    df_out = df_out[["Event Start Trial Time [ms]", "Event End Trial Time [ms]", "Event Duration [ms]", "Visual Intake Position X [px]", "Visual Intake Position Y [px]"]]
+    df_out.columns = ['Event Start Trial Time [ms]',"Event End Trial Time [ms]", 'Event Duration [ms]', 'Visual Intake Position X [px]', 'Visual Intake Position Y [px]']
 
 
     base = os.path.basename(file)

@@ -35,8 +35,8 @@ from matplotlib import image
 import add_columns as ac
 import ooi_metrics
 import general_metrics
-import tobii_to_fixations
-import tobii_to_saccades
+import tobii_to_fixations as t2f # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
+import tobii_to_saccades as t2s # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
 import action_separation
 import kcoefficient_analysis
 import visualisations
@@ -56,7 +56,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, entropy_stats, results_summary_report
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/gaze_input_tobii_ogd_kcoeff'
+    ui_input_path =  'Data/test_study_v2_new_tobii_input' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -67,7 +67,7 @@ def get_variables_gui():
     general_analysis = True
 
     # calculate k-coefficient
-    kcoeff_analysis = False
+    kcoeff_analysis = True
 
     # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, should be changed)
     action_analysis = False
@@ -82,7 +82,7 @@ def get_variables_gui():
     entropy_stats = False
 
     # results
-    results_summary_report = True
+    results_summary_report = False
        
 
     # import ogd file if it already exists
@@ -216,13 +216,13 @@ if general_analysis == True:
                 tobiipath = trial_paths[i][j][k] + '_tobii.tsv' 
 
                 # transform tobii into (not)cgom file 
-                tobii_to_fixations.reformat(tobiipath, trial_paths[i][j][k])
+                t2f.reformat(tobiipath, trial_paths[i][j][k])
                 
                 # read newly created fixation file 
                 fixationdata = pd.read_csv(trial_paths[i][j][k] + '_fixations.txt', sep='\t')
 
                 # transform tobii into saccade file
-                tobii_to_saccades.reformat(tobiipath, trial_paths[i][j][k])
+                t2s.reformat(tobiipath, trial_paths[i][j][k])
                 
                 # read saccade data
                 saccadedata = pd.read_csv(trial_paths[i][j][k] + '_saccades.txt', sep='\t')
@@ -402,7 +402,7 @@ if kcoeff_analysis == True:
             # iterate through each trial
             for k in range(len(trials[i][j])):
                 
-                kcoeff_path = trial_paths[i][j][k] + '_tobii_kcoeff.tsv'
+                kcoeff_path = trial_paths[i][j][k] + '_tobii.tsv' # used to be '_tobii_kcoeff.tsv', now tobii.tsv in new version, since same file is used for general and k-coeff analysis
 
                 # filter for whole fixations and saccades 
                 kcoefficient_analysis.reformat(kcoeff_path, trial_paths[i][j][k])
