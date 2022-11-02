@@ -1,32 +1,13 @@
 # _____________ IMPORT
 #region
-from calendar import c
-from cmath import nan
 from ntpath import join
-#from pprint import pp
-from re import A
-from tkinter import TRUE
-from tkinter.tix import DirSelectBox
-from tokenize import group
-from xmlrpc.client import boolean
-from zlib import DEF_BUF_SIZE
-from matplotlib import test
 import pandas as pd
-from pyparsing import col
-import seaborn as sns # added to OGD_HMM
 import numpy as np
-import matplotlib.pyplot as plt
-import shutil
 from glob import glob
 from pathlib import Path
 import statistics
 import os
-from IPython.display import display
 import math
-import re
-import pylev
-import string
-from matplotlib import image
 
 
 # make requirements.txt that lists all packages that need to be installed in environment -
@@ -35,15 +16,13 @@ from matplotlib import image
 import add_columns as ac
 import ooi_metrics
 import general_metrics
-import tobii_to_fixations as t2f # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
+import tobii_to_fixations as t2f # change to "Archive.tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
 import tobii_to_saccades as t2s # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
 import action_separation
 import kcoefficient_analysis
 import visualisations
-import summary_calculations
 import sequence_comparisons
 import result_summaries
-# import make_gaze_OGD
 
 #endregion
 
@@ -56,7 +35,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, entropy_stats, results_summary_report
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/test_study_v2_new_tobii_input' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py
+    ui_input_path =  'Data/test_study_metricsexport_1' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -260,7 +239,7 @@ if general_analysis == True:
             save_path = output_path_groups[i] / Path(participants[i][j]) / Path('general_analysis')
 
             # create summary df of all trials per participant and save to created dir
-            pp_df_summary = summary_calculations.summary_general_analysis(participant_list_dfs, participants[i][j], save_path, 'Whole Trial')
+            pp_df_summary = general_metrics.summary_general_analysis(participant_list_dfs, participants[i][j], save_path, 'Whole Trial')
 
             # extract average row from pp_df_summary and append to group_list_df
             pp_df_average = pp_df_summary.iloc[[-2]]
@@ -309,7 +288,7 @@ if general_analysis == True:
         save_path = output_path_groups[i] / Path('general_analysis')
         
         # create summary df of all participants per group and save to created dir
-        group_df_summary = summary_calculations.summary_general_analysis(group_list_dfs, groups[i], save_path, 'Whole Trial')
+        group_df_summary = general_metrics.summary_general_analysis(group_list_dfs, groups[i], save_path, 'Whole Trial')
 
         # add df to summary list for all groups
         # extract average row from pp_df_summary and append to group_list_df
@@ -358,7 +337,7 @@ if general_analysis == True:
     save_path = output_path / Path('general_analysis')
 
     # create summary df of all groups and save to created df
-    allgroups_df_summary = summary_calculations.summary_general_analysis(allgroups_list_dfs, 'All Groups', save_path, 'Whole Trial')
+    allgroups_df_summary = general_metrics.summary_general_analysis(allgroups_list_dfs, 'All Groups', save_path, 'Whole Trial')
 
     # visualisations per group
     vis_path = save_path / Path('visualisations')
@@ -751,7 +730,7 @@ if ooi_analysis == True:
             os.makedirs(output_path_groups[i] / Path(participants[i][j]) / Path('ooi_analysis'), exist_ok = True)
             save_path = output_path_groups[i] / Path(participants[i][j]) / Path('ooi_analysis')
             # create summary df of all trials per participant and save to created dir
-            participant_df_summary_ooi, participant_df_means_ooi = summary_calculations.summary_ooi_analysis(participant_list_dfs_ooi, participants[i][j], save_path, 'Whole Trial')
+            participant_df_summary_ooi, participant_df_means_ooi = ooi_metrics.summary_ooi_analysis(participant_list_dfs_ooi, participants[i][j], save_path, 'Whole Trial')
             # append mean_df to group_list_df
             group_list_dfs_ooi.append(participant_df_means_ooi)        
             
@@ -778,7 +757,7 @@ if ooi_analysis == True:
             ### summary of ooi-based general analysis per participant
 
             # create summary df of all trials per participant and save to created dir
-            participant_df_summary_ooigen = summary_calculations.summary_ooigen_analysis(participant_list_dfs_ooigen, participants[i][j], save_path, 'Whole Trial')
+            participant_df_summary_ooigen = ooi_metrics.summary_ooigen_analysis(participant_list_dfs_ooigen, participants[i][j], save_path, 'Whole Trial')
             # extract average row from pp_df_summary and append to group_list_df
             pp_df_average = participant_df_summary_ooigen.iloc[[-2]]
             group_list_dfs_ooigen.append(pp_df_average)  
@@ -811,7 +790,7 @@ if ooi_analysis == True:
         os.makedirs(output_path_groups[i] / Path('ooi_analysis'), exist_ok=True)
         save_path = output_path_groups[i] / Path('ooi_analysis')    
         # create summary df of all participants per group and save to created dir
-        group_df_summary_ooi, group_df_means_ooi = summary_calculations.summary_ooi_analysis(group_list_dfs_ooi, groups[i], save_path, 'Whole Trial')
+        group_df_summary_ooi, group_df_means_ooi = ooi_metrics.summary_ooi_analysis(group_list_dfs_ooi, groups[i], save_path, 'Whole Trial')
         # add df to summary list of all groups
         allgroups_list_dfs_ooi.append(group_df_means_ooi)     
 
@@ -862,7 +841,7 @@ if ooi_analysis == True:
         ### summary of ooi-based general analysis per group
 
         # create summary df of all participants per group and save 
-        group_df_summary_ooigen = summary_calculations.summary_ooigen_analysis(group_list_dfs_ooigen, groups[i], save_path, 'Whole Trial')
+        group_df_summary_ooigen = ooi_metrics.summary_ooigen_analysis(group_list_dfs_ooigen, groups[i], save_path, 'Whole Trial')
 
         # extract means and add df to summary list of all groups
         group_df_average = group_df_summary_ooigen.iloc[[-2]]
@@ -904,7 +883,7 @@ if ooi_analysis == True:
     os.makedirs(output_path / Path('ooi_analysis'), exist_ok=True)
     save_path = output_path / Path('ooi_analysis')
     # create summary df of all participants per group and save to created dir
-    allgroups_df_summary_ooi, allgroups_df_means_ooi = summary_calculations.summary_ooi_analysis(allgroups_list_dfs_ooi, 'All Groups', save_path, 'Whole Trial')
+    allgroups_df_summary_ooi, allgroups_df_means_ooi = ooi_metrics.summary_ooi_analysis(allgroups_list_dfs_ooi, 'All Groups', save_path, 'Whole Trial')
 
     
     ### visualisations of ooi analysis of all groups
@@ -938,7 +917,7 @@ if ooi_analysis == True:
 
 
     ### summary of ooi-based general analysis of all groups
-    allgroups_df_summary_ooigen = summary_calculations.summary_ooigen_analysis(allgroups_list_dfs_ooigen, 'All Groups', save_path, 'Whole Trial')
+    allgroups_df_summary_ooigen = ooi_metrics.summary_ooigen_analysis(allgroups_list_dfs_ooigen, 'All Groups', save_path, 'Whole Trial')
 
     # visualisations
     
@@ -1266,7 +1245,7 @@ if action_analysis == True:
             
             for action in all_actions:
                 df_pp_action_list = [df_pp_gen_action_dfs[action][x][0] for x in range(len(df_pp_gen_action_dfs))]
-                df_summary_pp_action = summary_calculations.summary_general_analysis(df_pp_action_list, participants[i][j], save_path, action)
+                df_summary_pp_action = general_metrics.summary_general_analysis(df_pp_action_list, participants[i][j], save_path, action)
 
                 # extract row with means per pp (second last row) and append to group summary df
                 pp_df_average = df_summary_pp_action.iloc[[-2]]
@@ -1294,7 +1273,7 @@ if action_analysis == True:
             
             for action in all_actions:
                 df_pp_action_list = [df_pp_ooi_action_dfs[action][x][0] for x in range(len(df_pp_ooi_action_dfs))]
-                df_summary_pp_action, df_summary_pp_action_means = summary_calculations.summary_ooi_analysis(df_pp_action_list, participants[i][j], save_path, action)
+                df_summary_pp_action, df_summary_pp_action_means = ooi_metrics.summary_ooi_analysis(df_pp_action_list, participants[i][j], save_path, action)
 
                 # append means df to group summary df    
                 df_group_ooi_action_dfs[action][j].append(df_summary_pp_action_means) 
@@ -1307,7 +1286,7 @@ if action_analysis == True:
             
             for action in all_actions:
                 df_pp_action_list = [df_pp_ooigen_action_dfs[action][x][0] for x in range(len(df_pp_ooigen_action_dfs))]
-                df_summary_pp_action = summary_calculations.summary_ooigen_analysis(df_pp_action_list, participants[i][j], save_path, action)
+                df_summary_pp_action = ooi_metrics.summary_ooigen_analysis(df_pp_action_list, participants[i][j], save_path, action)
 
                 # extract row with means per pp (second last row) and append to group summary df
                 pp_df_average = df_summary_pp_action.iloc[[-2]]
@@ -1364,7 +1343,7 @@ if action_analysis == True:
 
         for action in all_actions:
             df_group_action_list = [df_group_gen_action_dfs[action][x][0] for x in range(len(df_group_gen_action_dfs))]
-            df_summary_group_action = summary_calculations.summary_general_analysis(df_group_action_list, groups[i], save_path, action)
+            df_summary_group_action = general_metrics.summary_general_analysis(df_group_action_list, groups[i], save_path, action)
 
             # extract row with means (second last) per pp and append to group summary df
             group_df_average = df_summary_group_action.iloc[[-2]]
@@ -1393,7 +1372,7 @@ if action_analysis == True:
         
         for action in all_actions:
             df_group_action_list = [df_group_ooi_action_dfs[action][x][0] for x in range(len(df_group_ooi_action_dfs))]
-            df_summary_group_action, df_summary_group_action_means = summary_calculations.summary_ooi_analysis(df_group_action_list, groups[i], save_path, action)
+            df_summary_group_action, df_summary_group_action_means = ooi_metrics.summary_ooi_analysis(df_group_action_list, groups[i], save_path, action)
 
             # append means df to group summary df    
             df_allgroups_ooi_action_dfs[action][i].append(df_summary_group_action_means)  
@@ -1406,7 +1385,7 @@ if action_analysis == True:
         
         for action in all_actions:
             df_group_action_list = [df_group_ooigen_action_dfs[action][x][0] for x in range(len(df_group_ooigen_action_dfs))]
-            df_summary_group_action = summary_calculations.summary_ooigen_analysis(df_group_action_list,groups[i], save_path, action)
+            df_summary_group_action = ooi_metrics.summary_ooigen_analysis(df_group_action_list,groups[i], save_path, action)
 
             # extract row with means per pp (second last row) and append to group summary df
             group_df_average = df_summary_group_action.iloc[[-2]]
@@ -1462,7 +1441,7 @@ if action_analysis == True:
 
     for action in all_actions:
         df_allgroups_action_list = [df_allgroups_gen_action_dfs[action][x][0] for x in range(len(df_allgroups_gen_action_dfs))]
-        df_summary_allgroups_action = summary_calculations.summary_general_analysis(df_allgroups_action_list, 'All Groups', save_path, action)
+        df_summary_allgroups_action = general_metrics.summary_general_analysis(df_allgroups_action_list, 'All Groups', save_path, action)
 
     # duration per step
     df_allgroups_duration_per_action.loc['Mean All Groups'] = df_allgroups_duration_per_action.mean()
@@ -1483,7 +1462,7 @@ if action_analysis == True:
     
     for action in all_actions:
         df_allgroups_action_list = [df_allgroups_ooi_action_dfs[action][x][0] for x in range(len(df_allgroups_ooi_action_dfs))]
-        df_summary_allgroups_action, df_summary_allgroups_action_means = summary_calculations.summary_ooi_analysis(df_allgroups_action_list,'All Groups', save_path, action)
+        df_summary_allgroups_action, df_summary_allgroups_action_means = ooi_metrics.summary_ooi_analysis(df_allgroups_action_list,'All Groups', save_path, action)
     
 
     # visualisation of mean values of all groups
@@ -1492,7 +1471,7 @@ if action_analysis == True:
     ## ooi-based general analysis
     for action in all_actions:
         df_allgroups_action_list = [df_allgroups_ooigen_action_dfs[action][x][0] for x in range(len(df_allgroups_ooigen_action_dfs))]
-        df_summary_allgroups_action = summary_calculations.summary_ooigen_analysis(df_allgroups_action_list,'All Groups', save_path, action)
+        df_summary_allgroups_action = ooi_metrics.summary_ooigen_analysis(df_allgroups_action_list,'All Groups', save_path, action)
 
 
     ## k-coefficient
@@ -1647,9 +1626,9 @@ if entropy_stats == True:
 if results_summary_report == True:
 
     ### to delete, only for testing
-    ooi_analysis = True
-    kcoeff_analysis = True
-    action_analysis = True
+    #ooi_analysis = True
+    #kcoeff_analysis = True
+    #action_analysis = True
 
     
     img_import_path = output_path

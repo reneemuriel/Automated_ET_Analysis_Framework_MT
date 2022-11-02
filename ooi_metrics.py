@@ -4,6 +4,10 @@ import statistics
 import math
 import add_columns as ac
 import numpy as np
+from pathlib import Path
+import re
+
+
 
 ### PREPARE OGD FILE
 #region
@@ -45,9 +49,6 @@ def extract_oois(ogd_data):
 
 
 #endregion
-
-
-
 
 
 
@@ -501,3 +502,45 @@ def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
 
 
 #endregion
+
+
+
+### SUMMARY CALCULATIONS
+#region
+
+def summary_ooi_analysis(df_list, spec, save_path, action):
+    # calculate mean of all ellements of dfs and store them in new df
+    df_summary_means = pd.concat(df_list).groupby(level=0).mean()
+    # rename indeces: add 'Mean' to all indeces
+    df_summary_means_prefix = df_summary_means.T.add_prefix('Mean ').T
+
+    # calculate stdev of all ellements of dfs and store them in new df
+    df_summary_stdev = pd.concat(df_list).groupby(level=0).std()
+    # rename indeces: add 'Standard Deviation' to all indeces
+    df_summary_stdev = df_summary_stdev.T.add_prefix('Standard Deviation ').T
+
+    # combine the two dfs
+    df_summary = pd.concat([df_summary_means_prefix, df_summary_stdev])
+
+    # save dataframe per participant
+    df_summary.to_csv(save_path / Path('{}_summary_ooi_analysis_{}.csv'.format(spec, action)))
+
+    # also return mean df (without prefix) for further calculation of 
+    return df_summary, df_summary_means
+
+
+def summary_ooigen_analysis(df_list, spec, save_path, action):
+    e=2
+
+    # concatenate all dfs 
+    df_summary = pd.concat(df_list)
+    # add mean to all columns
+    df_summary.loc['Mean {}'.format(spec)] = df_summary.mean()
+    # add standard deviation to all columns
+    df_summary.loc['Standard Deviation {}'.format(spec)] = df_summary.iloc[0:-1].std()
+    # save dataframe 
+    df_summary.to_csv(save_path / Path('{}_summary_ooi-based_general_analysis_{}.csv'.format(spec, action)))
+    
+    return df_summary
+
+    #endregion
