@@ -14,15 +14,17 @@ import numpy as np
 # barplots for all metrics (apart from relative fix / sac duration)
 def vis_gen_metrics_barplots(df, outputpath, filename, specification):
 
-    # barplots: all general metrics except relative
-    for col in range(len(df.columns)-1):    # -1 because of relative percentage (in last column) that cannot be plotted 
+    df_barplots = df.drop('Relative Fixation/Saccade Duration [%]', axis = 1)
 
-        savepath = outputpath / '{}_barplot_{}'.format(df.columns[col], specification)
+    # barplots: all general metrics except relative
+    for col in range(len(df_barplots.columns)):   
+
+        savepath = outputpath / '{}_barplot_{}'.format(df_barplots.columns[col], specification)
         sns.set_theme(style='whitegrid')
-        barplot = sns.barplot(x=df.index.values[:-1], y=df.iloc[:-1,col], color='mediumseagreen')
-        plt.title('{} ({})'.format(df.columns[col], specification), fontsize = 16, pad = 20, weight = 'bold')
+        barplot = sns.barplot(x=df_barplots.index.values[:-1], y=df_barplots.iloc[:-1,col], color='mediumseagreen')
+        plt.title('{} ({})'.format(df_barplots.columns[col], specification), fontsize = 16, pad = 20, weight = 'bold')
         plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
-        plt.ylabel(df.columns[col],  labelpad=20)
+        plt.ylabel(df_barplots.columns[col],  labelpad=20)
         fig = barplot.get_figure()
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
@@ -424,7 +426,7 @@ def vis_stats_ooi_gen(df, outputpath, trialname, metric, specification):
     # create barplot
     barplot = sns.barplot(x=df.index, y=df[metric], palette=custom_palette, dodge = False, data = df) 
     plt.title('{} ({})'.format(metric, specification), fontsize = 16, pad = 20, weight = 'bold')
-    plt.text(1.1,1.1, trialname, transform=plt.gca().transAxes)
+    plt.text(1.5,1.1, trialname, transform=plt.gca().transAxes)
     plt.ylabel(metric,  labelpad=20)
     barplot.set_xticklabels(labels = df.index, rotation=90)
     plt.legend(handlelist, label_list, bbox_to_anchor=(1.2, 1), loc="upper left")

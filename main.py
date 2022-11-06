@@ -16,10 +16,10 @@ import math
 import add_columns as ac
 import ooi_metrics
 import general_metrics
-import tobii_to_fixations as t2f # change to "Archive.tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
-import tobii_to_saccades as t2s # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
+import tobii_to_fixations as t2f # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
+import tobii_to_saccades as t2s # change to "tobii_to_saccades_old" if you have the .tsv file from tobii data export (not metrics export!)
 import action_separation
-import kcoefficient_analysis
+import kcoefficient_calculation
 import visualisations
 import sequence_comparisons
 import result_summaries
@@ -27,15 +27,17 @@ import result_summaries
 #endregion
 
 
+
+
 # _____________ VARIABLES FROM GUI (replacement for GUI at this stage)
 # region
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, entropy_stats, results_summary_report
+    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, run_stats, results_summary_report
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/test_study_metricsexport_1' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py
+    ui_input_path =  'Data/study_analysis_part2' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -52,16 +54,16 @@ def get_variables_gui():
     action_analysis = False
 
     # ooi-based analysis
-    ooi_analysis =  False
+    ooi_analysis = False
 
     # sequence comparison
     sequence_comp = False
 
     # stats (entropy) (needs ooi-based analysis to be run first)
-    entropy_stats = False
+    run_stats = False
 
     # results
-    results_summary_report = False
+    results_summary_report = True
        
 
     # import ogd file if it already exists
@@ -76,7 +78,7 @@ def get_variables_gui():
     # if distance should be calculated between sequences, ask for optimal sequence
     if sequence_comp == True:
         opt_sequence =  ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Injection', 'Remove Tip', 'Cap On']
-        algrthm = 'levenshtein_distance' 
+        algrthm = 'levenshtein_distance' # to extend with other types of edit distance algorithm calculations
 
     ## groups
 
@@ -381,10 +383,10 @@ if kcoeff_analysis == True:
             # iterate through each trial
             for k in range(len(trials[i][j])):
                 
-                kcoeff_path = trial_paths[i][j][k] + '_tobii.tsv' # used to be '_tobii_kcoeff.tsv', now tobii.tsv in new version, since same file is used for general and k-coeff analysis
+                kcoeff_path = trial_paths[i][j][k] + '_tobii.tsv' # change to '_tobii_kcoeff.tsv' if old tobii export is used
 
                 # filter for whole fixations and saccades 
-                kcoefficient_analysis.reformat(kcoeff_path, trial_paths[i][j][k])
+                kcoefficient_calculation.reformat(kcoeff_path, trial_paths[i][j][k])
                 
                 # read newly created kcoeff file 
                 kcoeff_data = pd.read_csv(trial_paths[i][j][k] + '_kcoeff.txt', sep='\t')
@@ -1025,7 +1027,7 @@ if action_analysis == True:
                 df_actions = action_separation.action_times(ogd_final, fixationdata, all_actions)
                 # save duration per step to trial folder
                 df_duration_per_step = df_actions[['action', 'start_time_action', 'end_time_action']]
-                df_duration_per_step.to_csv(trial_output_path / general_analysis / Path('{} Duration per Step.csv'.format(trials[i][j][k])))
+                df_duration_per_step.to_csv(trial_output_path / 'general_analysis' / Path('{} Duration per Step.csv'.format(trials[i][j][k])))
                 
                 ##  make df with average duration per action (general analysis)
 
@@ -1194,7 +1196,7 @@ if action_analysis == True:
                     df_pp_gen_action_dfs[action][k].append(df_summary_gen)
                     # how to access the saved df: df_pp_gen_action_dfs[action][k][0]
                     # because df is stored in a list     
-
+                    
 
                     ### summary of ooi metrics
 
@@ -1210,7 +1212,7 @@ if action_analysis == True:
                     # add df to summary df per participant
                     df_pp_ooi_action_dfs[action][k].append(df_summary_ooi)
 
-                    # visualisations of ooi metrics per action
+                    # visualisations of ooi metrics per action per trial
                     vis_path = analysispath / Path('visualisations')
                     spec = action   # add this to title in figure and file name
                     visualisations.vis_ooi_metrics(df_summary_ooi, vis_path, trials[i][j][k], spec)
@@ -1242,6 +1244,10 @@ if action_analysis == True:
             # create directory and define output path
             save_path = output_path / Path(groups[i]) / Path(participants[i][j]) / Path('general_analysis')
             os.makedirs(save_path, exist_ok= True)
+
+            # create directory and define output path of visualisations
+            vis_path = save_path / Path('visualisations')
+            os.makedirs(vis_path, exist_ok = True)
             
             for action in all_actions:
                 df_pp_action_list = [df_pp_gen_action_dfs[action][x][0] for x in range(len(df_pp_gen_action_dfs))]
@@ -1250,7 +1256,10 @@ if action_analysis == True:
                 # extract row with means per pp (second last row) and append to group summary df
                 pp_df_average = df_summary_pp_action.iloc[[-2]]
                 df_group_gen_action_dfs[action][j].append(pp_df_average)
-                e=3
+                
+                # visualisation of mean values of one participant
+                visualisations.vis_gen_metrics_barplots(df_summary_pp_action, vis_path, participants[i][j], action) 
+
 
             # duration per action
             df_pp_duration_per_action.loc['Mean {}'.format(participants[i][j])] = df_pp_duration_per_action.mean()
@@ -1291,6 +1300,9 @@ if action_analysis == True:
                 # extract row with means per pp (second last row) and append to group summary df
                 pp_df_average = df_summary_pp_action.iloc[[-2]]
                 df_group_ooigen_action_dfs[action][j].append(pp_df_average)
+                
+                # visualisation of mean values of one participant
+                visualisations.vis_ooigen_barplots(df_summary_pp_action, vis_path, participants[i][j], action) 
         
 
             ## k-coefficient
@@ -1341,6 +1353,11 @@ if action_analysis == True:
         save_path = output_path / Path(groups[i]) / Path('general_analysis')
         os.makedirs(save_path, exist_ok= True)
 
+        # create directory and define output path of visualisations
+        vis_path = save_path / Path('visualisations')
+        os.makedirs(vis_path, exist_ok = True)
+      
+
         for action in all_actions:
             df_group_action_list = [df_group_gen_action_dfs[action][x][0] for x in range(len(df_group_gen_action_dfs))]
             df_summary_group_action = general_metrics.summary_general_analysis(df_group_action_list, groups[i], save_path, action)
@@ -1348,6 +1365,11 @@ if action_analysis == True:
             # extract row with means (second last) per pp and append to group summary df
             group_df_average = df_summary_group_action.iloc[[-2]]
             df_allgroups_gen_action_dfs[action][i].append(group_df_average)
+
+            # visualisation of mean values per group
+            visualisations.vis_gen_metrics_barplots(df_summary_group_action, vis_path, groups[i], action) 
+
+            
 
         # duration per step
         df_group_duration_per_action.loc['Mean {}'.format(groups[i])] = df_group_duration_per_action.mean()
@@ -1390,6 +1412,9 @@ if action_analysis == True:
             # extract row with means per pp (second last row) and append to group summary df
             group_df_average = df_summary_group_action.iloc[[-2]]
             df_allgroups_ooigen_action_dfs[action][i].append(group_df_average)
+                            
+            # visualisation of mean values of one participant
+            visualisations.vis_ooigen_barplots(df_summary_group_action, vis_path, groups[i], action) 
 
         
         ## k-coefficient
@@ -1439,9 +1464,17 @@ if action_analysis == True:
     save_path = output_path / Path('general_analysis')
     os.makedirs(save_path, exist_ok= True)
 
+    # create directory and define output path of visualisations
+    vis_path = save_path / Path('visualisations')
+    os.makedirs(vis_path, exist_ok = True)
+
     for action in all_actions:
         df_allgroups_action_list = [df_allgroups_gen_action_dfs[action][x][0] for x in range(len(df_allgroups_gen_action_dfs))]
         df_summary_allgroups_action = general_metrics.summary_general_analysis(df_allgroups_action_list, 'All Groups', save_path, action)
+                
+        # visualisation of mean values per group
+        visualisations.vis_gen_metrics_barplots(df_summary_allgroups_action, vis_path, 'All Groups', action) 
+
 
     # duration per step
     df_allgroups_duration_per_action.loc['Mean All Groups'] = df_allgroups_duration_per_action.mean()
@@ -1463,15 +1496,20 @@ if action_analysis == True:
     for action in all_actions:
         df_allgroups_action_list = [df_allgroups_ooi_action_dfs[action][x][0] for x in range(len(df_allgroups_ooi_action_dfs))]
         df_summary_allgroups_action, df_summary_allgroups_action_means = ooi_metrics.summary_ooi_analysis(df_allgroups_action_list,'All Groups', save_path, action)
-    
+        
+        # visualisation of mean values of all groups
+        visualisations.vis_ooi_metrics(df_summary_allgroups_action_means, vis_path, 'All Groups', action) 
 
-    # visualisation of mean values of all groups
-    visualisations.vis_ooi_metrics(df_summary_allgroups_action_means, vis_path, 'All Groups', action) 
+
 
     ## ooi-based general analysis
     for action in all_actions:
         df_allgroups_action_list = [df_allgroups_ooigen_action_dfs[action][x][0] for x in range(len(df_allgroups_ooigen_action_dfs))]
         df_summary_allgroups_action = ooi_metrics.summary_ooigen_analysis(df_allgroups_action_list,'All Groups', save_path, action)
+
+                                    
+        # visualisation of mean values of one participant
+        visualisations.vis_ooigen_barplots(df_summary_allgroups_action, vis_path, 'All Groups', action) 
 
 
     ## k-coefficient
@@ -1503,22 +1541,16 @@ if action_analysis == True:
         os.makedirs(vis_path, exist_ok=True)
         visualisations.vis_kcoeff_barplot_action(df_allgroups_kcoeff_per_action,vis_path, 'All Groups', 'Whole Trial' )
 
-e=3
 
 
-
-
-
-
-    
 
 #endregion
 
 
-# _____________ STATISTICS (only entropy yet)
+# _____________ STATISTICS (only implemented for entropy yet)
 #region
 
-if entropy_stats == True:
+if run_stats == True:
     
     # save overall mean and overall standard deviation of all trials (not stdev of means of group, similar to k-coefficient)
     
@@ -1625,28 +1657,28 @@ if entropy_stats == True:
 
 if results_summary_report == True:
 
-    ### to delete, only for testing
+    ### only if it should be run separately
     #ooi_analysis = True
     #kcoeff_analysis = True
     #action_analysis = True
 
     
     img_import_path = output_path
-    results_path = Path('Results')
+    results_path = Path('Summary Report')
     os.makedirs(results_path, exist_ok = True)
     result_summaries.allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, 'All Groups')
 
     # iterate through groups    
     for i in range(len(groups)):
         img_import_path = output_path / Path(groups[i])
-        results_path = Path('Results') / Path(groups[i])
+        results_path = Path('Summary Report') / Path(groups[i])
         os.makedirs(results_path, exist_ok = True)
         result_summaries.allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, groups[i])
         
         # iterate through participants
         for j in range(len(participants[i])):
             img_import_path = output_path / Path(groups[i]) / participants[i][j]
-            results_path = Path('Results') / Path(groups[i]) / participants[i][j]
+            results_path = Path('Summary Report') / Path(groups[i]) / participants[i][j]
             os.makedirs(results_path, exist_ok = True)
             result_summaries.participants_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, participants[i][j])
 

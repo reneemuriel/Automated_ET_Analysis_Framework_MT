@@ -6,38 +6,9 @@ import cv2
 from fpdf import FPDF
 import os
 
-"""
-Attention
-    Hits per OOI
-    Time to first fixation per OOI
-    Relative dwell time per OOI
-    Average Fixation Duration per OOI
-
-Focus
-    K-Coefficient
-    Entropy
-    Fixation/saccade time ratio
-
-
-Efficiency
-    Average dwell time per OOI 
-    Duration per step / Total duration
-    Total fixations
-
-
-1) für all images ahpasse mit w und h: done
-2) luege öbs für group easy und difficult au gaht wemer efach de output path änderet: done
-3) denn für participants
-4) denn für trials fix e neui funktion
-5) alli textli schriebe 
-
-"""
-
-
 
 
 ### results for all groups and per group
-
 
 def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level):
     
@@ -72,7 +43,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     # description
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,55)
-    pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] the participants have taken to complete the task. of fixations that were identified on the respective object of interest. The less time they took, the more efficient they were.')
+    pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] is has taken the participant to complete the task. Generally, the shorter the duration, the more efficient the execution, and the higher the expertise.')
 
     # image
     # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -111,7 +82,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     # description
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,170)
-    pdf.multi_cell(190, 5 , align = 'L', txt='The average number of fixations over the entire trial. In general, the more fixations, the less efficient.')
+    pdf.multi_cell(190, 5 , align = 'L', txt='The average number of fixations per trial. Naturally, this correlates with the trial duration. Therefore, it is only useful if it is either normalised or if all recordings of a study have the same length. Generally, the number of fixations decreases with increasing expertise and in turn, increasing efficiency.')
 
 
     # image
@@ -122,19 +93,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     img_w = 80*wh_ratio
     if img_w > 190:
         # place image
-        pdf.set_xy(10,185) 
+        pdf.set_xy(10,195) 
         pdf.image(img_path, link='', type='PNG', w = 190) 
         # place frame
         img_h = 190/wh_ratio
-        pdf.set_xy(10,185) 
+        pdf.set_xy(10,195) 
         pdf.cell(w=190, h=img_h, border=1)
 
     else:
         # place image
-        pdf.set_xy(10, 185) 
+        pdf.set_xy(10, 195) 
         pdf.image(img_path, link='', type='PNG', h = 80)
         # place frame
-        pdf.set_xy(10,185)
+        pdf.set_xy(10,195)
         pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -154,7 +125,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant(s) to complete each of the identified actions. The faster, the more efficient they were.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participants to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -164,19 +135,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -186,13 +157,13 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,135)
+        pdf.set_xy(10,145)
         pdf.cell(190,10, align = 'L', txt='Average Dwell Time')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,145)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOI. Generally, the longer the dwell times, the higher the focus and concentration.')
+        pdf.set_xy(10,155)
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
 
         # image
@@ -203,19 +174,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,160)
+            pdf.set_xy(10,180)
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,160)
+            pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -237,7 +208,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOI. Generally, the longer the dwell times, the higher the focus and concentration.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -247,19 +218,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -280,7 +251,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant(s) to complete each of the identified actions. The faster, the more efficient they were.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participants to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -290,19 +261,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -324,12 +295,12 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     # title of metric
     pdf.set_font('Arial', 'B', 12)
     pdf.set_xy(10,25)
-    pdf.cell(190,10, align = 'L', txt='Relative Fixation Saccade Duration')
+    pdf.cell(190,10, align = 'L', txt='Relative Fixation/Saccade Duration')
 
     # description
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,35)
-    pdf.multi_cell(190, 5 , align = 'L', txt='Relative percentage of fixation and saccade durations.')
+    pdf.multi_cell(190, 5 , align = 'L', txt='Relative percentage of fixation and saccade durations, i.e. the total time the person has spent fixating compared to travelling from one fixation to the next. The higher the ratio, the more time is spent processing compared to searching.')
 
 
     # image
@@ -340,19 +311,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     img_w = 80*wh_ratio
     if img_w > 190:
         # place image
-        pdf.set_xy(10,50) 
+        pdf.set_xy(10,60) 
         pdf.image(img_path, link='', type='PNG', w = 190) 
         # place frame
         img_h = 190/wh_ratio
-        pdf.set_xy(10,50) 
+        pdf.set_xy(10,60) 
         pdf.cell(w=190, h=img_h, border=1)
 
     else:
         # place image
-        pdf.set_xy(10,50) 
+        pdf.set_xy(10,60) 
         pdf.image(img_path, link='', type='PNG', h = 80)
         # place frame
-        pdf.set_xy(10,50)
+        pdf.set_xy(10,60)
         pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -366,13 +337,13 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,140)
+        pdf.set_xy(10,150)
         pdf.cell(190,10, align = 'L', txt='Normalised Stationary Gaze Entropy')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,150)
-        pdf.multi_cell(190, 5 , align = 'L', txt='mimimiiii Normalised Stationary Gaze Entropy')
+        pdf.set_xy(10,160)
+        pdf.multi_cell(190, 5 , align = 'L', txt='A higher Stationary Gaze Entropy implies a more equal distribution of the visual attention between the OOIs. A lower value reflects when fixations tend to be concentrated on specific OOIs, either because they are more complex or more interesting to the subject.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -382,19 +353,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,165)
+            pdf.set_xy(10,185)
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,165)
+            pdf.set_xy(10,185)
             pdf.cell(w=img_w, h=80, border=1)
 
         
@@ -413,7 +384,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='Normalised Gaze Transition Entropy desciptiiionn BliblaBlau')
+        pdf.multi_cell(190, 5 , align = 'L', txt='In short, higher entropy can imply more randomness in the visual scanning pattern and in turn, less focus and efficiency.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -450,13 +421,13 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
             # title of metric
             pdf.set_font('Arial', 'B', 12)
-            pdf.set_xy(10,135)
+            pdf.set_xy(10,145)
             pdf.cell(190,10, align = 'L', txt='Average K-Coefficients')
 
             # description
             pdf.set_font('Arial', '', 12)
-            pdf.set_xy(10,145)
-            pdf.multi_cell(190, 5 , align = 'L', txt='K-Coefficient explained. And outside std dev')
+            pdf.set_xy(10,155)
+            pdf.multi_cell(190, 5 , align = 'L', txt='K > 0 indicates relatively long fixations succeeded by short saccades, implying focal vision. K < 0 indicates relatively short fixations succeeded by long saccades, implying ambient vision.')
 
             # image
             # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -466,19 +437,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             img_w = 80*wh_ratio
             if img_w > 190:
                 # place image
-                pdf.set_xy(10,160) 
+                pdf.set_xy(10,170) 
                 pdf.image(img_path, link='', type='PNG', w = 190) 
                 # place frame
                 img_h = 190/wh_ratio
-                pdf.set_xy(10,160)
+                pdf.set_xy(10,170)
                 pdf.cell(w=190, h=img_h, border=1)
 
             else:
                 # place image
-                pdf.set_xy(10,160) 
+                pdf.set_xy(10,170) 
                 pdf.image(img_path, link='', type='PNG', h = 80)
                 # place frame
-                pdf.set_xy(10,160)
+                pdf.set_xy(10,170)
                 pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -496,7 +467,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
                 # description
                 pdf.set_font('Arial', '', 12)
                 pdf.set_xy(10,30)
-                pdf.multi_cell(190, 5 , align = 'L', txt='K-Coefficient explained. and outside std dev ')
+                pdf.multi_cell(190, 5 , align = 'L', txt='K > 0 indicates relatively long fixations succeeded by short saccades, implying focal vision. K < 0 indicates relatively short fixations succeeded by long saccades, implying ambient vision.')
 
                 # image
                 # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -529,12 +500,12 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,140)
+        pdf.set_xy(10,150)
         pdf.cell(190,10, align = 'L', txt='K-Coefficient')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,150)
+        pdf.set_xy(10,160)
         pdf.multi_cell(190, 5 , align = 'L', txt='mimimiiii K-Coefficient description')
 
         # image
@@ -545,19 +516,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,165)
+            pdf.set_xy(10,185)
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,165)
+            pdf.set_xy(10,185)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -575,7 +546,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             # description
             pdf.set_font('Arial', '', 12)
             pdf.set_xy(10,30)
-            pdf.multi_cell(190, 5 , align = 'L', txt='descriptionnnn Average K-Coefficients of per Action')
+            pdf.multi_cell(190, 5 , align = 'L', txt='See Average K-Coefficient.')
 
             # image
             # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -657,12 +628,12 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,135)
+        pdf.set_xy(10,145)
         pdf.cell(190,10, align = 'L', txt='Time to First Fixation per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,145)
+        pdf.set_xy(10,155)
         pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
 
 
@@ -674,19 +645,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,170) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,160)
+            pdf.set_xy(10,170)
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,170) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,160)
+            pdf.set_xy(10,170)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -700,12 +671,12 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,10)
+        pdf.set_xy(10,20)
         pdf.cell(190,10, align = 'L', txt='Relative Dwelltime per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,20)
+        pdf.set_xy(10,30)
         pdf.multi_cell(190, 5 , align = 'L', txt='The relative amount of time the participants\' gaze was focused on each OOI. In general, the higher the percentage of dwell time, the higher the objects\' importance.')
 
         # image
@@ -716,19 +687,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,35) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,35) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,35) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,35)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -738,13 +709,13 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,125)
-        pdf.cell(190,10, align = 'L', txt='Relative Dwelltime per OOI')
+        pdf.set_xy(10,145)
+        pdf.cell(190,10, align = 'L', txt='Average Fixation Time per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,135)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration of a fixation on each OOI. Generally, higher fixation durations are associated with more focus and concentration. (?)')
+        pdf.set_xy(10,155)
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average fixation time per OOI is the mean duration of all fixations placed onto a particular OOI. Generally, higher fixation durations can be associated with more focus, concentration or interest.')
         
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -754,19 +725,19 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,150) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,150) 
+            pdf.set_xy(10,160) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,150) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,150)
+            pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -809,7 +780,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     # description
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,55)
-    pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] is has taken the participant to complete the task. of fixations that were identified on the respective object of interest. The less time they took, the more efficient they were.')
+    pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] it has taken the participants to complete the task. Generally, the shorter the duration, the more efficient the execution, and the higher the expertise.')
 
     # image
     # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -848,7 +819,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     # description
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,170)
-    pdf.multi_cell(190, 5 , align = 'L', txt='The average number of fixations over the entire trial. In general, the more fixations, the less efficient.')
+    pdf.multi_cell(190, 5 , align = 'L', txt='The average number of fixations per trial. Naturally, this number strongly correlates with the trial duration. Therefore, it is only useful if it is either normalised or if all recordings of a study have the same length. Generally, the number of fixations decreases with increasing expertise and efficiency.')
 
 
     # image
@@ -859,19 +830,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     img_w = 80*wh_ratio
     if img_w > 190:
         # place image
-        pdf.set_xy(10,185) 
+        pdf.set_xy(10,195) 
         pdf.image(img_path, link='', type='PNG', w = 190) 
         # place frame
         img_h = 190/wh_ratio
-        pdf.set_xy(10,185)
+        pdf.set_xy(10,195)
         pdf.cell(w=190, h=img_h, border=1)
 
     else:
         # place image
-        pdf.set_xy(10, 185) 
+        pdf.set_xy(10, 195) 
         pdf.image(img_path, link='', type='PNG', h = 80)
         # place frame
-        pdf.set_xy(10,185)
+        pdf.set_xy(10,195)
         pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -891,7 +862,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant(s) to complete each of the identified actions. The faster, the more efficient they were.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -901,19 +872,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -923,13 +894,13 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,135)
+        pdf.set_xy(10,145)
         pdf.cell(190,10, align = 'L', txt='Average Dwell Time')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,145)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOI. Generally, the longer the dwell times, the higher the focus and concentration.')
+        pdf.set_xy(10,155)
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
 
         # image
@@ -940,19 +911,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,160)
+            pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -974,7 +945,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOI. Generally, the longer the dwell times, the higher the focus and concentration.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOI. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -984,19 +955,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1017,7 +988,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant(s) to complete each of the identified actions. The faster, the more efficient they were.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1027,19 +998,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1061,12 +1032,12 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     # title of metric
     pdf.set_font('Arial', 'B', 12)
     pdf.set_xy(10,25)
-    pdf.cell(190,10, align = 'L', txt='Relative Fixation Saccade Duration')
+    pdf.cell(190,10, align = 'L', txt='Relative Fixation/Saccade Duration')
 
     # description
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,35)
-    pdf.multi_cell(190, 5 , align = 'L', txt='Relative percentage of fixation and saccade durations.')
+    pdf.multi_cell(190, 5 , align = 'L', txt='Relative percentage of fixation and saccade durations, i.e. the total time the person has spent fixating compared to travelling from one fixation to the next. The higher the ratio, the more time is spent processing compared to searching.')
 
     # image
     # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1076,19 +1047,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     img_w = 80*wh_ratio
     if img_w > 190:
         # place image
-        pdf.set_xy(10,50) 
+        pdf.set_xy(10,60) 
         pdf.image(img_path, link='', type='PNG', w = 190) 
         # place frame
         img_h = 190/wh_ratio
-        pdf.set_xy(10,50)
+        pdf.set_xy(10,60)
         pdf.cell(w=190, h=img_h, border=1)
 
     else:
         # place image
-        pdf.set_xy(10,50) 
+        pdf.set_xy(10,60) 
         pdf.image(img_path, link='', type='PNG', h = 80)
         # place frame
-        pdf.set_xy(10,50)
+        pdf.set_xy(10,60)
         pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1102,13 +1073,13 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,140)
+        pdf.set_xy(10,150)
         pdf.cell(190,10, align = 'L', txt='Normalised Stationary Gaze Entropy')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,150)
-        pdf.multi_cell(190, 5 , align = 'L', txt='mimimiiii Normalised Stationary Gaze Entropy')
+        pdf.set_xy(10,160)
+        pdf.multi_cell(190, 5 , align = 'L', txt='A higher SGE implies a more equal distribution of the visual attention between the OOIs. A lower value reflects when fixations tend to be concentrated on specific OOIs, either because they are more complex or more interesting to the subject.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1118,19 +1089,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,165)
+            pdf.set_xy(10,185)
             pdf.cell(w=img_w, h=80, border=1)
 
         
@@ -1149,7 +1120,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='Normalised Gaze Transition Entropy desciptiiionn BliblaBlau')
+        pdf.multi_cell(190, 5 , align = 'L', txt='In short, higher entropy can imply more randomness in the visual scanning pattern and in turn, less focus and efficiency.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1159,19 +1130,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1186,13 +1157,13 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
             # title of metric
             pdf.set_font('Arial', 'B', 12)
-            pdf.set_xy(10,135)
+            pdf.set_xy(10,145)
             pdf.cell(190,10, align = 'L', txt='Average K-Coefficients')
 
             # description
             pdf.set_font('Arial', '', 12)
-            pdf.set_xy(10,145)
-            pdf.multi_cell(190, 5 , align = 'L', txt='K-Coefficient explained. And outside std dev')
+            pdf.set_xy(10,155)
+            pdf.multi_cell(190, 5 , align = 'L', txt='K > 0 indicates relatively long fixations succeeded by short saccades, implying focal vision. K < 0 indicates relatively short fixations succeeded by long saccades, implying ambient vision.')
 
             # image
             # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1202,19 +1173,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             img_w = 80*wh_ratio
             if img_w > 190:
                 # place image
-                pdf.set_xy(10,160) 
+                pdf.set_xy(10,180) 
                 pdf.image(img_path, link='', type='PNG', w = 190) 
                 # place frame
                 img_h = 190/wh_ratio
-                pdf.set_xy(10,160) 
+                pdf.set_xy(10,180) 
                 pdf.cell(w=190, h=img_h, border=1)
 
             else:
                 # place image
-                pdf.set_xy(10,160) 
+                pdf.set_xy(10,180) 
                 pdf.image(img_path, link='', type='PNG', h = 80)
                 # place frame
-                pdf.set_xy(10,160)
+                pdf.set_xy(10,180)
                 pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1232,7 +1203,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
                 # description
                 pdf.set_font('Arial', '', 12)
                 pdf.set_xy(10,30)
-                pdf.multi_cell(190, 5 , align = 'L', txt='K-Coefficient explained. and outside std dev ')
+                pdf.multi_cell(190, 5 , align = 'L', txt='K > 0 indicates relatively long fixations succeeded by short saccades, implying focal vision. K < 0 indicates relatively short fixations succeeded by long saccades, implying ambient vision.')
 
                 # image
                 # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1242,19 +1213,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
                 img_w = 80*wh_ratio
                 if img_w > 190:
                     # place image
-                    pdf.set_xy(10,45) 
+                    pdf.set_xy(10,55) 
                     pdf.image(img_path, link='', type='PNG', w = 190) 
                     # place frame
                     img_h = 190/wh_ratio
-                    pdf.set_xy(10,45) 
+                    pdf.set_xy(10,55) 
                     pdf.cell(w=190, h=img_h, border=1)
 
                 else:
                     # place image
-                    pdf.set_xy(10,45) 
+                    pdf.set_xy(10,55) 
                     pdf.image(img_path, link='', type='PNG', h = 80)
                     # place frame
-                    pdf.set_xy(10,45)
+                    pdf.set_xy(10,55)
                     pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1265,12 +1236,12 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,140)
+        pdf.set_xy(10,150)
         pdf.cell(190,10, align = 'L', txt='K-Coefficient')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,150)
+        pdf.set_xy(10,160)
         pdf.multi_cell(190, 5 , align = 'L', txt='mimimiiii K-Coefficient description')
 
         # image
@@ -1281,19 +1252,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,165)
+            pdf.set_xy(10,185)
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,165) 
+            pdf.set_xy(10,185) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,165)
+            pdf.set_xy(10,185)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1311,7 +1282,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             # description
             pdf.set_font('Arial', '', 12)
             pdf.set_xy(10,30)
-            pdf.multi_cell(190, 5 , align = 'L', txt='descriptionnnn Average K-Coefficients of per Action')
+            pdf.multi_cell(190, 5 , align = 'L', txt='See Average K-Coefficient.')
 
             # image
             # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1321,19 +1292,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             img_w = 80*wh_ratio
             if img_w > 190:
                 # place image
-                pdf.set_xy(10,45) 
+                pdf.set_xy(10,55) 
                 pdf.image(img_path, link='', type='PNG', w = 190) 
                 # place frame
                 img_h = 190/wh_ratio
-                pdf.set_xy(10,45) 
+                pdf.set_xy(10,55) 
                 pdf.cell(w=190, h=img_h, border=1)
 
             else:
                 # place image
-                pdf.set_xy(10,45) 
+                pdf.set_xy(10,55) 
                 pdf.image(img_path, link='', type='PNG', h = 80)
                 # place frame
-                pdf.set_xy(10,45)
+                pdf.set_xy(10,55)
                 pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1370,19 +1341,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,45) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,45)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1393,12 +1364,12 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,135)
+        pdf.set_xy(10,145)
         pdf.cell(190,10, align = 'L', txt='Time to First Fixation per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,145)
+        pdf.set_xy(10,155)
         pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
 
 
@@ -1410,19 +1381,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,160) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,160)
+            pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1436,12 +1407,12 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,10)
+        pdf.set_xy(10,20)
         pdf.cell(190,10, align = 'L', txt='Relative Dwelltime per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,20)
+        pdf.set_xy(10,30)
         pdf.multi_cell(190, 5 , align = 'L', txt='The relative amount of time the participants\' gaze was focused on each OOI. In general, the higher the percentage of dwell time, the higher the objects\' importance.')
 
         # image
@@ -1452,19 +1423,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,35) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,35) 
+            pdf.set_xy(10,55) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,35) 
+            pdf.set_xy(10,55) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,35)
+            pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1474,13 +1445,13 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
         # title of metric
         pdf.set_font('Arial', 'B', 12)
-        pdf.set_xy(10,125)
-        pdf.cell(190,10, align = 'L', txt='Relative Dwelltime per OOI')
+        pdf.set_xy(10,145)
+        pdf.cell(190,10, align = 'L', txt='Average Fixation Time per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)
-        pdf.set_xy(10,135)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration of a fixation on each OOI. Generally, higher fixation durations are associated with more focus and concentration. (?)')
+        pdf.set_xy(10,155)
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average fixation time per OOI is the mean duration of all fixations placed onto a particular OOI. Generally, higher fixation durations can be associated with more focus, concentration or interest.')
         
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1490,19 +1461,19 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         img_w = 80*wh_ratio
         if img_w > 190:
             # place image
-            pdf.set_xy(10,150) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', w = 190) 
             # place frame
             img_h = 190/wh_ratio
-            pdf.set_xy(10,150) 
+            pdf.set_xy(10,180) 
             pdf.cell(w=190, h=img_h, border=1)
 
         else:
             # place image
-            pdf.set_xy(10,150) 
+            pdf.set_xy(10,180) 
             pdf.image(img_path, link='', type='PNG', h = 80)
             # place frame
-            pdf.set_xy(10,150)
+            pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
 
 
@@ -1518,17 +1489,15 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
 
 # which analyses took place? 
-ooi_analysis = False
-kcoeff_analysis = False
-action_analysis = False
 # general_analysis: always true 
+#ooi_analysis = True
+#kcoeff_analysis = True
+#action_analysis = True
 
-
-level = 'participant03'
-img_import_path = 'Output/group_easy/participant03'
-results_path = Path('Results/group_easy/participant03')
-os.makedirs(results_path, exist_ok = True)
+#level = 'participant03'
+#img_import_path = 'Output_backup/group_easy/participant03'
+#results_path = Path('Summary_Report_Sep/group_easy/participant03')
+#os.makedirs(results_path, exist_ok = True)
 
 #allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level)
-
-participants_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level)
+#participants_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level)

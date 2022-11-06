@@ -1,7 +1,0 @@
-,K-coefficient,start_time,Action,Outside 2x Stdev,Focal/Ambient
-0,0.5957607094272315,1544,Cap Off,False,Focal
-1,0.7736431057857187,3453,Cap Off,False,Focal
-2,-1.328497853416031,13777,Apply Tip,True,Ambient
-3,-1.381766854866354,38373,Setting Units,True,Ambient
-4,-0.3020237872928514,60520,Cap On,False,Ambient
-5,0.2146675725150778,61060,Cap On,False,Focal
