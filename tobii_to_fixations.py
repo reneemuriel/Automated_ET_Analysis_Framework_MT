@@ -65,7 +65,7 @@ def reformat(file, trial_path):    #ouput file location added by renee
   
     df_out.to_csv(trial_path + '_fixations.txt', sep='\t', index=False) 
 
-    print("file: {} was reformatted successfully".format(file_string))
+     #print("file: {} was reformatted successfully".format(file_string))
 
 
 

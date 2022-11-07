@@ -22,6 +22,8 @@ def vis_gen_metrics_barplots(df, outputpath, filename, specification):
         savepath = outputpath / '{}_barplot_{}'.format(df_barplots.columns[col], specification)
         sns.set_theme(style='whitegrid')
         barplot = sns.barplot(x=df_barplots.index.values[:-1], y=df_barplots.iloc[:-1,col], color='mediumseagreen')
+        x_labels = df_barplots.index.values[:-1]
+        barplot.set_xticklabels(x_labels, rotation = 90)
         plt.title('{} ({})'.format(df_barplots.columns[col], specification), fontsize = 16, pad = 20, weight = 'bold')
         plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
         plt.ylabel(df_barplots.columns[col],  labelpad=20)
@@ -36,7 +38,7 @@ def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specificat
     savepath=outputpath /'{}_boxplot_{}'.format(metric, specification)
     sns.set_theme(style='whitegrid')
     boxplot = sns.boxplot(data=nested_list, color='mediumseagreen')
-    boxplot.set_xticklabels(x_labels)
+    boxplot.set_xticklabels(x_labels, rotation = 90) # changed this
     plt.title('{} ({})'.format(metric, specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
     fig = boxplot.get_figure()
@@ -90,7 +92,7 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
             axes[fig_number].set_title(df.index[fig_number])
             axes[fig_number].pie(piedata, colors = clrs, autopct='%.0f%%' )
         axes[0].legend(lbls, bbox_to_anchor=(0, 0.5))
-        plt.text(1.1,1.5, filename, transform=plt.gca().transAxes)
+        plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
         plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
         plt.clf()
 
@@ -111,11 +113,14 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
             break
 
 
-        axes[0,0].legend(lbls, bbox_to_anchor=(5, 0))
-        axes[0,0].text(4.5,2.5, filename, transform=plt.gca().transAxes) 
+        fig.legend(lbls, bbox_to_anchor=(1, 1), loc = 'upper right') 
+        axes[0,0].text(4.5,5, filename, transform=plt.gca().transAxes) 
+
         # remove empty grid
         for ax in axes.flat[number_figs:]:
-            ax.remove()       
+            ax.remove()    
+           
+        plt.tight_layout()
         plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
         plt.clf()
     

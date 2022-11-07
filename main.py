@@ -27,8 +27,6 @@ import result_summaries
 #endregion
 
 
-
-
 # _____________ VARIABLES FROM GUI (replacement for GUI at this stage)
 # region
 
@@ -37,7 +35,7 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, run_stats, results_summary_report
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/study_analysis_part2' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
+    ui_input_path =  'Data/study_analysis_part1' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -48,7 +46,7 @@ def get_variables_gui():
     general_analysis = True
 
     # calculate k-coefficient
-    kcoeff_analysis = True
+    kcoeff_analysis = False
 
     # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, should be changed)
     action_analysis = False
@@ -63,7 +61,7 @@ def get_variables_gui():
     run_stats = False
 
     # results
-    results_summary_report = True
+    results_summary_report = False
        
 
     # import ogd file if it already exists
@@ -128,7 +126,7 @@ for i in range (len(groups)):
     # save all participants (participants[0] for group 1 and participants[1] for group 2)
     participant_paths.insert(i,[Path(filepath[:-18]) for filepath in filepaths]) # -18 to get participantxx
     participant_paths[i] = set(participant_paths[i]) # remove duplicates
-    participant_paths[i] = list(participant_paths[i])
+    participant_paths[i] = list(participant_paths[i])   
     participants.insert(i,[os.path.basename(participant) for participant in participant_paths[i]])
 
     # iterate through participants to save trial paths per participants
@@ -407,8 +405,7 @@ if kcoeff_analysis == True:
     stdv_sac_amp = statistics.pstdev(saccade_amplitudes)
 
     # now, iterate again through trials to calculate k-coefficient per fixation and save in df
-   
-    summary_df_kcoeff = pd.DataFrame(index = trials[i])
+    #summary_df_kcoeff = pd.DataFrame(index = trials[i])
     df_kcoeff_participant_list = []
     all_kcoeffs_list = []
     df_allgroups_kcoeff = pd.DataFrame(index=['All Groups'], columns = groups + ['Mean All Groups']) 
