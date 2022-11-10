@@ -39,12 +39,3 @@ def add_fixation_time(data):
     for row in range (0,len(data)):
         fixation_time.append(data['end_time'][row]-data['start_time'][row])
     data['fixation_time'] = fixation_time
-
-
-# calculate average fixation time per OOI of entire trial
-
-
-# calculate average fixation time per OOI per step
-
-
-# count duration per step (or maybe from other file?)

@@ -113,8 +113,9 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
             break
 
 
-        fig.legend(lbls, bbox_to_anchor=(1, 1), loc = 'upper right') 
-        axes[0,0].text(4.5,5, filename, transform=plt.gca().transAxes) 
+        fig.legend(lbls, bbox_to_anchor=(0.95, 1.05), loc = 'upper right') 
+        fig.text(1,1, s=filename)
+        #axes[0,0].text(4.5,5, filename, transform=plt.gca().transAxes) 
 
         # remove empty grid
         for ax in axes.flat[number_figs:]:
@@ -132,7 +133,7 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
     savepath=outputpath /'Average Saccade Duration [ms]_boxplot_{}'.format(specification)
     sns.set_theme(style='whitegrid')
     boxplot = sns.boxplot(data=sac_dur_list, color='mediumseagreen')
-    boxplot.set_xticklabels(x_labels)
+    boxplot.set_xticklabels(x_labels, rotation = 90)
     plt.title('Average Saccade Duration ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
     fig = boxplot.get_figure()
@@ -143,7 +144,7 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
     # boxplots: fixation duration
     savepath=outputpath /'Average Fixation Duration [ms]_boxplot_{}'.format(specification)
     boxplot = sns.boxplot(data=fix_dur_list, color='mediumseagreen')
-    boxplot.set_xticklabels(x_labels)
+    boxplot.set_xticklabels(x_labels, rotation = 90)
     plt.title('Average Fixation Duration ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
     fig = boxplot.get_figure()

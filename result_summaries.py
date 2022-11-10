@@ -495,7 +495,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
     if ooi_analysis == False and kcoeff_analysis == True:
         # second metric first focus page: kcoeff 
-        img_path = '{}/k-coefficient_analysis/visualisations/All Groups K-Coefficients Summary.png'.format(img_import_path)
+        img_path = '{}/k-coefficient_analysis/visualisations/K-Coefficients Summary.png'.format(img_import_path)
         
         
         # title of metric
@@ -506,7 +506,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,160)
-        pdf.multi_cell(190, 5 , align = 'L', txt='mimimiiii K-Coefficient description')
+        pdf.multi_cell(190, 5 , align = 'L', txt='K > 0 indicates relatively long fixations succeeded by short saccades, implying focal vision. K < 0 indicates relatively short fixations succeeded by long saccades, implying ambient vision.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1242,7 +1242,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,160)
-        pdf.multi_cell(190, 5 , align = 'L', txt='mimimiiii K-Coefficient description')
+        pdf.multi_cell(190, 5 , align = 'L', txt='K > 0 indicates relatively long fixations succeeded by short saccades, implying focal vision. K < 0 indicates relatively short fixations succeeded by long saccades, implying ambient vision.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 

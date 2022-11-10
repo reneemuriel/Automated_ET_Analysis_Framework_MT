@@ -12,8 +12,7 @@ import math
 
 # make requirements.txt that lists all packages that need to be installed in environment -
 
-# import own modules
-import add_columns as ac
+# import own scripts
 import ooi_metrics
 import general_metrics
 import tobii_to_fixations as t2f # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
@@ -32,7 +31,7 @@ import result_summaries
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, subs_trials, input_path, output_path, number_of_subs_trials, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, run_stats, results_summary_report
+    global ogd_exist, pixel_distance, input_path, output_path, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, run_stats, results_summary_report
 
     # choose input path (where group folders lie)
     ui_input_path =  'Data/study_analysis_part1' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
@@ -75,7 +74,7 @@ def get_variables_gui():
 
     # if distance should be calculated between sequences, ask for optimal sequence
     if sequence_comp == True:
-        opt_sequence =  ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Injection', 'Remove Tip', 'Cap On']
+        opt_sequence =  ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Setting Units', 'Injection', 'Remove Tip', 'Cap On']
         algrthm = 'levenshtein_distance' # to extend with other types of edit distance algorithm calculations
 
     ## groups
@@ -84,10 +83,6 @@ def get_variables_gui():
     groups = []
     groups = [f for f in sorted(os.listdir(input_path))] 
 
-
-    # multiple trials per participant?
-    subs_trials = True
-    number_of_subs_trials = 4
 
     # others
     pixel_distance = 20
@@ -126,12 +121,14 @@ for i in range (len(groups)):
     # save all participants (participants[0] for group 1 and participants[1] for group 2)
     participant_paths.insert(i,[Path(filepath[:-18]) for filepath in filepaths]) # -18 to get participantxx
     participant_paths[i] = set(participant_paths[i]) # remove duplicates
-    participant_paths[i] = list(participant_paths[i])   
+    participant_paths[i] = list(participant_paths[i]) # convert to list
+    participant_paths[i] = sorted(participant_paths[i]) # sort alphabetically
     participants.insert(i,[os.path.basename(participant) for participant in participant_paths[i]])
+    participants[i] = sorted(participants[i]) # sort alphabetically
 
     # iterate through participants to save trial paths per participants
     trials.append([])
-    trials_only.append([])
+    trials_only.append([]) # not used yet, but could be useful later if trial number want to be compared to each other (e.g. all first trials vs. all third trials)
     trial_paths.append([])
     j=0
     for j in range(len(participants[i])):
@@ -145,21 +142,23 @@ for i in range (len(groups)):
             if '{}'.format(participants[i][j]) in file:
                 trial_name = file[:-10] # to get trialname only
                 trial_path_list.append(trial_name)
-                #trial_paths[i][j] = [file]
         trials_list = [os.path.basename(trial) for trial in trial_path_list]
         trials_only_list = [trial[14:] for trial in trials_list]
         
         # create ouput folder for each trial
         [os.makedirs(output_path / Path(groups[i]) / Path(participants[i][j]) / trial, exist_ok = True) for trial in trials_list]
 
-        # add to trial list
+        # add to trial list & sort alphabetically
         trials[i].insert(j,trials_list)
-        # add to trials_only list
+        trials[i][j] = sorted(trials[i][j])
+        # add to trials_only list & sort alphabetically
         trials_only[i].insert(j, trials_only_list)
+        trials_only[i][j] = sorted(trials_only[i][j])
         # add to trial_paths list
-        trial_paths[i].insert(j,trial_path_list) # for some reason adds a new empty element
+        trial_paths[i].insert(j,trial_path_list) 
+        trial_paths[i][j] = sorted(trial_paths[i][j])
 
-
+groups = sorted(groups) # sort groups alphabetically
 
 #endregion
 
@@ -1451,7 +1450,7 @@ if action_analysis == True:
             df_group_seq_comp.index = ['trial0{}'.format(x) for x in range(1,len(df_group_seq_comp)+1)]
             analysispath = output_path / Path(groups[i]) / Path('sequence_comparison')
             os.makedirs(analysispath, exist_ok=True)
-            df_group_seq_comp.to_csv(analysispath / '{} Sequence Comparison'.format(groups[i]))
+            df_group_seq_comp.to_csv(analysispath / '{} Sequence Comparison.csv'.format(groups[i]))
     
     ### summary of all groups
 
@@ -1656,7 +1655,7 @@ if results_summary_report == True:
 
     ### only if it should be run separately
     #ooi_analysis = True
-    #kcoeff_analysis = True
+    kcoeff_analysis = True
     #action_analysis = True
 
     

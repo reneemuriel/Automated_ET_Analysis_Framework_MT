@@ -106,5 +106,5 @@ def reformat_sep(file, output_path):
     print("file: {} was reformatted successfully".format(file_string_trialonly))
 
 # reformat 
-for filename in filenames:
-    reformat_sep(filename, output_path)
+#for filename in filenames:
+#    reformat_sep(filename, output_path)
