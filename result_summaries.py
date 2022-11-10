@@ -125,7 +125,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participants to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] it has taken the participants to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -163,7 +163,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell [ms] on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
 
         # image
@@ -208,7 +208,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell [ms] on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -251,7 +251,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participants to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] it has taken the participants to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -634,7 +634,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
 
 
         # image
@@ -663,8 +663,8 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
 
 
 
-        ### third metric: Relative Dwelltime [%] per OOI
-        img_path =  '{}/ooi_analysis/visualisations/Relative Dwelltime [%] per OOI_piechart_Whole Trial.png'.format(img_import_path)
+        ### third metric: Relative Dwell Time [%] per OOI
+        img_path =  '{}/ooi_analysis/visualisations/Relative Dwell Time [%] per OOI_piechart_Whole Trial.png'.format(img_import_path)
 
         # new page
         pdf.add_page()
@@ -672,7 +672,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # title of metric
         pdf.set_font('Arial', 'B', 12)
         pdf.set_xy(10,20)
-        pdf.cell(190,10, align = 'L', txt='Relative Dwelltime per OOI')
+        pdf.cell(190,10, align = 'L', txt='Relative Dwell Time per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)
@@ -862,7 +862,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] it has taken the participant to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -900,7 +900,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell [ms] on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
 
         # image
@@ -945,7 +945,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell in miliseconds on the defined OOI. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell [ms] on the defined OOI. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -988,7 +988,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,30)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds it has taken the participant to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] it has taken the participant to complete each of the identified actions. Similar to "Total Duration", the faster they were, the more efficient the task was performed.')
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1370,7 +1370,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # description
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
-        pdf.multi_cell(190, 5 , align = 'L', txt='The average time in miliseconds until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
+        pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
 
 
         # image
@@ -1399,8 +1399,8 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
 
 
 
-        ### third metric: Relative Dwelltime [%] per OOI
-        img_path =  '{}/ooi_analysis/visualisations/Relative Dwelltime [%] per OOI_piechart_Whole Trial.png'.format(img_import_path)
+        ### third metric: Relative Dwell Time [%] per OOI
+        img_path =  '{}/ooi_analysis/visualisations/Relative Dwell Time [%] per OOI_piechart_Whole Trial.png'.format(img_import_path)
 
         # new page
         pdf.add_page()
@@ -1408,7 +1408,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # title of metric
         pdf.set_font('Arial', 'B', 12)
         pdf.set_xy(10,20)
-        pdf.cell(190,10, align = 'L', txt='Relative Dwelltime per OOI')
+        pdf.cell(190,10, align = 'L', txt='Relative Dwell Time per OOI')
 
         # description
         pdf.set_font('Arial', '', 12)

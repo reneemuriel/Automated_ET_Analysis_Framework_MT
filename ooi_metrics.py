@@ -257,7 +257,7 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
 
     # name rows of df
     # maybe convert back to seconds?
-    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwelltime [ms]', 'Total Dwelltime [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Time to First Fixation [ms]', 'Relative Dwelltime [%]']
+    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwell Time [ms]', 'Total Dwell Time [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Time to First Fixation [ms]', 'Relative Dwell Time [%]']
 
 
     return df_ooi_metrics
@@ -301,7 +301,7 @@ def calculate_ooi_metrics_per_action(data, all_ooi):
 
     # name rows of df
     # maybe convert back to seconds?
-    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwelltime [ms]', 'Total Dwelltime [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Relative Dwelltime [%]']
+    df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwell Time [ms]', 'Total Dwell Time [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Relative Dwell Time [%]']
 
 
     return df_ooi_metrics
@@ -480,7 +480,7 @@ def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
     df_general_ooi_metrics = pd.DataFrame(dtype=float)
 
     # calculate average dwell time 
-    df_general_ooi_metrics['Average Dwelltime [ms]'] = [avg_dwell_time(all_ooi)]
+    df_general_ooi_metrics['Average Dwell Time [ms]'] = [avg_dwell_time(all_ooi)]
     
     # calculate total hits
     df_general_ooi_metrics['Total Hits'] = [tot_hits()]
