@@ -1,0 +1,14 @@
+action_list: null
+executionOptions:
+  action_analysis: false
+  entropy_stats: false
+  general_analysis: true
+  hitradius: 60
+  kcoeff_analysis: false
+  novice_results: true
+  ooi_analysis: true
+  sequence_comparison: false
+paths:
+  input: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/.vscode
+  output: Enter the path to your output folder.
+template_sequence: null
