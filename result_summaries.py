@@ -581,7 +581,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         ### set sub-title of analysis: attention
         pdf.set_font('Arial', 'B', 16)
         pdf.set_xy(10,10)
-        pdf.cell(190,10, txt='3) Attention / Object of Interest-based Analysis', align='C')
+        pdf.cell(190,10, txt='3) Attention / Object of Interest-Based Analysis', align='C')
 
 
         ### first metric: hits per OOI
@@ -1317,7 +1317,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         ### set sub-title of analysis: attention
         pdf.set_font('Arial', 'B', 16)
         pdf.set_xy(10,10)
-        pdf.cell(190,10, txt='3) Attention / Object of Interest-based Analysis', align='C')
+        pdf.cell(190,10, txt='3) Attention / Object of Interest-Based Analysis', align='C')
 
 
         ### first metric: hits per OOI

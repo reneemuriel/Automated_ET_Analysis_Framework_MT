@@ -1,31 +1,6 @@
-#Author Thomas Kreiner
-#Requires python3 and pandas
-
-# tobii file expert in microseconds!
-
-#Changes from cgom: 
-
 import pandas as pd
 import os
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-import glob
 from pathlib import Path
-
-path = os.getcwd()
-filenames = glob.glob(path + '/To_be_formatted' + "/*.tsv") 
-
-#Import tsv into pandas dataframe: data.tsv must be in the same folder as python script
-
-def insert_row(idx, df, df_insert):
-    dfA = df.iloc[:idx, ]
-    dfB = df.iloc[idx:, ]
-
-    df = dfA.append(df_insert).append(dfB).reset_index(drop = True)
-
-    return df
-
 
 def reformat(file, trial_path):    #ouput file location added by renee
 
@@ -48,7 +23,3 @@ def reformat(file, trial_path):    #ouput file location added by renee
 
     #print("file: {} was reformatted successfully".format(file_string))
 
-
-
-for filename in filenames:
-    reformat(filename)

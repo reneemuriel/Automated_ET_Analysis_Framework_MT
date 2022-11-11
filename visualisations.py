@@ -188,20 +188,20 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
 
-    # piechart for Relative Dwelltime [%]:
+    # piechart for Relative Dwell Time [%]:
 
     # only plot if greater than 0% 
-    piedata = df.loc['Relative Dwelltime [%]'] 
+    piedata = df.loc['Relative Dwell Time [%]'] 
     piedata = piedata[piedata!=0]
 
     # make pie chart
-    savepath=outputpath /'{} per OOI_piechart_{}'.format('Relative Dwelltime [%]', specification)
+    savepath=outputpath /'{} per OOI_piechart_{}'.format('Relative Dwell Time [%]', specification)
     number_cols = len(piedata)
     clrs = sns.color_palette('pastel')[0:number_cols]
     lbls = piedata.index
     plt.pie(piedata, labels = lbls, colors = clrs, autopct='%.0f%%' )
     plt.text(1.3,1.1, filename, transform=plt.gca().transAxes)
-    plt.title('Relative Dwelltime [%] per OOI ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
+    plt.title('Relative Dwell Time [%] per OOI ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
     #plt.tight_layout()
     plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
     plt.clf()

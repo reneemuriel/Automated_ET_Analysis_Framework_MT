@@ -10,8 +10,6 @@ import os
 import math
 
 
-# make requirements.txt that lists all packages that need to be installed in environment -
-
 # import own scripts
 import ooi_metrics
 import general_metrics
@@ -31,10 +29,10 @@ import result_summaries
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, input_path, output_path, groups, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, run_stats, results_summary_report
+    global ogd_exist, pixel_distance, input_path, output_path, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, run_stats, results_summary_report
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/study_analysis_part1' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
+    ui_input_path =  'Data/study_analysis_part2' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
@@ -45,22 +43,22 @@ def get_variables_gui():
     general_analysis = True
 
     # calculate k-coefficient
-    kcoeff_analysis = False
+    kcoeff_analysis = True
 
     # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, should be changed)
-    action_analysis = False
+    action_analysis = True
 
     # ooi-based analysis
-    ooi_analysis = False
+    ooi_analysis = True
 
     # sequence comparison
-    sequence_comp = False
+    sequence_comp = True
 
     # stats (entropy) (needs ooi-based analysis to be run first)
-    run_stats = False
+    run_stats = True
 
     # results
-    results_summary_report = False
+    results_summary_report = True
        
 
     # import ogd file if it already exists
@@ -77,11 +75,7 @@ def get_variables_gui():
         opt_sequence =  ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Setting Units', 'Injection', 'Remove Tip', 'Cap On']
         algrthm = 'levenshtein_distance' # to extend with other types of edit distance algorithm calculations
 
-    ## groups
 
-    # same folder structure for one group and multiple groups: input/groupname/data
-    groups = []
-    groups = [f for f in sorted(os.listdir(input_path))] 
 
 
     # others
@@ -95,6 +89,9 @@ get_variables_gui()
 
 # _____________ GET LIST & PATHS OF PARTICIPANTS AND TRIALS 
 #region
+
+# same folder structure for one group and multiple groups: input/groupname/data
+groups = [f for f in sorted(os.listdir(input_path))] 
 
 trials = []
 trials_only = []
@@ -1655,7 +1652,7 @@ if results_summary_report == True:
 
     ### only if it should be run separately
     #ooi_analysis = True
-    kcoeff_analysis = True
+    #kcoeff_analysis = True
     #action_analysis = True
 
     
