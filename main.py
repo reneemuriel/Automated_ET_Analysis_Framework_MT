@@ -29,7 +29,7 @@ import result_summaries
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, input_path, output_path, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, opt_sequence, algrthm, run_stats, results_summary_report
+    global ogd_exist, pixel_distance, input_path, output_path, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, template_sequence, algrthm, run_stats, results_summary_report
 
     # choose input path (where group folders lie)
     ui_input_path =  'Data/study_analysis_part2' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
@@ -72,7 +72,7 @@ def get_variables_gui():
 
     # if distance should be calculated between sequences, ask for optimal sequence
     if sequence_comp == True:
-        opt_sequence =  ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Setting Units', 'Injection', 'Remove Tip', 'Cap On']
+        template_sequence =  ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Setting Units', 'Injection', 'Remove Tip', 'Cap On']
         algrthm = 'levenshtein_distance' # to extend with other types of edit distance algorithm calculations
 
 
@@ -356,7 +356,6 @@ if general_analysis == True:
     visualisations.vis_gen_metrics_piechart(allgroups_df_summary, vis_path, 'All Groups', 'Whole Trial')
 
 
-e=3
 #endregion
 
 
@@ -1060,7 +1059,7 @@ if action_analysis == True:
 
                 ## distance algorithm
                 if sequence_comp == True:
-                    distance = sequence_comparisons.calculate_difference(opt_sequence, action_sequence, algrthm)
+                    distance = sequence_comparisons.calculate_difference(template_sequence, action_sequence, algrthm)
                     # save to list to add to df_group_distance
                     list_pp_seq_comp.append(distance)
 

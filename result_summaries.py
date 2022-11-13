@@ -43,7 +43,7 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     # description
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,55)
-    pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] is has taken the participant to complete the task. Generally, the shorter the duration, the more efficient the execution, and the higher the expertise.')
+    pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] it has taken the participant to complete the task. Generally, the shorter the duration, the more efficient the execution, and the higher the expertise.')
 
     # image
     # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
