@@ -1,4 +1,3 @@
-#TODO: update file information
 '''
 Date:
 Author:
@@ -83,7 +82,7 @@ class ActionDialog(QDialog, SelectionDialog):
 
         # parse string into action list
         tmp_list = list_str[1:-1].split(',')
-        self.action_list = [(elem[1:] if elem[0] == ' ' else elem) for elem in tmp_list]
+        self.action_list = [(elem[1:] if elem[0] == ' ' else elem) for elem in tmp_list] 
 
         # update action list
         self.textBrowser.setText(str(self.action_list))
@@ -170,7 +169,7 @@ class SequenceDialog(QDialog, SequenceDialog):
         
         # parse string into template sequence
         tmp_seq = seq_str[1:-1].split(',')
-        self.template_sequence = [(elem[1:] if elem[0] == ' ' else elem) for elem in tmp_seq]
+        self.template_sequence = [(elem[1:] if elem[0] == ' ' else elem) for elem in tmp_seq] 
 
         # update template sequence
         self.textBrowser.setText(str(self.template_sequence))

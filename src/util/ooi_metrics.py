@@ -2,11 +2,11 @@ from glob import glob
 import pandas as pd
 import statistics
 import math
-import add_columns as ac
 import numpy as np
 from pathlib import Path
 import re
 
+from src.util import add_columns as ac
 
 
 ### PREPARE OGD FILE
@@ -30,15 +30,20 @@ def prepare_ogd_file(ogd_data, pixel_distance):
     
     # add columns
     ogd_final = ogd_data
-    ac.add_fixation_object(ogd_final,pixel_distance)
-    ac.add_fixation_time(ogd_final)
 
+    # if last column is action, call ac.add_fixation_object_action()
+    if ogd_final.columns[-1] == 'action':
+        ac.add_fixation_object_action(ogd_final,pixel_distance)
+    # otherwise, call ac.add_fixation_object()
+    else:
+        ac.add_fixation_object(ogd_final,pixel_distance)
+    
     return ogd_final
 
 
 def extract_oois(ogd_data):
     # extract oois from ogd_data
-    if ogd_data.columns.values[-1] == 'action' or 'Action':
+    if ogd_data.columns.values[-1] == 'action' or ogd_data.columns.values[-1] == 'Action':
     # format: start_time, end_time, OOI_1, OOI_2, OOI_3, action
         all_ooi = ogd_data.columns.values.tolist()[2:-1]
     else:

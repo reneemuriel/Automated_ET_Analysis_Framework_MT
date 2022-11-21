@@ -13,7 +13,7 @@ import src.util.sequence_comparisons as sequence_comparisons
 import src.util.visualisations as visualisations
 
 
-def analyse(list_tuple: list, output_path: str, pixel_distance: int, all_actions: list, template_sequence, sequence_comp: bool, kcoeff_analysis: bool, kcoeff_stats_list, mean_kcoeff_all, stdev_kcoeff_all) -> tuple:
+def analyse(list_tuple: list, output_path: str, pixel_distance: int, all_actions: list, template_sequence, sequence_comp: bool, kcoeff_analysis: bool,  mean_kcoeff_all, stdev_kcoeff_all) -> tuple:
 
 
     # get individual lists from tuple
@@ -113,7 +113,7 @@ def analyse(list_tuple: list, output_path: str, pixel_distance: int, all_actions
                     for x in range(len(df_duration_per_step)):
                         if df_duration_per_step['action'][x] == action:
                             df_trial_duration_per_action[action][0].append(df_duration_per_step['duration'][x])
-                
+                            
                 # add column with mean per action
                 list_means = []
                 for x in range(len(all_actions)):
@@ -300,13 +300,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance: int, all_actions
 
                     # save output per action: ooi-based general metrics
                     df_summary_ooigen.to_csv(analysispath / '{}_ooi-based_general_analysis_{}.csv'.format(trials[i][j][k], action))
-
-                    # visualisations of transition_matrix per action
-                    # for each step!
-
-
-                print(i,j,k)           
-            
 
 
             ### summary per participant

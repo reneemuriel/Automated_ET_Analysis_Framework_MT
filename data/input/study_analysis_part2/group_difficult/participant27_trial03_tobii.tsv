@@ -1,0 +1,661 @@
+	Recording	Participant	TOI	Interval	Media	Event_type	Validity	EventIndex	Start	Stop	Duration	AOI	Hit_proportion	FixationPointX	FixationPointY	Average_pupil_diameter	Saccade_direction	Average_velocity	Peak_velocity	Saccade_amplitude	Start_AOI	Landing_AOI	Start_position_X	Start_position_Y	Landing_position_X	Landing_position_Y
+20925	Recording032	participant27_trial03	Entire Recording	1		Fixation	Partial	1	0	165	165			0.56419	0.37659000000000004	3.5588300000000004										
+20926	Recording032	participant27_trial03	Entire Recording	1		Saccade	Partial	1	165	175	10							178.93	178.93				0.56419	0.37659000000000004		
+20927	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	2	305	485	180			0.49438999999999994	0.44342	3.6249										
+20928	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	3	505	655	150			0.45277	0.45531000000000005	3.61424										
+20929	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	2	655	705	50							213.09	250.61				0.45277	0.45531000000000005		
+20930	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	3	1204	1264	60							212.59	311.37							
+20931	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	4	1324	1364	40							136.76	160.43						0.72137	0.48593000000000003
+20932	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	4	1364	1434	70			0.72137	0.48593000000000003	3.54651										
+20933	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	5	1434	1454	20						216.26	132.77	142.17	5.73			0.72137	0.48593000000000003	0.65847	0.5320600000000001
+20934	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	5	1454	1524	70			0.65847	0.5320600000000001	3.3700300000000003										
+20935	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	6	1524	1544	20							145.62	145.62				0.65847	0.5320600000000001		
+20936	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	7	1554	1574	20							253.66	253.66							
+20937	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	8	1634	1684	50							163.13	261.52							
+20938	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	9	1704	1714	10							149.45	149.45							
+20939	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	10	1754	1774	20							109.99	119.71						0.7246100000000001	0.50652
+20940	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	6	1774	1854	80			0.7246100000000001	0.50652	3.14253										
+20941	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	7	1874	1974	100			0.69729	0.47353999999999996	3.13556										
+20942	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	11	1974	1994	20							128.86	136.0				0.69729	0.47353999999999996		
+20943	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	12	2014	2034	20							176.06	176.06							
+20944	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	13	2074	2094	20							129.26	129.26							
+20945	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	14	2104	2134	30							310.95	389.13							
+20946	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	15	2154	2174	20							112.25	112.25						0.75716	0.7622800000000001
+20947	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	8	2174	2244	70			0.75716	0.7622800000000001	3.09042										
+20948	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	16	2244	2264	20							132.09	132.09				0.75716	0.7622800000000001		
+20949	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	9	2444	2514	70			0.71718	0.78361	3.19319										
+20950	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	17	2573	2603	30							149.63	171.6						0.95365	0.75859
+20951	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	10	2603	2723	120			0.95365	0.75859	3.07575										
+20952	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	18	2723	2753	30							542.46	638.89				0.95365	0.75859		
+20953	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	19	2773	2813	40							687.09	728.58							
+20954	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	20	2893	2923	30							109.46	111.56						0.42826000000000003	0.61749
+20955	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	11	2923	3023	100			0.42826000000000003	0.61749	3.15223										
+20956	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	12	3103	3213	110			0.45653999999999995	0.6109100000000001	3.1670599999999998										
+20957	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	21	3303	3313	10							131.82	131.82						0.41616000000000003	0.6582899999999999
+20958	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	13	3313	3403	90			0.41616000000000003	0.6582899999999999	3.05309										
+20959	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	14	3423	3653	230			0.38647	0.68507	2.99517										
+20960	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	22	3713	3733	20							126.06	127.63							
+20961	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	15	3823	3933	110			0.32761999999999997	0.6382899999999999	3.01451										
+20962	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	16	3953	4083	130			0.31839	0.6550699999999999	3.03589										
+20963	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	23	4103	4212	110							403.88	578.65							
+20964	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	24	4252	4282	30							269.62	299.41							
+20965	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	25	4312	4342	30							184.38	234.96							
+20966	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	17	4402	4522	120			0.65394	0.65199	3.10465										
+20967	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	18	4542	4822	280			0.65733	0.6018600000000001	3.26252										
+20968	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	26	4822	4832	10						172.21	100.96	100.96	2.86			0.65733	0.6018600000000001	0.62716	0.5977399999999999
+20969	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	19	4832	4932	100			0.62716	0.5977399999999999	3.27475										
+20970	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	20	4952	5222	270			0.62183	0.5931	3.26988										
+20971	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	27	5312	5332	20							128.51	128.51							
+20972	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	28	5352	5452	100							285.88	484.2							
+20973	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	21	5512	5722	210			0.24871	0.66843	3.2120900000000003										
+20974	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	29	5722	5752	30							486.36	598.25				0.24871	0.66843		
+20975	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	30	5772	5842	70							367.39	531.43							
+20976	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	31	5852	5881	30							223.97	282.68							
+20977	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	22	5921	6081	160			0.6692	0.55655	3.19727										
+20978	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	23	6121	6581	460			0.62062	0.54067	3.23215										
+20979	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	24	6601	6751	150			0.6409100000000001	0.50881	3.22568										
+20980	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	25	6771	6851	80			0.63051	0.5756	3.24105										
+20981	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	32	7021	7051	30							395.56	465.56							
+20982	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	33	7071	7121	50							173.22	243.51							
+20983	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	34	7161	7221	60							415.78	802.9							
+20984	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	35	7241	7271	30							125.13	125.13							
+20985	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	26	7311	7471	160			0.34896	0.5671	3.0869299999999997										
+20986	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	36	7471	7481	10						56.12	119.36	119.36	2.73			0.34896	0.5671	0.3759	0.5269699999999999
+20987	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	27	7481	7551	70			0.3759	0.5269699999999999	3.0639										
+20988	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	37	7610	7650	40							188.12	264.48						0.4298	0.69944
+20989	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	28	7650	7860	210			0.4298	0.69944	3.04069										
+20990	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	38	7860	7880	20						332.62	126.5	141.3	5.3			0.4298	0.69944	0.48596000000000006	0.72852
+20991	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	29	7880	7960	80			0.48596000000000006	0.72852	3.07775										
+20992	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	39	7960	7980	20							132.41	132.41				0.48596000000000006	0.72852		
+20993	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	40	8020	8040	20							106.75	106.75							
+20994	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	30	8140	8240	100			0.45683	0.70948	3.1316599999999997										
+20995	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	31	8340	8450	110			0.47552	0.7178800000000001	3.17788										
+20996	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	32	8470	8680	210			0.49881000000000003	0.6912699999999999	3.17246										
+20997	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	33	8720	8870	150			0.5020100000000001	0.62274	3.15082										
+20998	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	34	8890	9180	290			0.53109	0.65378	3.1370400000000003										
+20999	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	41	9180	9210	30						200.29	192.68	244.88	6.99			0.53109	0.65378	0.45463000000000003	0.68205
+21000	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	35	9210	9499	290			0.45463000000000003	0.68205	3.0956099999999998										
+21001	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	36	9539	9609	70			0.41244	0.74046	3.10589										
+21002	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	42	9609	9679	70						43.95	393.27	596.2	27.08			0.41244	0.74046	0.68534	0.47741000000000006
+21003	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	37	9679	9749	70			0.68534	0.47741000000000006	3.26536										
+21004	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	38	9819	9969	150			0.64787	0.5048699999999999	3.1625										
+21005	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	39	9989	10069	80			0.63267	0.50907	3.11175										
+21006	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	40	10269	10359	90			0.54982	0.51484	3.01201										
+21007	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	43	10359	10389	30							452.65	560.44				0.54982	0.51484		
+21008	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	44	10409	10439	30							185.87	220.1							
+21009	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	45	10479	10499	20							106.59	106.59							
+21010	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	46	10569	10589	20							118.92	125.89							
+21011	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	47	10629	10639	10							119.76	119.76						0.7054199999999999	0.34171999999999997
+21012	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	41	10639	10749	110			0.7054199999999999	0.34171999999999997	3.12033										
+21013	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	48	10749	10769	20							117.81	117.81				0.7054199999999999	0.34171999999999997		
+21014	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	42	10809	11048	240			0.61252	0.31385	3.12175										
+21015	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	43	11068	11228	160			0.58096	0.35841	3.10478										
+21016	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	49	11228	11268	40							368.48	505.61				0.58096	0.35841		
+21017	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	44	11338	11448	110			0.54233	0.69519	3.11734										
+21018	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	45	11488	11708	220			0.51849	0.70957	3.13923										
+21019	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	50	11708	11738	30							311.4	391.89				0.51849	0.70957		
+21020	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	46	11758	11998	240			0.5882	0.35128000000000004	3.1692										
+21021	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	47	12088	12378	290			0.59046	0.33571999999999996	3.1193400000000002										
+21022	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	51	12378	12518	140							275.71	447.47				0.59046	0.33571999999999996		
+21023	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	52	12538	12578	40							137.81	164.95							
+21024	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	53	12588	12608	20							133.23	133.23							
+21025	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	54	12628	12667	40							242.46	247.93							
+21026	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	55	12687	12727	40							173.42	240.64							
+21027	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	56	12827	12867	40							168.31	210.72							
+21028	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	48	12907	12997	90			0.3161	0.58145	3.0929599999999997										
+21029	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	57	12997	13017	20							115.3	115.3				0.3161	0.58145		
+21030	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	58	13057	13077	20							117.09	117.09						0.30808	0.6647
+21031	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	49	13077	13207	130			0.30808	0.6647	3.06838										
+21032	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	59	13277	13287	10							117.62	117.62						0.3988	0.61146
+21033	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	50	13287	13597	310			0.3988	0.61146	3.06478										
+21034	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	60	13597	13627	30						33.76	181.36	212.84	10.29			0.3988	0.61146	0.50727	0.53897
+21035	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	51	13627	13777	150			0.50727	0.53897	3.10447										
+21036	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	61	13777	13787	10						86.95	104.03	104.03	2.47			0.50727	0.53897	0.5099199999999999	0.48928999999999995
+21037	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	52	13787	13927	140			0.5099199999999999	0.48928999999999995	3.11016										
+21038	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	62	13927	13957	30							171.21	205.63				0.5099199999999999	0.48928999999999995		
+21039	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	53	14037	14177	140			0.52598	0.5132800000000001	3.07972										
+21040	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	63	14177	14187	10							141.2	141.2				0.52598	0.5132800000000001		
+21041	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	54	14336	14576	240			0.54362	0.60209	3.0847599999999997										
+21042	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	64	14576	14626	50							346.85	493.34				0.54362	0.60209		
+21043	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	65	14656	14676	20							192.89	214.21						0.6517	0.59721
+21044	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	55	14676	15026	350			0.6517	0.59721	3.095										
+21045	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	66	15026	15066	40						124.55	156.27	211.38	7.52			0.6517	0.59721	0.58354	0.4982
+21046	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	56	15066	15306	240			0.58354	0.4982	3.0455900000000002										
+21047	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	67	15306	15376	70						223.67	341.04	461.91	26.0			0.58354	0.4982	0.32111999999999996	0.7487199999999999
+21048	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	57	15376	15486	110			0.32111999999999996	0.7487199999999999	2.96412										
+21049	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	68	15486	15546	60						36.45	314.02	486.71	19.94			0.32111999999999996	0.7487199999999999	0.5333399999999999	0.59197
+21050	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	58	15546	16075	530			0.5333399999999999	0.59197	2.9617										
+21051	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	69	16075	16095	20						93.39	141.97	157.74	8.62			0.5333399999999999	0.59197	0.52345	0.42489
+21052	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	59	16095	16335	240			0.52345	0.42489	2.93605										
+21053	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	70	16335	16365	30						277.83	210.5	260.97	7.61			0.52345	0.42489	0.54396	0.57398
+21054	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	60	16365	16755	390			0.54396	0.57398	2.98247										
+21055	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	71	16755	16785	30						63.98	132.78	169.05	5.52			0.54396	0.57398	0.58431	0.49132
+21056	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	61	16785	17315	530			0.58431	0.49132	2.93371										
+21057	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	72	17315	17395	80							351.64	591.39				0.58431	0.49132		
+21058	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	73	17415	17465	50							169.04	212.55						0.75463	0.42194
+21059	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	62	17465	17535	70			0.75463	0.42194	3.0483599999999997										
+21060	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	74	17535	17545	10							106.44	106.44				0.75463	0.42194		
+21061	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	75	17565	17585	20							115.57	116.89						0.66122	0.39671999999999996
+21062	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	63	17585	17684	100			0.66122	0.39671999999999996	2.9851900000000002										
+21063	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	76	17684	17714	30						241.74	156.66	222.91	2.05			0.66122	0.39671999999999996	0.64483	0.42721000000000003
+21064	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	64	17714	17994	280			0.64483	0.42721000000000003	3.03734										
+21065	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	77	17994	18014	20						306.76	355.37	382.21	2.54			0.64483	0.42721000000000003	0.66769	0.45781000000000005
+21066	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	65	18014	18224	210			0.66769	0.45781000000000005	3.09841										
+21067	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	78	18224	18234	10						253.22	138.88	138.88	3.35			0.66769	0.45781000000000005	0.6471899999999999	0.5258
+21068	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	66	18234	18344	110			0.6471899999999999	0.5258	3.11008										
+21069	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	79	18344	18394	50						155.13	278.95	393.28	9.27			0.6471899999999999	0.5258	0.5483	0.47996000000000005
+21070	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	67	18394	19284	889			0.5483	0.47996000000000005	3.1070900000000004										
+21071	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	80	19284	19314	30						269.42	229.9	285.57	6.35			0.5483	0.47996000000000005	0.5471	0.59963
+21072	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	68	19314	19423	110			0.5471	0.59963	3.04105										
+21073	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	81	19423	19513	90						161.16	290.15	445.29	22.89			0.5471	0.59963	0.29377	0.5132
+21074	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	69	19513	19603	90			0.29377	0.5132	3.04822										
+21075	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	82	19603	19633	30						172.99	249.98	316.73	1.05			0.29377	0.5132	0.28033	0.51155
+21076	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	70	19633	20013	380			0.28033	0.51155	3.05389										
+21077	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	83	20013	20143	130							314.08	502.31				0.28033	0.51155		
+21078	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	84	20163	20183	20							114.93	120.11						0.64476	0.60148
+21079	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	71	20183	21252	1069			0.64476	0.60148	3.12793										
+21080	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	85	21252	21392	140							293.88	471.55				0.64476	0.60148		
+21081	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	86	21402	21422	20							152.47	189.53							
+21082	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	87	21462	21472	10							105.12	105.12							
+21083	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	88	21482	21502	20							220.85	233.31						0.35211	0.44532
+21084	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	72	21502	21702	200			0.35211	0.44532	3.01694										
+21085	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	89	21702	21722	20						312.96	132.73	144.0	9.64			0.35211	0.44532	0.44535	0.5454399999999999
+21086	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	73	21722	22152	430			0.44535	0.5454399999999999	2.9788										
+21087	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	90	22152	22172	20						83.8	184.82	195.21	5.08			0.44535	0.5454399999999999	0.45605	0.44703000000000004
+21088	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	74	22172	22342	170			0.45605	0.44703000000000004	3.0274099999999997										
+21089	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	91	22342	22392	50						276.61	251.25	335.68	14.32			0.45605	0.44703000000000004	0.48813	0.7238600000000001
+21090	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	75	22392	22662	270			0.48813	0.7238600000000001	2.9891400000000004										
+21091	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	92	22662	22692	30						157.24	241.72	305.7	5.98			0.48813	0.7238600000000001	0.42425	0.69706
+21092	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	76	22692	23321	630			0.42425	0.69706	2.9958										
+21093	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	93	23321	23341	20						330.02	133.83	145.28	5.27			0.42425	0.69706	0.47898	0.72863
+21094	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	77	23341	23791	450			0.47898	0.72863	3.01435										
+21095	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	94	23791	23811	20						354.94	153.0	173.4	5.66			0.47898	0.72863	0.54227	0.73423
+21096	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	78	23811	24071	260			0.54227	0.73423	3.02609										
+21097	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	95	24071	24081	10						186.05	122.09	122.09	3.94			0.54227	0.73423	0.49808	0.7389100000000001
+21098	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	79	24081	24400	320			0.49808	0.7389100000000001	2.9699										
+21099	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	96	24400	24490	90							298.69	420.98				0.49808	0.7389100000000001		
+21100	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	97	24510	24520	10							105.5	105.5						0.70185	0.52884
+21101	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	80	24520	24800	280			0.70185	0.52884	3.06622										
+21102	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	98	24800	24820	20						187.36	144.27	149.48	9.76			0.70185	0.52884	0.58953	0.54335
+21103	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	81	24820	25440	620			0.58953	0.54335	2.94136										
+21104	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	99	25440	25510	70							355.24	795.2				0.58953	0.54335		
+21105	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	100	25540	25550	10							121.11	121.11						0.75444	0.38261999999999996
+21106	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	82	25550	25650	100			0.75444	0.38261999999999996	3.0013900000000002										
+21107	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	101	25650	25660	10							110.13	110.13				0.75444	0.38261999999999996		
+21108	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	102	25680	25700	20							122.69	141.53						0.6475	0.40321
+21109	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	83	25700	26090	390			0.6475	0.40321	3.00034										
+21110	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	103	26090	26179	90							331.95	447.28				0.6475	0.40321		
+21111	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	104	26229	26239	10							106.56	106.56						0.42078000000000004	0.63147
+21112	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	84	26239	26829	590			0.42078000000000004	0.63147	2.9632099999999997										
+21113	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	105	26829	26929	100							363.56	619.73				0.42078000000000004	0.63147		
+21114	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	106	26979	26999	20							148.89	149.04						0.75346	0.43806999999999996
+21115	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	85	26999	27119	120			0.75346	0.43806999999999996	3.11127										
+21116	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	107	27119	27129	10						146.0	104.41	104.41	6.56			0.75346	0.43806999999999996	0.68113	0.38929
+21117	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	86	27129	27579	450			0.68113	0.38929	3.08822										
+21118	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	108	27579	27699	120							317.97	462.96				0.68113	0.38929		
+21119	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	109	27709	27729	20							119.2	124.93						0.32706	0.7407600000000001
+21120	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	87	27729	27848	120			0.32706	0.7407600000000001	2.95321										
+21121	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	110	27848	27868	20						76.23	143.42	176.45	2.96			0.32706	0.7407600000000001	0.34191	0.68018
+21122	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	88	27868	28258	390			0.34191	0.68018	2.94746										
+21123	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	111	28258	28338	80						27.22	418.1	566.34	30.91			0.34191	0.68018	0.68347	0.50453
+21124	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	89	28338	28658	320			0.68347	0.50453	3.00608										
+21125	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	112	28658	28678	20						108.39	141.91	159.68	4.09			0.68347	0.50453	0.6611600000000001	0.43743000000000004
+21126	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	90	28678	28968	290			0.6611600000000001	0.43743000000000004	3.05777										
+21127	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	113	28968	28988	20						249.8	116.61	121.9	13.47			0.6611600000000001	0.43743000000000004	0.56996	0.68524
+21128	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	91	28988	29288	300			0.56996	0.68524	2.98128										
+21129	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	114	29288	29368	80						162.09	345.03	482.1	21.09			0.56996	0.68524	0.32936	0.60747
+21130	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	92	29368	29777	410			0.32936	0.60747	2.9081										
+21131	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	115	29777	29817	40						49.23	170.43	221.49	12.23			0.32936	0.60747	0.45069	0.46674
+21132	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	93	29817	30287	470			0.45069	0.46674	2.9648										
+21133	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	116	30287	30327	40						274.89	306.64	400.55	15.41			0.45069	0.46674	0.47707	0.7752
+21134	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	94	30327	30697	370			0.47707	0.7752	2.94835										
+21135	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	117	30697	30717	20						106.0	145.27	170.74	3.21			0.47707	0.7752	0.46026000000000006	0.71659
+21136	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	95	30717	31176	460			0.46026000000000006	0.71659	2.9572700000000003										
+21137	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	118	31176	31186	10						289.3	105.09	105.09	2.45			0.46026000000000006	0.71659	0.47673000000000004	0.7636
+21138	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	96	31186	31696	510			0.47673000000000004	0.7636	2.93168										
+21139	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	119	31696	31776	80							306.41	431.96				0.47673000000000004	0.7636		
+21140	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	120	31826	31846	20							169.76	184.21							
+21141	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	121	31866	31876	10							128.06	128.06						0.67515	0.50033
+21142	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	97	31876	31976	100			0.67515	0.50033	3.06562										
+21143	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	122	31976	31996	20						242.74	114.06	119.29	5.93			0.67515	0.50033	0.62765	0.59251
+21144	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	98	31996	32286	290			0.62765	0.59251	3.00394										
+21145	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	123	32286	32306	20						120.46	135.1	135.19	1.77			0.62765	0.59251	0.61329	0.5681
+21146	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	99	32306	32566	260			0.61329	0.5681	2.94382										
+21147	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	124	32566	32596	30						147.41	178.05	207.71	11.21			0.61329	0.5681	0.49713999999999997	0.49385
+21148	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	100	32596	33115	520			0.49713999999999997	0.49385	2.8871700000000002										
+21149	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	125	33115	33125	10						241.71	101.91	101.91	4.79			0.49713999999999997	0.49385	0.46026999999999996	0.5623600000000001
+21150	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	101	33125	33905	780			0.46026999999999996	0.5623600000000001	2.89417										
+21151	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	126	33905	33925	20						207.7	166.04	166.51	12.12			0.46026999999999996	0.5623600000000001	0.32418	0.63381
+21152	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	102	33925	34195	270			0.32418	0.63381	2.87589										
+21153	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	127	34195	34265	70						43.14	354.82	467.89	15.41			0.32418	0.63381	0.48357	0.48446000000000006
+21154	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	103	34265	34854	590			0.48357	0.48446000000000006	2.95204										
+21155	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	128	34854	34914	60						331.39	441.96	594.33	20.52			0.48357	0.48446000000000006	0.70625	0.60592
+21156	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	104	34914	35054	140			0.70625	0.60592	3.07875										
+21157	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	129	35054	35094	40						223.58	149.6	203.79	10.11			0.70625	0.60592	0.60256	0.7046100000000001
+21158	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	105	35094	35214	120			0.60256	0.7046100000000001	3.03885										
+21159	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	130	35214	35264	50						217.87	281.68	419.98	15.25			0.60256	0.7046100000000001	0.43892	0.83188
+21160	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	106	35264	35404	140			0.43892	0.83188	3.07966										
+21161	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	131	35404	35444	40						101.44	186.42	256.41	7.64			0.43892	0.83188	0.40776	0.67786
+21162	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	107	35444	35534	90			0.40776	0.67786	3.10612										
+21163	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	132	35534	35554	20						44.31	155.16	170.29	5.55			0.40776	0.67786	0.46326999999999996	0.62367
+21164	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	108	35554	35684	130			0.46326999999999996	0.62367	3.0745299999999998										
+21165	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	133	35684	35734	50						126.88	258.67	383.2	10.89			0.46326999999999996	0.62367	0.36446	0.49196000000000006
+21166	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	109	35734	35904	170			0.36446	0.49196000000000006	3.07768										
+21167	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	134	36054	36094	40							430.11	536.79						0.5738300000000001	0.6499199999999999
+21168	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	110	36094	36164	70			0.5738300000000001	0.6499199999999999	3.03926										
+21169	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	135	36343	36373	30							208.26	224.39						0.40614	0.51645
+21170	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	111	36373	36523	150			0.40614	0.51645	3.0263										
+21171	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	136	36523	36583	60							233.35	442.41				0.40614	0.51645		
+21172	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	112	36623	36693	70			0.53593	0.66082	3.01313										
+21173	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	137	36693	36733	40						132.4	325.2	445.24	14.08			0.53593	0.66082	0.40317	0.51545
+21174	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	113	36733	36873	140			0.40317	0.51545	3.04733										
+21175	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	114	36893	36963	70			0.41213	0.52015	3.04434										
+21176	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	138	36963	36973	10							154.82	154.82				0.41213	0.52015		
+21177	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	115	37153	37283	130			0.5513	0.67557	3.0662599999999998										
+21178	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	116	37343	37453	110			0.5363	0.6595	3.0412										
+21179	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	117	37523	37633	110			0.53017	0.64145	3.03322										
+21180	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	118	37773	37872	100			0.54315	0.70749	3.0186										
+21181	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	139	37872	38032	160							241.82	403.66				0.54315	0.70749		
+21182	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	140	38052	38072	20							181.48	181.48							
+21183	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	141	38132	38162	30							235.16	285.21							
+21184	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	142	38252	38272	20							174.84	174.84							
+21185	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	119	38342	38452	110			0.4154	0.64686	2.93138										
+21186	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	143	38452	38472	20						82.27	123.28	146.41	3.18			0.4154	0.64686	0.4238	0.58492
+21187	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	120	38472	38602	130			0.4238	0.58492	2.93595										
+21188	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	144	38622	38642	20							109.54	109.54						0.44888	0.46718999999999994
+21189	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	121	38642	38882	240			0.44888	0.46718999999999994	3.0083										
+21190	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	145	38932	38962	30							214.53	258.79						0.43107	0.6731699999999999
+21191	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	122	38962	39152	190			0.43107	0.6731699999999999	2.96457										
+21192	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	146	39152	39172	20						309.74	125.26	137.54	4.85			0.43107	0.6731699999999999	0.47358999999999996	0.72431
+21193	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	123	39172	39282	110			0.47358999999999996	0.72431	2.95082										
+21194	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	124	39302	39422	120			0.49325	0.72351	2.96717										
+21195	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	147	39492	39512	20							175.86	185.47						0.44861	0.66814
+21196	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	125	39512	39791	280			0.44861	0.66814	3.03147										
+21197	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	148	39791	39811	20							161.12	161.12				0.44861	0.66814		
+21198	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	126	39851	40041	190			0.52715	0.7126399999999999	3.0026200000000003										
+21199	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	149	40041	40081	40							231.11	322.45				0.52715	0.7126399999999999		
+21200	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	127	40271	40451	180			0.45355	0.6963699999999999	2.98955										
+21201	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	150	40451	40471	20						284.84	170.88	171.69	4.87			0.45355	0.6963699999999999	0.47635	0.78241
+21202	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	128	40471	40651	180			0.47635	0.78241	3.0171799999999998										
+21203	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	151	40651	40681	30						126.52	193.06	239.04	7.15			0.47635	0.78241	0.4129	0.69672
+21204	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	129	40681	40771	90			0.4129	0.69672	3.0189										
+21205	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	130	40791	40921	130			0.42162	0.68699	3.01221										
+21206	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	131	40941	41051	110			0.44393999999999995	0.6984899999999999	2.97857										
+21207	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	132	41141	41220	80			0.47413	0.70406	2.9662599999999997										
+21208	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	133	41240	41330	90			0.44588999999999995	0.66779	2.9849099999999997										
+21209	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	152	41430	41470	40							221.46	319.64						0.55948	0.7403
+21210	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	134	41470	41570	100			0.55948	0.7403	2.9872799999999997										
+21211	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	135	41640	41800	160			0.53346	0.74597	2.9839900000000004										
+21212	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	153	41860	41900	40							118.83	144.87							
+21213	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	136	41920	42050	130			0.47236000000000006	0.68891	2.94257										
+21214	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	154	42110	42170	60							419.23	482.44							
+21215	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	137	42240	42350	110			0.67475	0.49153	3.0656										
+21216	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	138	42370	42500	130			0.6408	0.49113	2.99927										
+21217	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	139	42560	42750	190			0.59267	0.5005	2.92105										
+21218	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	140	42810	43009	200			0.5735399999999999	0.48746000000000006	2.89518										
+21219	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	141	43069	43329	260			0.52745	0.54122	2.89336										
+21220	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	155	43409	43489	80							335.79	463.95							
+21221	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	156	43529	43599	70							126.59	143.14						0.52746	0.45691000000000004
+21222	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	142	43599	44029	430			0.52746	0.45691000000000004	2.91149										
+21223	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	157	44029	44069	40						344.2	186.59	251.18	2.56			0.52746	0.45691000000000004	0.55593	0.46497
+21224	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	143	44069	44299	230			0.55593	0.46497	2.9697										
+21225	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	158	44299	44339	40						237.86	234.85	331.33	10.11			0.55593	0.46497	0.4712	0.5998100000000001
+21226	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	144	44339	44539	200			0.4712	0.5998100000000001	2.9585										
+21227	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	159	44539	44569	30						28.31	252.35	301.64	9.36			0.4712	0.5998100000000001	0.57128	0.5459
+21228	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	145	44569	44848	280			0.57128	0.5459	2.99105										
+21229	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	160	44848	44948	100							330.91	535.33				0.57128	0.5459		
+21230	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	161	44958	44988	30							129.44	166.99							
+21231	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	162	45008	45038	30							1007.56	1284.37							
+21232	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	163	45048	45078	30							111.46	111.81							
+21233	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	164	45088	45108	20							229.57	234.94						0.30372	0.42341000000000006
+21234	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	146	45108	45398	290			0.30372	0.42341000000000006	3.0182599999999997										
+21235	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	147	45418	45648	230			0.35999000000000003	0.42586999999999997	2.96143										
+21236	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	165	45648	45768	120							353.1	511.53				0.35999000000000003	0.42586999999999997		
+21237	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	166	45788	45818	30							183.41	217.7							
+21238	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	167	45888	45898	10							131.59	131.59							
+21239	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	168	45968	45988	20							103.51	103.51							
+21240	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	169	46018	46038	20							159.33	161.82							
+21241	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	148	46118	46228	110			0.58933	0.3992	3.0164400000000002										
+21242	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	170	46228	46257	30						291.4	219.78	263.3	4.23			0.58933	0.3992	0.6208199999999999	0.47956000000000004
+21243	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	149	46257	46707	450			0.6208199999999999	0.47956000000000004	3.05443										
+21244	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	171	46707	46737	30						284.62	168.48	212.02	4.86			0.6208199999999999	0.47956000000000004	0.6448699999999999	0.5717800000000001
+21245	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	150	46737	46937	200			0.6448699999999999	0.5717800000000001	3.08734										
+21246	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	172	46997	47047	50							440.23	589.75							
+21247	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	173	47087	47137	50							297.65	405.99							
+21248	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	174	47157	47177	20							170.24	204.86							
+21249	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	175	47187	47217	30							268.59	310.07							
+21250	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	176	47307	47327	20							110.34	110.34						0.38909	0.5143399999999999
+21251	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	151	47327	47457	130			0.38909	0.5143399999999999	3.03504										
+21252	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	177	47457	47477	20							116.15	119.0				0.38909	0.5143399999999999		
+21253	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	152	47537	47797	260			0.47163999999999995	0.52376	2.92562										
+21254	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	178	47797	47817	20						282.41	114.13	117.39	1.75			0.47163999999999995	0.52376	0.4788	0.5563
+21255	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	153	47817	47946	130			0.4788	0.5563	2.85396										
+21256	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	179	47946	48016	70							312.84	422.87				0.4788	0.5563		
+21257	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	180	48036	48056	20							105.75	105.86							
+21258	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	181	48086	48096	10							107.15	107.15						0.31675	0.61654
+21259	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	154	48096	48176	80			0.31675	0.61654	2.8666099999999997										
+21260	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	182	48176	48186	10						314.31	129.21	129.21	4.78			0.31675	0.61654	0.36528	0.66625
+21261	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	155	48186	48576	390			0.36528	0.66625	2.91473										
+21262	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	183	48576	48596	20						313.88	154.05	154.13	7.21			0.36528	0.66625	0.43343000000000004	0.7371300000000001
+21263	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	156	48596	48876	280			0.43343000000000004	0.7371300000000001	2.9819299999999997										
+21264	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	184	48876	48896	20						151.81	141.94	145.31	4.11			0.43343000000000004	0.7371300000000001	0.38943	0.71355
+21265	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	157	48896	49056	160			0.38943	0.71355	3.00577										
+21266	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	185	49126	49156	30							254.69	292.44						0.40538	0.47938000000000003
+21267	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	158	49156	49446	290			0.40538	0.47938000000000003	2.9735099999999997										
+21268	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	186	49446	49466	20						261.72	178.01	179.68	6.54			0.40538	0.47938000000000003	0.38522	0.61793
+21269	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	159	49466	49655	190			0.38522	0.61793	2.87173										
+21270	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	187	49655	49685	30						355.22	155.42	185.86	6.2			0.38522	0.61793	0.4555	0.6238100000000001
+21271	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	160	49685	49765	80			0.4555	0.6238100000000001	2.86322										
+21272	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	161	49785	49885	100			0.42653	0.6421600000000001	2.8851299999999998										
+21273	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	188	49885	49915	30						317.11	149.2	210.36	0.58			0.42653	0.6421600000000001	0.43161000000000005	0.64688
+21274	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	162	49915	50205	290			0.43161000000000005	0.64688	2.88902										
+21275	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	163	50225	50315	90			0.37806999999999996	0.70977	2.90252										
+21276	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	189	50355	50375	20							127.44	127.44						0.40726999999999997	0.7451399999999999
+21277	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	164	50375	50445	70			0.40726999999999997	0.7451399999999999	2.88915										
+21278	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	165	50505	50585	80			0.39316	0.7595	2.91038										
+21279	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	190	50585	50625	40						86.34	214.02	288.86	9.24			0.39316	0.7595	0.40554	0.56581
+21280	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	166	50625	50735	110			0.40554	0.56581	2.9557900000000004										
+21281	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	167	50755	50985	230			0.39383	0.58387	2.9274400000000003										
+21282	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	191	50985	51015	30							249.03	293.2				0.39383	0.58387		
+21283	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	168	51075	51474	400			0.48275	0.69489	2.9102099999999997										
+21284	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	192	51474	51504	30						165.44	166.69	200.48	5.23			0.48275	0.69489	0.42416000000000004	0.6796800000000001
+21285	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	169	51504	51654	150			0.42416000000000004	0.6796800000000001	2.86595										
+21286	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	170	51734	51804	70			0.41784	0.71483	2.8337										
+21287	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	193	51804	51834	30							244.67	313.4				0.41784	0.71483		
+21288	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	194	51874	51914	40							257.65	293.77						0.7176899999999999	0.48848
+21289	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	171	51914	52054	140			0.7176899999999999	0.48848	3.04964										
+21290	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	172	52154	52284	130			0.61228	0.57176	2.96505										
+21291	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	195	52344	52374	30							143.22	191.37							
+21292	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	173	52424	52594	170			0.63354	0.5660000000000001	2.9353										
+21293	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	196	52594	52614	20						215.23	110.96	113.68	6.86			0.63354	0.5660000000000001	0.56128	0.61702
+21294	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	174	52614	52784	170			0.56128	0.61702	2.89265										
+21295	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	197	52784	52834	50						104.49	224.66	333.15	14.75			0.56128	0.61702	0.49194	0.34878000000000003
+21296	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	175	52834	53063	230			0.49194	0.34878000000000003	2.93398										
+21297	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	198	53063	53083	20						269.69	161.05	175.62	5.57			0.49194	0.34878000000000003	0.4913	0.46834
+21298	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	176	53083	53493	410			0.4913	0.46834	2.92366										
+21299	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	199	53493	53503	10						12.05	148.95	148.95	3.4			0.4913	0.46834	0.52868	0.46036000000000005
+21300	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	177	53503	53623	120			0.52868	0.46036000000000005	2.90667										
+21301	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	178	53643	54013	370			0.5142100000000001	0.41968	2.90749										
+21302	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	200	54013	54093	80							333.98	477.93				0.5142100000000001	0.41968		
+21303	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	201	54103	54123	20							153.02	164.48							
+21304	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	202	54183	54193	10							151.27	151.27							
+21305	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	203	54213	54233	20							329.34	340.8						0.69299	0.49795
+21306	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	179	54233	54383	150			0.69299	0.49795	2.98945										
+21307	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	204	54383	54403	20						231.24	136.44	150.82	6.25			0.69299	0.49795	0.63156	0.5744600000000001
+21308	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	180	54403	54652	250			0.63156	0.5744600000000001	3.0380599999999998										
+21309	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	205	54652	54672	20						217.79	153.1	168.87	8.62			0.63156	0.5744600000000001	0.5416	0.6442
+21310	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	181	54672	54782	110			0.5416	0.6442	3.0180000000000002										
+21311	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	182	54802	54882	80			0.51446	0.66065	3.00123										
+21312	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	206	54952	54982	30							187.43	222.4							
+21313	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	183	55002	55182	180			0.5535399999999999	0.66947	2.9876400000000003										
+21314	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	207	55182	55212	30						119.68	205.17	249.75	8.08			0.5535399999999999	0.66947	0.49045	0.55877
+21315	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	184	55212	55372	160			0.49045	0.55877	2.9946900000000003										
+21316	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	208	55372	55402	30							201.3	229.31				0.49045	0.55877		
+21317	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	185	55422	55512	90			0.47376	0.40592	3.0310900000000003										
+21318	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	186	55572	55822	250			0.48341000000000006	0.43093000000000004	3.01867										
+21319	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	187	55842	56082	240			0.50827	0.4604	3.0464700000000002										
+21320	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	188	56102	56192	90			0.5739	0.4765	3.05511										
+21321	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	189	56252	56341	90			0.59202	0.6059100000000001	3.1098										
+21322	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	209	56341	56371	30							230.69	254.59				0.59202	0.6059100000000001		
+21323	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	210	56491	56521	30							444.31	539.43							
+21324	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	211	56601	56651	50							114.14	125.21							
+21325	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	212	56711	56721	10							101.88	101.88							
+21326	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	190	56801	57091	290			0.41805	0.62953	2.9598299999999997										
+21327	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	213	57091	57111	20						304.37	150.59	161.13	6.57			0.41805	0.62953	0.47343999999999997	0.7105199999999999
+21328	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	191	57111	57261	150			0.47343999999999997	0.7105199999999999	2.98746										
+21329	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	214	57261	57291	30						311.79	201.56	267.35	6.04			0.47343999999999997	0.7105199999999999	0.53501	0.77942
+21330	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	192	57291	57451	160			0.53501	0.77942	3.00048										
+21331	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	193	57491	57671	180			0.51002	0.76076	3.0117700000000003										
+21332	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	215	57731	57781	50							219.73	312.96							
+21333	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	194	57821	57901	80			0.40194	0.61231	2.9256900000000003										
+21334	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	216	57981	58010	30							171.03	232.57							
+21335	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	195	58110	58210	100			0.37087	0.68212	2.97613										
+21336	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	217	58210	58250	40						76.68	189.14	253.73	7.76			0.37087	0.68212	0.40848	0.52328
+21337	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	196	58250	58600	350			0.40848	0.52328	3.0138599999999998										
+21338	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	197	58620	58700	80			0.39121999999999996	0.5190100000000001	3.0091200000000002										
+21339	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	218	58700	58720	20						279.82	166.18	171.67	5.0			0.39121999999999996	0.5190100000000001	0.40865999999999997	0.61985
+21340	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	198	58720	58820	100			0.40865999999999997	0.61985	2.9689200000000002										
+21341	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	219	58820	58840	20							115.16	128.41				0.40865999999999997	0.61985		
+21342	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	199	58910	59270	360			0.45595	0.6230600000000001	2.9617400000000003										
+21343	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	200	59360	59450	90			0.39611999999999997	0.55027	2.94674										
+21344	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	201	59490	59600	110			0.36418	0.55992	2.9254										
+21345	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	202	59620	59749	130			0.34947	0.56597	2.93111										
+21346	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	203	59769	59959	190			0.35815	0.54893	2.92793										
+21347	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	220	59959	59999	40							170.89	194.29				0.35815	0.54893		
+21348	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	204	60069	60319	250			0.4454	0.62175	2.90703										
+21349	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	205	60339	60619	280			0.43095	0.61948	2.93446										
+21350	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	206	60639	60789	150			0.43011000000000005	0.64072	2.9199900000000003										
+21351	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	207	60889	61049	160			0.44348000000000004	0.61987	2.9325900000000003										
+21352	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	221	61049	61069	20							122.0	122.0				0.44348000000000004	0.61987		
+21353	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	208	61089	61269	180			0.46337	0.65335	2.93169										
+21354	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	209	61309	61418	110			0.44822	0.64249	2.95755										
+21355	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	210	61438	61568	130			0.4401	0.6351899999999999	2.96181										
+21356	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	211	61588	61818	230			0.4335	0.6436	2.94616										
+21357	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	212	61838	61948	110			0.44816999999999996	0.62675	2.95257										
+21358	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	213	61988	62098	110			0.44392	0.6350600000000001	2.9463										
+21359	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	222	62148	62228	80							347.3	453.98							
+21360	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	223	62308	62338	30							119.71	119.71							
+21361	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	224	62408	62428	20							568.35	568.35						0.59765	0.53786
+21362	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	214	62428	62528	100			0.59765	0.53786	2.9409400000000003										
+21363	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	215	62568	62658	90			0.58609	0.5415800000000001	2.92164										
+21364	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	216	62718	62948	230			0.5300600000000001	0.58991	2.8517799999999998										
+21365	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	217	62968	63087	120			0.46843	0.6172300000000001	2.81786										
+21366	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	218	63107	63337	230			0.45371999999999996	0.6139899999999999	2.8069599999999997										
+21367	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	225	63337	63357	20							157.58	157.58				0.45371999999999996	0.6139899999999999		
+21368	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	219	63377	63457	80			0.37611999999999995	0.6130899999999999	2.79987										
+21369	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	226	63457	63537	80							370.03	508.09				0.37611999999999995	0.6130899999999999		
+21370	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	227	63547	63587	40							227.71	373.53							
+21371	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	228	63597	63617	20							209.42	251.6							
+21372	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	229	63637	63657	20							120.68	132.45						0.70062	0.41698999999999997
+21373	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	220	63657	63767	110			0.70062	0.41698999999999997	2.98175										
+21374	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	230	63767	63777	10							130.97	130.97				0.70062	0.41698999999999997		
+21375	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	221	63937	64087	150			0.59386	0.33935	3.00408										
+21376	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	222	64137	64257	120			0.59554	0.36025999999999997	3.0165										
+21377	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	231	64257	64277	20						311.34	121.84	122.41	3.78			0.59554	0.36025999999999997	0.63522	0.40536
+21378	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	223	64277	64347	70			0.63522	0.40536	3.0657900000000002										
+21379	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	224	64387	64637	250			0.6409699999999999	0.40941	3.0507299999999997										
+21380	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	225	64657	64836	180			0.6703100000000001	0.41257	3.0532										
+21381	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	232	64836	64916	80							399.54	634.52				0.6703100000000001	0.41257		
+21382	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	233	64936	65026	90							231.38	290.9							
+21383	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	234	65036	65066	30							211.0	254.79							
+21384	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	235	65086	65116	30							163.96	192.44						0.3078	0.58297
+21385	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	226	65116	65206	90			0.3078	0.58297	2.93493										
+21386	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	227	65386	65516	130			0.37967	0.49045	2.90821										
+21387	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	236	65516	65556	40							248.44	359.94				0.37967	0.49045		
+21388	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	228	65636	65736	100			0.43496	0.7236100000000001	2.9220900000000003										
+21389	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	237	65736	65756	20							179.12	179.12				0.43496	0.7236100000000001		
+21390	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	238	65776	65806	30							163.3	185.12						0.5353100000000001	0.6016199999999999
+21391	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	229	65806	65906	100			0.5353100000000001	0.6016199999999999	2.98243										
+21392	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	230	65926	66086	160			0.46676999999999996	0.60643	2.98015										
+21393	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	231	66106	66286	180			0.40321	0.60907	2.96011										
+21394	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	232	66326	66555	230			0.38114000000000003	0.64208	2.94375										
+21395	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	239	66555	66585	30							159.4	188.64				0.38114000000000003	0.64208		
+21396	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	233	66605	66785	180			0.40644	0.75249	2.94053										
+21397	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	240	66805	66865	60							172.0	215.61							
+21398	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	234	66885	67005	120			0.41005	0.58503	2.9704599999999997										
+21399	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	235	67175	67295	120			0.39748	0.62549	2.93316										
+21400	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	241	67355	67375	20							157.34	157.34						0.34295	0.55623
+21401	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	236	67375	67545	170			0.34295	0.55623	2.9153599999999997										
+21402	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	237	67605	67715	110			0.34504	0.5789	2.92123										
+21403	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	238	67735	67855	120			0.33641	0.60001	2.9242										
+21404	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	239	67875	68324	450			0.33593	0.64907	2.91323										
+21405	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	242	68324	68344	20							272.2	272.2				0.33593	0.64907		
+21406	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	243	68404	68424	20							105.17	105.17							
+21407	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	244	68464	68484	20							119.29	134.91						0.30489	0.49522
+21408	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	240	68484	68554	70			0.30489	0.49522	2.96092										
+21409	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	241	68624	68834	210			0.34936	0.5102800000000001	2.94297										
+21410	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	242	68874	69004	130			0.36355	0.55178	2.9457										
+21411	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	245	69004	69014	10						282.58	105.26	105.26	3.17			0.36355	0.55178	0.37711999999999996	0.61258
+21412	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	243	69014	69134	120			0.37711999999999996	0.61258	2.92797										
+21413	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	246	69154	69174	20							149.69	149.69						0.37316	0.53705
+21414	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	244	69174	69284	110			0.37316	0.53705	2.95614										
+21415	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	247	69284	69324	40						152.32	220.98	321.61	6.97			0.37316	0.53705	0.29351	0.49526000000000003
+21416	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	245	69324	69474	150			0.29351	0.49526000000000003	3.0417799999999997										
+21417	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	248	69474	69484	10						336.13	153.05	153.05	1.94			0.29351	0.49526000000000003	0.31671	0.50553
+21418	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	246	69484	69554	70			0.31671	0.50553	2.99023										
+21419	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	249	69604	69634	30							168.17	210.73							
+21420	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	247	69704	69813	110			0.42996	0.6187199999999999	2.94333										
+21421	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	250	69883	69923	40							197.19	271.87						0.53728	0.57693
+21422	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	248	69923	70103	180			0.53728	0.57693	3.0059099999999996										
+21423	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	249	70143	70273	130			0.54151	0.59185	2.97863										
+21424	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	251	70293	70313	20							103.92	103.92						0.5409	0.65503
+21425	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	250	70313	70823	510			0.5409	0.65503	2.9226099999999997										
+21426	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	252	70903	70923	20							132.52	132.52							
+21427	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	253	71023	71053	30							158.88	184.25						0.64445	0.66695
+21428	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	251	71053	71213	160			0.64445	0.66695	2.9495400000000003										
+21429	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	254	71213	71233	20							118.49	118.49				0.64445	0.66695		
+21430	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	255	71293	71323	30							213.03	263.3						0.36013	0.7707
+21431	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	252	71323	71403	80			0.36013	0.7707	2.95895										
+21432	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	256	71592	71652	60							425.41	636.87							
+21433	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	257	71692	71732	40							140.34	175.02						0.6561100000000001	0.51645
+21434	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	253	71732	71842	110			0.6561100000000001	0.51645	3.08711										
+21435	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	258	71842	71852	10						206.62	115.69	115.69	5.03			0.6561100000000001	0.51645	0.60022	0.54446
+21436	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	254	71852	71932	80			0.60022	0.54446	3.04641										
+21437	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	255	72102	72212	110			0.57845	0.5568	2.9776599999999998										
+21438	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	259	72342	72372	30							193.36	193.36							
+21439	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	256	72392	72502	110			0.48932	0.4271	2.9660900000000003										
+21440	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	257	72522	72782	260			0.4812	0.45223	2.9621										
+21441	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	260	72802	72832	30							170.15	170.15							
+21442	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	258	72922	73012	90			0.41498999999999997	0.48877	2.92995										
+21443	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	259	73052	73121	70			0.4224	0.52077	2.91763										
+21444	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	261	73121	73141	20						21.99	128.78	143.29	3.61			0.4224	0.52077	0.46071999999999996	0.50529
+21445	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	260	73141	73451	310			0.46071999999999996	0.50529	2.9058										
+21446	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	261	73471	73561	90			0.45353999999999994	0.51244	2.87665										
+21447	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	262	73561	73651	90							355.54	462.09				0.45353999999999994	0.51244		
+21448	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	263	73671	73691	20							129.44	139.41							
+21449	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	264	73711	73731	20							194.74	194.74							
+21450	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	265	73751	73781	30							177.94	196.23						0.65064	0.49082
+21451	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	262	73781	73871	90			0.65064	0.49082	2.9177										
+21452	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	266	73871	73901	30							147.46	151.25				0.65064	0.49082		
+21453	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	263	73921	74001	80			0.58207	0.5382600000000001	2.92654										
+21454	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	264	74041	74151	110			0.54838	0.45316999999999996	2.9580599999999997										
+21455	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	265	74171	74301	130			0.5353100000000001	0.45506	2.94318										
+21456	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	266	74341	74591	250			0.52261	0.46574	2.92597										
+21457	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	267	74611	74711	100			0.51746	0.45588999999999996	2.94561										
+21458	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	268	74770	74950	180			0.57072	0.40884000000000004	2.98961										
+21459	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	269	74970	75110	140			0.58157	0.40678000000000003	2.99648										
+21460	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	267	75110	75150	40							166.27	205.81				0.58157	0.40678000000000003		
+21461	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	270	75190	75260	70			0.5163300000000001	0.5461699999999999	2.97926										
+21462	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	268	75260	75290	30							578.1	650.51				0.5163300000000001	0.5461699999999999		
+21463	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	271	75310	75390	80			0.71024	0.6080399999999999	3.0775099999999997										
+21464	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	269	75500	75520	20							127.43	141.92						0.62244	0.6463300000000001
+21465	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	272	75520	75800	280			0.62244	0.6463300000000001	3.10355										
+21466	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	273	75840	75950	110			0.6170399999999999	0.65156	3.11643										
+21467	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	270	76030	76050	20							111.38	122.53							
+21468	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	274	76120	76270	150			0.60365	0.56681	3.06537										
+21469	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	271	76340	76460	120							276.28	420.65							
+21470	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	272	76479	76519	40							284.56	329.22							
+21471	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	273	76559	76579	20							116.89	131.79							
+21472	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	274	76619	76649	30							202.93	242.6							
+21473	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	275	76689	76709	20							159.97	159.97						0.60223	0.5844600000000001
+21474	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Whole	275	76709	76839	130			0.60223	0.5844600000000001	3.06652										
+21475	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	276	76839	76909	70							345.37	439.73				0.60223	0.5844600000000001		
+21476	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	276	76959	77069	110			0.4357	0.5625899999999999	2.8848700000000003										
+21477	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	277	77119	77239	120			0.48215	0.54292	2.87253										
+21478	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	277	77239	77259	20							169.76	173.16				0.48215	0.54292		
+21479	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	278	77369	77529	160			0.47238	0.6478	2.93623										
+21480	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	278	77529	77549	20							112.41	112.41				0.47238	0.6478		
+21481	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	279	77659	77769	110			0.39165	0.56013	2.94671										
+21482	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	280	77809	77899	90			0.38166	0.57177	2.95085										
+21483	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	281	78089	78298	210			0.35433000000000003	0.60634	2.99729										
+21484	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	282	78338	78488	150			0.33749	0.60921	3.00253										
+21485	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	279	78488	78528	40							225.45	294.08				0.33749	0.60921		
+21486	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	283	78638	78728	90			0.35013	0.43798000000000004	3.00524										
+21487	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	280	78728	78768	40							110.64	139.11				0.35013	0.43798000000000004		
+21488	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	284	78888	79008	120			0.38343	0.50795	2.98467										
+21489	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	281	79008	79038	30						278.77	134.26	168.72	5.41			0.38343	0.50795	0.39962	0.6128899999999999
+21490	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	285	79038	79248	210			0.39962	0.6128899999999999	2.95054										
+21491	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	282	79288	79328	40							162.18	178.79						0.39137	0.45403000000000004
+21492	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	286	79328	79438	110			0.39137	0.45403000000000004	3.05048										
+21493	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	287	79458	79748	290			0.37059000000000003	0.5031399999999999	3.03085										
+21494	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	288	79768	79897	130			0.37044	0.46602	3.0012										
+21495	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	283	79897	79927	30							219.43	255.32				0.37044	0.46602		
+21496	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	289	79967	80077	110			0.30505	0.4047	3.03071										
+21497	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	284	80077	80087	10						281.94	126.26	126.26	3.9			0.30505	0.4047	0.32033	0.47694
+21498	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	290	80087	80287	200			0.32033	0.47694	2.99465										
+21499	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	285	80327	80367	40							176.8	209.54							
+21500	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	291	80407	80517	110			0.41861000000000004	0.48828	2.97675										
+21501	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	292	80537	80637	100			0.38643	0.51832	2.97004										
+21502	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	293	80677	80917	240			0.37351	0.51817	2.96697										
+21503	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	294	80937	81057	120			0.40507	0.52077	2.93066										
+21504	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	295	81077	81167	90			0.41596000000000005	0.53071	2.90656										
+21505	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	296	81227	81467	240			0.42678	0.54891	2.89118										
+21506	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	297	81487	81666	180			0.41963999999999996	0.5637300000000001	2.8874299999999997										
+21507	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	286	81726	81746	20							127.93	127.93							
+21508	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	298	81806	81906	100			0.41265	0.60706	2.88288										
+21509	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	299	81926	82036	110			0.37159000000000003	0.62512	2.89551										
+21510	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	300	82086	82166	80			0.35015999999999997	0.63353	2.93647										
+21511	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	287	82246	82296	50							395.64	501.76							
+21512	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	288	82386	82416	30							255.59	325.91							
+21513	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	289	82476	82496	20							363.78	363.78						0.29904000000000003	0.58133
+21514	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	301	82496	82666	170			0.29904000000000003	0.58133	3.01401										
+21515	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	302	82736	82886	150			0.29059	0.55755	3.10805										
+21516	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	290	82906	82976	70							333.88	419.06							
+21517	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	291	83016	83036	20							109.62	109.62							
+21518	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	292	83076	83116	40							146.45	178.54							
+21519	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	303	83136	83405	270			0.5174	0.52747	3.06314										
+21520	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	293	83475	83495	20							142.23	150.88							
+21521	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	304	83575	83665	90			0.45538999999999996	0.53066	2.94097										
+21522	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	305	83705	83815	110			0.43487	0.56193	2.89607										
+21523	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	294	83895	83915	20							109.02	109.84						0.4428	0.55324
+21524	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	306	83915	84105	190			0.4428	0.55324	2.8952299999999997										
+21525	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	307	84125	84205	80			0.4315	0.55596	2.87535										
+21526	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	295	84205	84235	30							241.83	303.47				0.4315	0.55596		
+21527	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	296	84255	84325	70							263.18	408.56							
+21528	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	297	84425	84435	10							119.98	119.98							
+21529	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	298	84445	84495	50							229.54	319.59						0.61288	0.33621999999999996
+21530	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	308	84495	84635	140			0.61288	0.33621999999999996	2.94406										
+21531	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	309	84675	84755	80			0.57031	0.26889	2.9622900000000003										
+21532	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	299	84755	84795	40							325.86	452.53				0.57031	0.26889		
+21533	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	310	84974	85064	90			0.6542399999999999	0.5051399999999999	3.03747										
+21534	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	311	85084	85194	110			0.6682600000000001	0.51575	3.06196										
+21535	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	312	85234	85454	220			0.6493	0.46924	3.02661										
+21536	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	313	85524	85704	180			0.65199	0.46463000000000004	3.02674										
+21537	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	300	85704	85774	70							312.85	372.56				0.65199	0.46463000000000004		
+21538	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	301	85804	85924	120							217.46	293.13							
+21539	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	302	85944	86004	60							157.64	185.94							
+21540	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	303	86024	86054	30							132.79	144.47							
+21541	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	314	86094	86174	80			0.3608	0.5907899999999999	2.9729										
+21542	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Whole	304	86174	86204	30						98.42	191.95	224.37	6.18			0.3608	0.5907899999999999	0.34267	0.4684
+21543	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	315	86204	86274	70			0.34267	0.4684	3.0017										
+21544	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	305	86354	86374	20							184.1	184.1						0.38750999999999997	0.66423
+21545	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	316	86374	86533	160			0.38750999999999997	0.66423	2.93095										
+21546	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	317	86643	86903	260			0.46466	0.71548	2.94123										
+21547	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	306	86953	86983	30							123.39	124.6						0.48372	0.8431299999999999
+21548	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	318	86983	87053	70			0.48372	0.8431299999999999	2.93643										
+21549	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	319	87093	87183	90			0.49001000000000006	0.82039	2.96508										
+21550	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	320	87203	87303	100			0.4738	0.8213	3.0002										
+21551	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	321	87343	87453	110			0.47453	0.7949	2.99884										
+21552	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	307	87473	87503	30							153.56	172.34							
+21553	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	322	87593	87733	140			0.5220600000000001	0.80178	2.94441										
+21554	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	323	87803	87873	70			0.52928	0.75542	2.98857										
+21555	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	324	87893	88003	110			0.50013	0.68618	3.00604										
+21556	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	325	88043	88153	110			0.48401000000000005	0.7036399999999999	2.97266										
+21557	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	326	88173	88662	490			0.47796000000000005	0.72291	2.9458599999999997										
+21558	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	308	88662	88702	40							122.59	150.56				0.47796000000000005	0.72291		
+21559	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	327	88722	88832	110			0.45427	0.60141	2.91583										
+21560	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	328	88892	89102	210			0.43211000000000005	0.64745	2.9085799999999997										
+21561	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	309	89142	89192	50							353.77	367.73							
+21562	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	310	89362	89382	20							100.69	100.69							
+21563	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	311	89492	89522	30							143.51	143.51							
+21564	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	312	89542	89592	50							134.9	141.96							
+21565	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	313	89602	89632	30							218.79	262.54							
+21566	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	329	89692	89832	140			0.52776	0.35583000000000004	2.7650099999999997										
+21567	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	330	89941	90061	120			0.5263100000000001	0.46518999999999994	2.7530200000000002										
+21568	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	331	90121	90371	250			0.51513	0.40186	2.77228										
+21569	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	332	90391	90631	240			0.5064	0.4412	2.73635										
+21570	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	333	90651	90741	90			0.51368	0.44393999999999995	2.73474										
+21571	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	334	90801	91031	230			0.51867	0.40571	2.75008										
+21572	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	335	91071	91311	240			0.5394399999999999	0.37059000000000003	2.82103										
+21573	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	336	91371	92030	660			0.53009	0.39437	2.82544										
+21574	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	337	92070	92170	100			0.52978	0.3749	2.81906										
+21575	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	338	92190	92430	240			0.5274300000000001	0.3551	2.78009										
+21576	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	339	92470	92620	150			0.51939	0.35044000000000003	2.7801400000000003										
+21577	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	340	92640	92740	100			0.51502	0.34343	2.8027900000000003										
+21578	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	341	92760	93170	410			0.50661	0.34221	2.82124										
+21579	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	314	93190	93250	60							405.92	569.31							
+21580	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	342	93309	93419	110			0.29945	0.9043200000000001	2.83751										
+21581	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	315	93419	93449	30							388.6	451.38				0.29945	0.9043200000000001		
+21582	Recording032	participant27_trial03	Entire Recording	1	fullstream	Saccade	Partial	316	93489	93509	20							200.32	200.54						0.49596999999999997	0.31332
+21583	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	343	93509	93769	260			0.49596999999999997	0.31332	2.9622599999999997										
+21584	Recording032	participant27_trial03	Entire Recording	1	fullstream	Fixation	Partial	344	93789	94998	1209			0.50618	0.30023	2.77921										

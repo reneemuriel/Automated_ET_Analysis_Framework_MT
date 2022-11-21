@@ -28,7 +28,6 @@ from src.analysis import statistics
 from src.analysis import report
 
 def get_lists(input_path: str, output_path: str) -> tuple:
-    ''' TODO: document '''
     # same folder structure for one group and multiple groups: input/groupname/data
     groups = [f for f in sorted(os.listdir(input_path))] 
 
@@ -100,8 +99,7 @@ def get_lists(input_path: str, output_path: str) -> tuple:
 
 
 def start_analysis(config: dict) -> None:
-    ''' TODO: document behaviour '''
-
+    
     # extract parameters from the user interface (main-window)
     try:
         # get input and output paths first
@@ -131,8 +129,9 @@ def start_analysis(config: dict) -> None:
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = all_lists
 
     # set default values, e.g. for mean kcoeff that is required as input for action_analysis even if kcoeff analysis did not take place
-    #TODO: jens fröge was passiert z.b. bi template_sequence nix ahgit, öb das efach e leeri liste isch
     mean_kcoeff_all, stdev_kcoeff_all = [1,1]
+
+
 
 
     # do the individual parts of the analysis
@@ -189,7 +188,7 @@ if __name__ == "__main__":
         application = QApplication(sys.argv)
         window = MainWindow()
         window.show()
-
+        
         # start the application event-loop - terminate, when the window is closed
         log.info("start program with GUI.")
         exit_code = application.exec()

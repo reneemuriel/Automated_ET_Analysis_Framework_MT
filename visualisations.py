@@ -281,6 +281,7 @@ def vis_ooigen_barplots(df, outputpath, filename, specification):
         savepath = outputpath / '{}_barplot_{}'.format(df.columns[col], specification)
         sns.set_theme(style='whitegrid')
         barplot = sns.barplot(x=df.index.values[:-1], y=df.iloc[:-1,col], color='mediumseagreen') # -1 becaues last row is standard deviation
+        barplot.set_xticklabels(df.index[:-1], rotation = 90)
         plt.title('{} ({})'.format(df.columns[col], specification), fontsize = 16, pad = 20, weight = 'bold')
         plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
         plt.ylabel(df.columns[col],  labelpad=20)
@@ -425,8 +426,8 @@ def vis_stats_ooi_gen(df, outputpath, trialname, metric, specification):
             custom_palette[df.index[x]] = 'seagreen'
     
     # create customised legend
-    color_list = ['seagreen','springgreen' ]
-    label_list = ['Not outside 2x stdev','Outside 2x stdev']
+    color_list = ['springgreen', 'seagreen' ]
+    label_list = ['Outside 2x stdev', 'Not outside 2x stdev']
     handlelist = [plt.plot([], marker='o', ls='', color = color)[0] for color in color_list]
     
     # create barplot

@@ -29,14 +29,14 @@ import result_summaries
 
 # replacing input from gui
 def get_variables_gui():
-    global ogd_exist, pixel_distance, input_path, output_path, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, template_sequence, algrthm, run_stats, results_summary_report
+    global ogd_exist, pixel_distance, input_path, output_path, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, template_sequence, algrthm, run_stats, results_summary_report, all_ooi
 
     # choose input path (where group folders lie)
-    ui_input_path =  'Data/study_analysis_part2' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
+    ui_input_path =  'data/input/study_analysis_part2' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
-    ui_output_path = 'Output'
+    ui_output_path = 'data/output'
     output_path = Path(ui_output_path)
 
     # general analysis
@@ -52,7 +52,7 @@ def get_variables_gui():
     ooi_analysis = True
 
     # sequence comparison
-    sequence_comp = True
+    sequence_comp = False
 
     # stats (entropy) (needs ooi-based analysis to be run first)
     run_stats = True
@@ -663,7 +663,7 @@ if ooi_analysis == True:
 
                 ogd_data = pd.read_csv(trial_paths[i][j][k] + '_ogd.txt', sep='\t')
 
-                # extract all OOIs
+                # extract all OOIs 
                 all_ooi = ooi_metrics.extract_oois(ogd_data)
 
                 # preprocess ogd data and add columns (fixation object and fixation time)
@@ -1001,7 +1001,7 @@ if action_analysis == True:
                 ogd_data = pd.read_csv(trial_paths[i][j][k] + '_ogd.txt', sep='\t')
 
                 # extract all OOIs
-                all_ooi = ooi_metrics.extract_oois(ogd_data)
+                all_ooi = ooi_metrics.extract_oois(ogd_data) #TODO: maybe delete again
 
                 # preprocess ogd data and add columns (fixation object and fixation time)
                 ogd_final = ooi_metrics.prepare_ogd_file(ogd_data, pixel_distance)
@@ -1033,6 +1033,8 @@ if action_analysis == True:
                     for x in range(len(df_duration_per_step)):
                         if df_duration_per_step['action'][x] == action:
                             df_trial_duration_per_action[action][0].append(df_duration_per_step['duration'][x])
+
+            
                 
                 # add column with mean per action
                 list_means = []

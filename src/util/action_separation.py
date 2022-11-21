@@ -120,7 +120,7 @@ def summary_ooi_metrics_per_action(ooi_metrics_action_df_list, idx_action_dfs):
     
     # create df_summary with identical columns 
     # and indeces of metrics that can be calculated by addition (df.add())
-    df_summary_ooi = pd.DataFrame(columns=ooi_metrics_action_df_list[0].columns, index=['Hits', 'Total Fixation Time [ms]', 'Total Dwelltime [ms]' , 'Revisits', 'Relative Dwelltime [%]'])
+    df_summary_ooi = pd.DataFrame(columns=ooi_metrics_action_df_list[0].columns, index=['Hits', 'Total Fixation Time [ms]', 'Total Dwell Time [ms]' , 'Revisits', 'Relative Dwell Time [%]'])
     
     # convert nans to 0
     df_summary_ooi.fillna(0, inplace=True)
@@ -132,7 +132,7 @@ def summary_ooi_metrics_per_action(ooi_metrics_action_df_list, idx_action_dfs):
 
     # now calculate average fixation time and average dwelltime
     df_summary_ooi.loc['Average Fixation Time [ms]'] = df_summary_ooi.loc['Total Fixation Time [ms]'] / df_summary_ooi.loc['Hits'].replace({ 0 : np.nan })
-    df_summary_ooi.loc['Average Dwelltime [ms]'] = df_summary_ooi.loc['Total Dwelltime [ms]'] / df_summary_ooi.loc['Revisits'].replace({ 0 : np.nan })
+    df_summary_ooi.loc['Average Dwell Time [ms]'] = df_summary_ooi.loc['Total Dwell Time [ms]'] / df_summary_ooi.loc['Revisits'].replace({ 0 : np.nan })
 
     # convert nans to 0 again
     df_summary_ooi.fillna(0, inplace=True)
@@ -157,9 +157,9 @@ def summary_ooi_general_metrics_per_action(gen_ooi_metrics_action_df_list, idx_a
     df_summary_ooi_gen.fillna(0, inplace=True)
 
     # calculate average dwelltime 
-    tot_dwelltime_action = sum(df_summary_ooi.loc['Total Dwelltime [ms]'])
+    tot_dwelltime_action = sum(df_summary_ooi.loc['Total Dwell Time [ms]'])
     tot_dwells_action = df_summary_ooi_gen['Total Dwells'][0]
-    df_summary_ooi_gen['Average Dwelltime [ms]'] = tot_dwelltime_action / tot_dwells_action
+    df_summary_ooi_gen['Average Dwell Time [ms]'] = tot_dwelltime_action / tot_dwells_action
     
     # calculate average stationary gaze entropy with duration per action: sum(GE_i*duration_i) / sum(durations)
     list_sum_sge = []
