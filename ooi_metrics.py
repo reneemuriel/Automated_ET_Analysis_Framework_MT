@@ -344,15 +344,13 @@ def tot_dwells(revisits_per_ooi):
     return sum(revisits_per_ooi)
 
 
-# calculate stationary gaze entropy (inclusive BG / BG)
+# calculate stationary gaze entropy (inclusive BG)
 def stationary_gaze_entropy(all_ooi, data):
-
-    global proportions # for tge calculation
 
     hits_with_BG = []
     all_ooi_BG = all_ooi + ['BG']
     
-    # calculate hits per OOI, inclusive BG/BG
+    # calculate hits per OOI, inclusive BG
     for ooi in all_ooi_BG:
         hits_with_BG.append(sum(x.count(ooi) for x in data['fixation_object']))
     
@@ -376,17 +374,15 @@ def stationary_gaze_entropy(all_ooi, data):
     sge_normalised = sge / max_entropy
     return sge_normalised # 1 = max entropy, 0 = minimum entropy
 
-# calculate transition gaze entropy (inclusive BG / BG)
+# calculate transition gaze entropy (inclusive BG)
 def gaze_transition_entropy(all_ooi, data):
 
     # make transition matrix global variable so that it can be saved as ouput
     global transition_matrix
     global dict_ooi
 
-    # add
-    # all_ooi_BG = all_ooi + ['BG']
 
-    # number of states as input for transition_matrix() -> only take objects that are looked at in this timeframe -> maybe change
+    # number of states as input for transition_matrix() -> only take objects that are looked at in this timeframe 
     number_of_states = len(data['fixation_object'].unique())
     ooi_recognised = data['fixation_object'].unique()
 
@@ -427,23 +423,31 @@ def gaze_transition_entropy(all_ooi, data):
     j=0
     for i in range (len(ooi_recognised)):
         for j in range(len(ooi_recognised)):
-            if transition_matrix[i][j] <= 0.0001: # or = 0 ?
+            if transition_matrix[i][j] <= 0.0001: 
                 m2[i][j] = 0
             else:
                 m2[i][j] = math.log2(transition_matrix[i][j]) * transition_matrix[i][j]
 
-    # conduct inner summation (each row) and multiply by stationary distribution value (from sge)
+    # conduct inner summation (each row) and multiply by stationary distribution value (named proportions, similar to sge)
+    proportions_tge = []
+    total_fixations = len(transitions)
+
+    for value in dict_ooi.values():
+        occurence = transitions.count(value)
+        proportions_tge.append(occurence/total_fixations)
+    
+
     inner_summation = []
     for i in range(len(ooi_recognised)):
-        inner_summation.append(sum(m2[i][:])*proportions[0])
+        inner_summation.append(sum(m2[i][:])*proportions_tge[i])  ### mistake!
 
     # conduct outer summation (sum of all inner summations) and negative
     outer_summation = sum(inner_summation)
     tge = -outer_summation
     
     # normalize stge with maxmimum entropy
-    max_entropy = math.log2(len(ooi_recognised))
-    if max_entropy == 0:    # only one ooi fixated in this action -> too little to calculate entropy?
+    max_entropy = math.log2(number_of_states) 
+    if max_entropy == 0:    
         tge_normalised = np.nan    
     else: 
         tge_normalised = tge / max_entropy

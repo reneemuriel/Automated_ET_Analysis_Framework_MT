@@ -40,22 +40,22 @@ def get_variables_gui():
     output_path = Path(ui_output_path)
 
     # general analysis
-    general_analysis = True
+    general_analysis = False
 
     # calculate k-coefficient
-    kcoeff_analysis = True
+    kcoeff_analysis = False
 
     # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, should be changed)
-    action_analysis = True
+    action_analysis = False
 
     # ooi-based analysis
-    ooi_analysis = True
+    ooi_analysis = False
 
     # sequence comparison
     sequence_comp = False
 
     # stats (entropy) (needs ooi-based analysis to be run first)
-    run_stats = True
+    run_stats = False
 
     # results
     results_summary_report = True
@@ -1570,7 +1570,7 @@ if run_stats == True:
     
     metrics = ['Normalised Stationary Gaze Entropy', 'Normalised Gaze Transition Entropy' ]
     means = [mean_sge, mean_gte]
-    stdevs = [stdev_sge, stdev_sge]
+    stdevs = [stdev_sge, stdev_gte]
 
 
     # go through summaries and make barplots per participants and mark >2stdev
@@ -1593,7 +1593,7 @@ if run_stats == True:
                 df_stats['Outside 2x Stdev'] = 'No' 
                 for x in range(len(df_stats)):
                     val = df_stats[metric][x] 
-                    if val > (mean_sge + 2*stdev_sge) or val < (mean_sge - 2*stdev_sge):
+                    if val > (means[y] + 2*stdevs[y]) or val < (means[y] - 2*stdevs[y]):
                         df_stats['Outside 2x Stdev'][x] = 'Yes'
                 
                 visualisations.vis_stats_ooi_gen(df_stats, vis_path, participants[i][j], metric, 'Whole Trial')
@@ -1614,7 +1614,7 @@ if run_stats == True:
             df_stats['Outside 2x Stdev'] = 'No' 
             for x in range(len(df_stats)):
                 val = df_stats[metric][x] 
-                if val > (mean_sge + 2*stdev_sge) or val < (mean_sge - 2*stdev_sge):
+                if val > (means[y] + 2*stdevs[y]) or val < (means[y] - 2*stdevs[y]):
                     df_stats['Outside 2x Stdev'][x] = 'Yes'
             
             visualisations.vis_stats_ooi_gen(df_stats, vis_path, groups[i], metric, 'Whole Trial')
@@ -1634,7 +1634,7 @@ if run_stats == True:
         df_stats['Outside 2x Stdev'] = 'No' 
         for x in range(len(df_stats)):
             val = df_stats[metric][x] 
-            if val > (mean_sge + 2*stdev_sge) or val < (mean_sge - 2*stdev_sge):
+            if val > (means[y] + 2*stdevs[y]) or val < (means[y] - 2*stdevs[y]):
                 df_stats['Outside 2x Stdev'][x] = 'Yes'
         
         visualisations.vis_stats_ooi_gen(df_stats, vis_path, 'All Groups', metric, 'Whole Trial')
@@ -1652,9 +1652,9 @@ if run_stats == True:
 if results_summary_report == True:
 
     ### only if it should be run separately
-    #ooi_analysis = True
-    #kcoeff_analysis = True
-    #action_analysis = True
+    ooi_analysis = True
+    kcoeff_analysis = True
+    action_analysis = False
 
     
     img_import_path = output_path
