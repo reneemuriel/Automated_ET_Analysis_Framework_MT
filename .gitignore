@@ -1,9 +1,9 @@
 # data
 Data_old/
-data/output
-Output
-archive
+data/
+archive/
 Summary Report
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

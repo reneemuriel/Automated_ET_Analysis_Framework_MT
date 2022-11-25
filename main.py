@@ -36,7 +36,7 @@ def get_variables_gui():
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
-    ui_output_path = 'data/output'
+    ui_output_path = 'data/output/output_to_replace'
     output_path = Path(ui_output_path)
 
     # general analysis
@@ -1001,7 +1001,7 @@ if action_analysis == True:
                 ogd_data = pd.read_csv(trial_paths[i][j][k] + '_ogd.txt', sep='\t')
 
                 # extract all OOIs
-                all_ooi = ooi_metrics.extract_oois(ogd_data) #TODO: maybe delete again
+                all_ooi = ooi_metrics.extract_oois(ogd_data) 
 
                 # preprocess ogd data and add columns (fixation object and fixation time)
                 ogd_final = ooi_metrics.prepare_ogd_file(ogd_data, pixel_distance)

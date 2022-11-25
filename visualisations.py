@@ -38,9 +38,10 @@ def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specificat
     savepath=outputpath /'{}_boxplot_{}'.format(metric, specification)
     sns.set_theme(style='whitegrid')
     boxplot = sns.boxplot(data=nested_list, color='mediumseagreen')
-    boxplot.set_xticklabels(x_labels, rotation = 90) # changed this
+    boxplot.set_xticklabels(x_labels, rotation = 90) 
     plt.title('{} ({})'.format(metric, specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
+    plt.ylabel(metric,  labelpad=20)              
     fig = boxplot.get_figure()
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
@@ -136,6 +137,7 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
     boxplot.set_xticklabels(x_labels, rotation = 90)
     plt.title('Average Saccade Duration ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
+    plt.ylabel('Average Saccade Duration [ms]',  labelpad=20)
     fig = boxplot.get_figure()
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
@@ -147,6 +149,7 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
     boxplot.set_xticklabels(x_labels, rotation = 90)
     plt.title('Average Fixation Duration ({})'.format(specification), fontsize = 16, pad = 20, weight = 'bold')
     plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
+    plt.ylabel('Average Fixation Duration [ms]',  labelpad=20) 
     fig = boxplot.get_figure()
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
@@ -282,9 +285,10 @@ def vis_ooigen_barplots(df, outputpath, filename, specification):
         sns.set_theme(style='whitegrid')
         barplot = sns.barplot(x=df.index.values[:-1], y=df.iloc[:-1,col], color='mediumseagreen') # -1 becaues last row is standard deviation
         barplot.set_xticklabels(df.index[:-1], rotation = 90)
+        barplot.set_yticklabels(df.columns[col])  
         plt.title('{} ({})'.format(df.columns[col], specification), fontsize = 16, pad = 20, weight = 'bold')
         plt.text(1.1,1.1, filename, transform=plt.gca().transAxes)
-        plt.ylabel(df.columns[col],  labelpad=20)
+        #plt.ylabel(df.columns[col],  labelpad=20)        
         fig = barplot.get_figure()
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
@@ -409,7 +413,6 @@ def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
 
 
 ### STATISTICS 
-#region
 
 # mark trials outside 2x 
 
