@@ -233,9 +233,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         args_dict = self.getConfigDict()
 
         # start analysis
-        start_analysis(args_dict)
-
         log.info("starting main with args = {}".format(args_dict))
+        start_analysis(args_dict)   
 
     @pyqtSlot()
     def save_configuration(self):

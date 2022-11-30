@@ -1,4 +1,9 @@
+# data
 Data_old/
+data/
+archive/
+Summary Report
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

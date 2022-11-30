@@ -1,0 +1,24 @@
+action_list:
+- Action1
+- Action2
+- Action3
+- Action4
+- Action5
+executionOptions:
+  action_analysis: false
+  entropy_stats: true
+  general_analysis: true
+  hitradius: 20
+  kcoeff_analysis: true
+  novice_results: true
+  ooi_analysis: true
+  sequence_comparison: false
+paths:
+  input: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/input/study_analysis_part2
+  output: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/output/last_test_2
+template_sequence:
+- Action2
+- Action4
+- Action3
+- Action1
+- Action2
