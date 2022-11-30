@@ -13,8 +13,8 @@ import math
 # import own scripts
 import ooi_metrics
 import general_metrics
-import tobii_to_fixations as t2f # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
-import tobii_to_saccades as t2s # change to "tobii_to_saccades_old" if you have the .tsv file from tobii data export (not metrics export!)
+import tobii_to_fixations_old as t2f # change to "tobii_to_fixations_old" if you have the .tsv file from tobii data export (not metrics export!)
+import tobii_to_saccades_old as t2s # change to "tobii_to_saccades_old" if you have the .tsv file from tobii data export (not metrics export!)
 import action_separation
 import kcoefficient_calculation
 import visualisations
@@ -32,21 +32,21 @@ def get_variables_gui():
     global ogd_exist, pixel_distance, input_path, output_path, action_analysis, ooi_analysis, general_analysis, kcoeff_analysis, all_actions, sequence_comp, template_sequence, algrthm, run_stats, results_summary_report, all_ooi
 
     # choose input path (where group folders lie)
-    ui_input_path =  'data/input/study_analysis_part2' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
+    ui_input_path =  'data/input/gaze_input_tobii_ogd_kcoeff' #test data: Data/gaze_input_tobii_ogd_kcoeff -> change to tobii_to_fixations_old.py and tobii_to_saccades_old.py in import & change kcoeff (tobii_kcoeff.tsv import)
     input_path = Path(ui_input_path)
 
     # (choose) output path (group folders will be created in there)
-    ui_output_path = 'data/output/output_to_replace'
+    ui_output_path = 'data/output/output_gui_test'
     output_path = Path(ui_output_path)
 
     # general analysis
-    general_analysis = False
+    general_analysis = True
 
     # calculate k-coefficient
     kcoeff_analysis = False
 
     # action-based analysis (needs ooi-based analysis to be run first, because dirs are created, should be changed)
-    action_analysis = False
+    action_analysis = True
 
     # ooi-based analysis
     ooi_analysis = False
@@ -1652,9 +1652,9 @@ if run_stats == True:
 if results_summary_report == True:
 
     ### only if it should be run separately
-    ooi_analysis = True
-    kcoeff_analysis = True
-    action_analysis = False
+    #ooi_analysis = True
+    #kcoeff_analysis = True
+    #action_analysis = False
 
     
     img_import_path = output_path

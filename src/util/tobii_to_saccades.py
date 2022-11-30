@@ -1,3 +1,7 @@
+''' 
+Converts tobii export (.tsv) into saccades file (.txt)
+'''
+
 import pandas as pd
 import os
 from pathlib import Path

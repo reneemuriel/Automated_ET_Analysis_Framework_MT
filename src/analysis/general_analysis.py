@@ -1,6 +1,12 @@
+'''
+General analysis
+'''
+
+
 import os
 import pandas as pd
 import numpy as np
+import logging as log
 from pathlib import Path
 import statistics
 
@@ -11,6 +17,8 @@ import src.util.general_metrics as general_metrics
 import src.util.visualisations as visualisations
 
 def analyse(list_tuple: list, output_path: str) -> tuple:
+
+    log.info("Starting general analysis.") 
 
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
@@ -190,5 +198,7 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
 
     # piecharts
     visualisations.vis_gen_metrics_piechart(allgroups_df_summary, vis_path, 'All Groups', 'Whole Trial')
+
+    log.info("Finished general analysis.")
 
     return

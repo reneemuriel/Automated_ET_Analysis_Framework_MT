@@ -1,4 +1,6 @@
-# append string to filename, e.g. to append '_tobii' to exported .tsv files from Tobii Pro Lab
+'''
+Append string to filename, e.g. to append '_ogd' to OGD files 
+'''
 
 from pathlib import Path
 import os

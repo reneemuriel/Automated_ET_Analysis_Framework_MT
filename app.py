@@ -1,6 +1,5 @@
-#TODO: update copyright notice
 '''
-Date:
+Date: 3/12/2022
 Author: Renée Saethre (renees@ethz.ch)
 Brief: entry point for the eye-tracking analyis framework
 '''
@@ -24,7 +23,7 @@ from src.analysis import general_analysis
 from src.analysis import kcoeff_analysis
 from src.analysis import ooi_analysis
 from src.analysis import action_analysis
-from src.analysis import statistics
+from src.analysis import stats
 from src.analysis import report
 
 def get_lists(input_path: str, output_path: str) -> tuple:
@@ -39,9 +38,7 @@ def get_lists(input_path: str, output_path: str) -> tuple:
     group_paths = []
     output_path_groups = []
 
-    i=0
-
-    for i in range (len(groups)):
+    for i in range(len(groups)):
 
         group_paths.append(input_path / Path(groups[i]))
         output_path_groups.append(output_path / Path(groups[i]))
@@ -130,8 +127,7 @@ def start_analysis(config: dict) -> None:
 
     # set default values, e.g. for mean kcoeff that is required as input for action_analysis even if kcoeff analysis did not take place
     mean_kcoeff_all, stdev_kcoeff_all = [1,1]
-
-
+    algrthm = 'levenshtein_distance'
 
 
     # do the individual parts of the analysis
@@ -145,15 +141,13 @@ def start_analysis(config: dict) -> None:
         ooi_analysis.analyse(all_lists, path_output, pixel_distance)
 
     if flag_action_analysis:
-        action_analysis.analyse(all_lists, path_output, pixel_distance, all_actions, template_sequence, flag_sequence_comparison, flag_kcoeff_analysis, mean_kcoeff_all, stdev_kcoeff_all)
+        action_analysis.analyse(all_lists, path_output, pixel_distance, all_actions, template_sequence, flag_sequence_comparison, flag_kcoeff_analysis, mean_kcoeff_all, stdev_kcoeff_all, algrthm)
 
     if flag_entropy_stats:
-        statistics.analyse(all_lists, path_output)
+        stats.analyse(all_lists, path_output)
 
     if flag_novice_results:
         report.get_summary(all_lists, path_output, flag_ooi_analysis, flag_kcoeff_analysis, flag_action_analysis)
-
-    
 
 
 

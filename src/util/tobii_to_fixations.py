@@ -1,15 +1,12 @@
-# adapted from Thomas Kreiner
-
-# new: takes event-based metrics export by tobii pro lab
+''' 
+Converts tobii export (.tsv) into fixations file (.txt)
+Adapted from Thomas Kreiner. New: takes event-based metrics export by tobii pro lab.
+'''
 
 import pandas as pd
 import os
 import glob
 from pathlib import Path
-
-
-
-
 
 
 def reformat(file, trial_path):    #ouput file location added by renee
@@ -42,8 +39,6 @@ def reformat(file, trial_path):    #ouput file location added by renee
     file_string = os.path.splitext(base)[0]
   
     df_out.to_csv(trial_path + '_fixations.txt', sep='\t', index=False) 
-
-     #print("file: {} was reformatted successfully".format(file_string))
 
 
 

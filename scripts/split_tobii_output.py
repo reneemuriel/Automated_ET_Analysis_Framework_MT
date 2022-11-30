@@ -1,11 +1,13 @@
+'''
+Split one .tsv file (e.g. named 'all_recordings.tsv') exported from the Metrics Export from Tobii Pro Lab to multiple .tsv files,
+according to the column "Participant" which are the trial names in the format participantxx_trialxx, 
+exported into the directory data/tobii/split/tobii_files.
+'''
+
 import pandas as pd
 from pathlib import Path
 import os
 
-# split the one .tsv file named 'all_recordings.tsv' exported from the Metrics Export from Tobii Pro Lab to multiple .tsv files 
-# according to the column "Participant" which are the trial names in the format participantxx_trialxx
-
-# exported into subfolder "files" 
 
 # read df that we want to split up
 df_to_split = pd.read_csv('data/tobii/split/all_recordings.tsv', sep='\t')

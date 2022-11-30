@@ -1,3 +1,8 @@
+'''
+K-coefficient calculation
+'''
+
+
 import pandas as pd
 import os
 

@@ -1,9 +1,15 @@
+'''
+K-coefficient analysis
+'''
+
 import os
 import pandas as pd
 import numpy as np
 from pathlib import Path
 import statistics
 import math
+import logging as log
+
 
 # local imports
 import src.util.kcoefficient_calculation as kcoefficient_calculation
@@ -11,6 +17,8 @@ import src.util.visualisations as visualisations
 
 
 def analyse(list_tuple: list, output_path: str) -> tuple:
+
+    log.info("Starting K-coefficient analysis.") 
 
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
@@ -271,5 +279,9 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
     os.makedirs(vis_path, exist_ok=True)
     visualisations.vis_kcoeff_barplot(df_allgroups_kcoeff_2,vis_path, 'All Groups', 'Whole Trial' )
 
+    log.info("Finished K-coefficient analysis.") 
+
     return mean_kcoeff_all, stdev_kcoeff_all
+
+
 

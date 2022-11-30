@@ -1,15 +1,23 @@
+'''
+OOI-based analysis
+'''
+
 import os
 import pandas as pd
 import numpy as np
 from pathlib import Path
 import statistics
+import logging as log
 
 # local imports
-import src.util.ooi_metrics as ooi_metrics
+import ooi_metrics
 import src.util.visualisations as visualisations
 
 
 def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
+
+    log.info("Starting ooi-based analysis.") 
+
 
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
@@ -89,10 +97,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
                 # visualisation of transition matrix
                 spec = 'Whole Trial'
                 visualisations.vis_transition_matrix(transition_matrix, dict_ooi, vis_path, trials[i][j][k], spec)
-
-                # visualisation of ooi-based general metrics
-                # boxplots of avg fixation duration and avg dwelltime (not priority)
-
 
 
             ### summary of ooi analysis per participant
@@ -307,5 +311,5 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
         allgroups_nested_list.append(list_means)
         # maybe change to own function?
         visualisations.vis_gen_metrics_boxplots_group(allgroups_nested_list, vis_path, 'All Groups', 'Whole Trial', metric, x_labels)
-
-
+    
+    log.info("Finished ooi-based analysis.") 

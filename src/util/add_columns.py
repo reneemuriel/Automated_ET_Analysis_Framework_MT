@@ -1,8 +1,8 @@
-# add column fixation_object
+'''
+add column fixation_object
+'''
 
 # only 1 OOI per fixation possible -> choose closer one
-
-
 # if last column is action
 def add_fixation_object_action(data, pixel_distance):
     fixation_object = []
@@ -20,7 +20,6 @@ def add_fixation_object_action(data, pixel_distance):
             fixation_object.append('BG')
     data['fixation_object'] = fixation_object
 
-
 # if last column is not action
 def add_fixation_object(data, pixel_distance):
     fixation_object = []
@@ -37,9 +36,6 @@ def add_fixation_object(data, pixel_distance):
         else:
             fixation_object.append('BG')
     data['fixation_object'] = fixation_object
-
-
-
 
 # def add_fixation_time
 def add_fixation_time(data):

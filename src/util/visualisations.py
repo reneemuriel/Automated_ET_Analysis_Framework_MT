@@ -1,3 +1,11 @@
+'''
+Contains all visualisations of the framework.
+'''
+
+# ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+
 # load packages
 from cmath import pi
 from matplotlib.image import FigureImage

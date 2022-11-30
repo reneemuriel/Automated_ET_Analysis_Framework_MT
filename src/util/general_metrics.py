@@ -1,3 +1,7 @@
+'''
+Calculation of metrics
+'''
+
 from numpy import fix
 import pandas as pd
 import statistics

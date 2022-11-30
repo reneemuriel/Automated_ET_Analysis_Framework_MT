@@ -1,12 +1,19 @@
+'''
+Generation of Summary Reports
+'''
+
 import os
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import logging as log
 
 import src.util.result_summaries as result_summaries
 
 
 def get_summary(list_tuple: list, output_path: str, ooi_analysis: bool, kcoeff_analysis: bool, action_analysis: bool) -> tuple:
+
+    log.info("All modules executed. Starting to generate summary reports.") 
 
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
@@ -35,3 +42,5 @@ def get_summary(list_tuple: list, output_path: str, ooi_analysis: bool, kcoeff_a
             results_path = Path('data/report') / Path(groups[i]) / participants[i][j]
             os.makedirs(results_path, exist_ok = True)
             result_summaries.participants_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, participants[i][j])
+
+    log.info("Finished creating all summary reports.") 

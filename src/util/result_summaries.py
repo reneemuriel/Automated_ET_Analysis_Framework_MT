@@ -1,3 +1,7 @@
+'''
+Generation Summary Reports
+'''
+
 from genericpath import exists
 import pandas as pd
 from matplotlib import image
@@ -1480,21 +1484,3 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     pdf.output(results_path / 'Results_Summary_{}.pdf'.format(level), 'F')
 
 
-
-
-### generate results manually separately from main.py
-
-
-# which analyses took place? 
-# general_analysis: always true 
-#ooi_analysis = True
-#kcoeff_analysis = True
-#action_analysis = True
-
-#level = 'participant03'
-#img_import_path = 'Output_backup/group_easy/participant03'
-#results_path = Path('Summary_Report_Sep/group_easy/participant03')
-#os.makedirs(results_path, exist_ok = True)
-
-#allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level)
-#participants_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level)

@@ -1,8 +1,14 @@
+'''
+Separation of dataframes per action
+'''
+
 from re import I
 import pandas as pd
-import ooi_metrics
 import numpy as np
-import general_metrics
+
+# local import
+from src.util import general_metrics
+from src.util import ooi_metrics
 
 # separate trial into actions
 def action_times(data, fixationdata, all_actions) -> pd.DataFrame():

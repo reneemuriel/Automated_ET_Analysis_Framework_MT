@@ -1,14 +1,21 @@
+'''
+Calculation of statistics. To date only implemented for SGE and GTE.
+'''
+
 import os
 import pandas as pd
 import numpy as np
 from pathlib import Path
 import statistics
+import logging as log
 
 # local imports
 import src.util.visualisations as visualisations
 
 
 def analyse(list_tuple: list, output_path: str) -> tuple:
+
+    log.info("Started to calculate statistics.") 
 
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
@@ -109,3 +116,4 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
         
         y=y+1
 
+    log.info("Finished to calculate statistics.") 
