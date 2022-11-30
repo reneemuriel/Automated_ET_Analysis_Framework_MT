@@ -74,8 +74,7 @@ python app.py --config config/example.yaml
 The program will then start and run to completion without further interaction. This may take a few hours.
 
 ## Deliverables
-The written thesis can be found [here](TODO:) while a comprehensive guide on the data pre-processing and input structure can be found [here](preprocessing.md).
+The written thesis can be found [here](deliverables/MT_Renee_Saethre_v1_20221127.pdf TODO: change to final version) while a comprehensive guide on the data pre-processing and input structure can be found [here](preprocessing.md).
 
 ## License
 The graphical user interface (GUI) in this framework is written with PyQt5, i.e. Python bindings for the QT framework. These are licensed under the General Public License (GPL). Consequently, this repository is also licensed under the GPL. In essence, this means that users provided with a copy of this framework must be provided with access to the underlying source code. Since the framework is entirely written in Python and no individual binaries are distributed, this requirement is always satisfied.
-
