@@ -23,8 +23,6 @@ filenames = glob.glob(path + '/tobii_to_fixations' + "/*.tsv")
 # choose output path
 output_path = path + '/tobii_to_fixations/'
 
-
-
 def insert_row(idx, df, df_insert):
     dfA = df.iloc[:idx, ]
     dfB = df.iloc[idx:, ]
@@ -32,8 +30,6 @@ def insert_row(idx, df, df_insert):
     df = dfA.append(df_insert).append(dfB).reset_index(drop = True)
 
     return df
-
-
 
 def reformat(file, trial_path):    #ouput file location added by renee
 
@@ -45,7 +41,6 @@ def reformat(file, trial_path):    #ouput file location added by renee
     #Select certain colums
     df_out = df_out[["Recording timestamp", "Gaze event duration", "Fixation point X", "Fixation point Y"]]
 
-
     ## tobii ouput file: in microseconds
     df_out['Recording timestamp'] = df_out['Recording timestamp'].div(1000).round()
     df_out[['change_x', 'change_y']] = df_out[['Fixation point X', 'Fixation point Y']].diff()
@@ -59,15 +54,12 @@ def reformat(file, trial_path):    #ouput file location added by renee
 
     df_out = df_out[["Event Start Trial Time [ms]", "Event End Trial Time [ms]", "Event Duration [ms]", "Visual Intake Position X [px]", "Visual Intake Position Y [px]"]]
 
-
     base = os.path.basename(file)
     file_string = os.path.splitext(base)[0]
   
     df_out.to_csv(trial_path + '_fixations.txt', sep='\t', index=False) 
 
     print("file: {} was reformatted successfully".format(file_string))
-
-
 
 def reformat_sep(file, output_path):
 
@@ -79,7 +71,6 @@ def reformat_sep(file, output_path):
     #Select certain colums
     df_out = df_out[["Recording timestamp", "Gaze event duration", "Fixation point X", "Fixation point Y"]]
 
-
     ## tobii ouput file: in microseconds
     df_out['Recording timestamp'] = df_out['Recording timestamp'].div(1000).round()
     df_out[['change_x', 'change_y']] = df_out[['Fixation point X', 'Fixation point Y']].diff()
@@ -93,7 +84,6 @@ def reformat_sep(file, output_path):
 
     df_out = df_out[["Event Start Trial Time [ms]", "Event End Trial Time [ms]", "Event Duration [ms]", "Visual Intake Position X [px]", "Visual Intake Position Y [px]"]]
 
-
     base = os.path.basename(file)
     file_string = os.path.splitext(base)[0]
     file_string_trialonly = file_string[:-6]
@@ -102,7 +92,7 @@ def reformat_sep(file, output_path):
    
     df_out.to_csv(save_path, sep='\t', index=False) 
 
-    print("file: {} was reformatted successfully".format(file_string_trialonly))
+    #print("file: {} was reformatted successfully".format(file_string_trialonly))
 
 # reformat 
 for filename in filenames:

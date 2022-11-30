@@ -1,5 +1,5 @@
 ''' 
-Converts tobii export (.tsv) into fixations file (.txt)
+Converts tobii export (.tsv) into fixations file (.txt).
 Adapted from Thomas Kreiner. New: takes event-based metrics export by tobii pro lab.
 '''
 

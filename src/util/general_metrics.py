@@ -1,5 +1,5 @@
 '''
-Calculation of metrics
+Calculation of metrics of general analysis
 '''
 
 from numpy import fix
@@ -16,31 +16,23 @@ from pathlib import Path
 def avg_fixation_duration_gen(fixationdata):
     return statistics.mean(fixationdata['Event Duration [ms]'])
 
-
 # number of fixations
 def tot_fixations_gen(fixationdata):
     return (len(fixationdata))
 
-
 # total duration
 def tot_duration_gen(fixationdata):
     return fixationdata.iloc[-1]['Event End Trial Time [ms]']
-
-    
-    
+        
 # time to first fixation
 def first_fixation_gen(fixationdata):
     return fixationdata.iloc[1]['Event Start Trial Time [ms]']
-
 
 # total fixation duration
 def tot_fixation_duration(fixationdata):
     return sum(fixationdata['Event Duration [ms]'])
 
-
-
 #endregion
-
 
 ### calculations with saccade file
 #region
@@ -56,9 +48,7 @@ def tot_saccades_gen(saccadedata):
 def tot_saccade_duration(saccadedata):
     return sum(saccadedata['Event Duration [ms]'])
 
-
 #endregion
-
 
 ### calculations with both files
 #region
@@ -76,9 +66,7 @@ def fix_sac_ratio(fixationdata, saccadedata):
     
     return percentages
 
-
 #endregion
-
 
 def calculate_general_metrics(fixationdata, saccadedata, trialname):
     
@@ -114,7 +102,6 @@ def calculate_general_metrics(fixationdata, saccadedata, trialname):
     df_general_metrics.index = [trialname]
 
     return df_general_metrics
-
 
 def calculate_general_metrics_per_action(fixationdata, saccadedata, trialname):
      
@@ -152,7 +139,6 @@ def calculate_general_metrics_per_action(fixationdata, saccadedata, trialname):
 
     return df_general_metrics   
 
-
 def summary_general_analysis(df_list, spec, save_path, action):
            
     # concatenate all dfs 
@@ -162,7 +148,7 @@ def summary_general_analysis(df_list, spec, save_path, action):
     # add standard deviation to all columns
     df_summary.loc['Standard Deviation {}'.format(spec)] = df_summary.iloc[0:-1].std()
     
-    ### manually add mean and standard deviation of relative percentages of fixation/saccade duration
+    ### add mean and standard deviation of relative percentages of fixation/saccade duration
     
     # extract numbers 
     perc_fixation_list = []

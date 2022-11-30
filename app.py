@@ -1,6 +1,6 @@
 '''
 Date: 3/12/2022
-Author: Renée Saethre (renees@ethz.ch)
+Author: Renée Muriel Saethre (renees@ethz.ch)
 Brief: entry point for the eye-tracking analyis framework
 '''
 
@@ -129,7 +129,6 @@ def start_analysis(config: dict) -> None:
     mean_kcoeff_all, stdev_kcoeff_all = [1,1]
     algrthm = 'levenshtein_distance'
 
-
     # do the individual parts of the analysis
     if flag_general_analysis:
         general_analysis.analyse(all_lists, path_output)
@@ -148,8 +147,6 @@ def start_analysis(config: dict) -> None:
 
     if flag_novice_results:
         report.get_summary(all_lists, path_output, flag_ooi_analysis, flag_kcoeff_analysis, flag_action_analysis)
-
-
 
 if __name__ == "__main__":
     # set-up logging environment

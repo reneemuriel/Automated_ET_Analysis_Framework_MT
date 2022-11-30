@@ -2,7 +2,6 @@
 General analysis
 '''
 
-
 import os
 import pandas as pd
 import numpy as np
@@ -11,8 +10,8 @@ from pathlib import Path
 import statistics
 
 # local imports
-import src.util.tobii_to_fixations_old as t2f
-import src.util.tobii_to_saccades_old as t2s
+import src.util.tobii_to_fixations as t2f
+import src.util.tobii_to_saccades as t2s
 import src.util.general_metrics as general_metrics
 import src.util.visualisations as visualisations
 

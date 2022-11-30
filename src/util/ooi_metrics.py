@@ -1,7 +1,6 @@
 '''
-Calculation of OOI metrics
+Calculation of metrics of OOI-based analysis
 '''
-
 
 from glob import glob
 import pandas as pd
@@ -11,9 +10,8 @@ import numpy as np
 from pathlib import Path
 import re
 
+# local imports 
 from src.util import add_columns as ac
-
-
 
 ### PREPARE OGD FILE
 #region
@@ -48,7 +46,6 @@ def prepare_ogd_file(ogd_data, pixel_distance):
 
     return ogd_final
 
-
 def extract_oois(ogd_data):
     # extract oois from ogd_data
     if ogd_data.columns.values[-1] == 'action' or ogd_data.columns.values[-1] == 'Action':
@@ -60,10 +57,7 @@ def extract_oois(ogd_data):
     
     return all_ooi
 
-
 #endregion
-
-
 
 ### CALCULATION OF OOI-BASED METRICS
 #region
@@ -77,7 +71,6 @@ def count_hits_ooi(data, all_ooi):
         hits.append(sum(x.count(ooi) for x in data['fixation_object']))
     return hits
 
-
 ### calculate fixation time per OOI of entire trial
 def tot_fixation_time_ooi(data, all_ooi):
     global tot_fixation_time
@@ -89,7 +82,6 @@ def tot_fixation_time_ooi(data, all_ooi):
                 tot_fixation_time[i] = tot_fixation_time[i] + data.iloc[row]['fixation_time']
         i=i+1
     return tot_fixation_time   
-
 
 ### calculate average dwell time per OOI of entire trial 
 def avg_dwell_time_ooi(data, all_ooi):
@@ -124,7 +116,6 @@ def avg_dwell_time_ooi(data, all_ooi):
             # and change start_dwell_row to next row
             start_dwell_row = row+1
 
-
     df_dwelltime = pd.DataFrame(columns=all_ooi) # do not include BG
     df_dwelltime.loc[len(df_dwelltime)] = 0 # add new row
 
@@ -141,10 +132,7 @@ def avg_dwell_time_ooi(data, all_ooi):
     for ooi in all_ooi:
         df_dwelltime[ooi][1] = statistics.mean(df_dwelltime[ooi][0])
 
-    e=2
-
     return df_dwelltime.iloc[1]
-
 
 ### calculate total dwell time per OOI of entire trial
 def total_dwell_time(df_dwelltime, all_ooi):
@@ -167,7 +155,6 @@ def revisits_per_ooi(df_dwelltime, all_ooi):
         else:
             revisits.append(len(df_dwelltime[ooi][0]))
     return revisits
-
 
 ### calculate average fixation time 
 def avg_fixation_time_ooi(data, all_ooi):
@@ -197,7 +184,6 @@ def avg_fixation_time_ooi(data, all_ooi):
 
     return df_fixationtime.iloc[1]
 
-
 # calculate time to first fixation per OOI
 def first_fixation_ooi(data, all_ooi):
     first_fixation = []
@@ -206,8 +192,6 @@ def first_fixation_ooi(data, all_ooi):
         first_fixation.append(data.iloc[idx_first_fixation]['start_time'])
     
     return first_fixation
-
-
 
 # calculate relative dwell time per OOI in percent (with dwelltime from previous function)
 def rel_dwell_time_ooi(tot_dwell_time):
@@ -219,8 +203,6 @@ def rel_dwell_time_ooi(tot_dwell_time):
         for dwell_time_ooi in tot_dwell_time:
             rel_dwell_time.append(dwell_time_ooi/sum(tot_dwell_time)*100)
     return rel_dwell_time
-
-
 
 def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
     '''
@@ -236,34 +218,26 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
 
     df_ooi_metrics = pd.DataFrame(columns=all_ooi, dtype=float)
 
-
     # count total hits per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = count_hits_ooi(data, all_ooi)
-
 
     # calculate total fixation time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = tot_fixation_time_ooi(data, all_ooi)
 
-
     # calculate average dwell time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_dwell_time_ooi(data, all_ooi)
-
 
     # calculate total dwell time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = total_dwell_time(df_dwelltime, all_ooi)
 
-
     # calculate number of revisits per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = revisits_per_ooi(df_dwelltime, all_ooi)
-
 
     # calculate average fixation time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_fixation_time_ooi(data, all_ooi)
 
-
     # calculate time to first fixation per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = first_fixation_ooi(data, all_ooi)
-
 
     # calculate relative dwell time per OOI (percent) & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = rel_dwell_time_ooi(tot_dwell_time)
@@ -272,34 +246,26 @@ def calculate_ooi_metrics(data: pd.DataFrame, all_ooi: list) -> pd.DataFrame:
     # maybe convert back to seconds?
     df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwell Time [ms]', 'Total Dwell Time [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Time to First Fixation [ms]', 'Relative Dwell Time [%]']
 
-
     return df_ooi_metrics
-
 
 def calculate_ooi_metrics_per_action(data, all_ooi):
     
     df_ooi_metrics = pd.DataFrame(columns=all_ooi, dtype=float)
 
-
     # count total hits per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = count_hits_ooi(data, all_ooi)
 
-
     # calculate fixation time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = tot_fixation_time_ooi(data, all_ooi)
-
-    
+ 
     # calculate average dwell time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_dwell_time_ooi(data, all_ooi)
 
-    
     # calculate total dwell time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = total_dwell_time(df_dwelltime, all_ooi)
 
-
     # calculate number of revisits per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = revisits_per_ooi(df_dwelltime, all_ooi)
-
 
     # calculate average fixation time per OOI & add to df_ooi_metrics
     df_ooi_metrics.loc[len(df_ooi_metrics)] = avg_fixation_time_ooi(data, all_ooi)
@@ -311,7 +277,6 @@ def calculate_ooi_metrics_per_action(data, all_ooi):
     # calculate time to first fixation per OOI & add to df_ooi_metrics
     # df_ooi_metrics.loc[len(df_ooi_metrics)] = first_fixation_ooi(data, all_ooi)
 
-
     # name rows of df
     # maybe convert back to seconds?
     df_ooi_metrics.index = ['Hits', 'Total Fixation Time [ms]', 'Average Dwell Time [ms]', 'Total Dwell Time [ms]', 'Revisits', 'Average Fixation Time [ms]', 'Relative Dwell Time [%]']
@@ -320,8 +285,6 @@ def calculate_ooi_metrics_per_action(data, all_ooi):
     return df_ooi_metrics
 
 #endregion
-
-
 
 ### CALCULATION OF GENERAL OOI-BASED METRICS
 #region
@@ -339,7 +302,6 @@ def avg_dwell_time(all_ooi):
     else:
         return statistics.mean(all_dwell_times)
 
-
 # calculate total hits (with df_hits)
 def tot_hits():
     return sum(hits)
@@ -348,7 +310,6 @@ def tot_hits():
 def tot_dwells(revisits_per_ooi):
     total_dwelllls = sum(revisits_per_ooi)
     return sum(revisits_per_ooi)
-
 
 # calculate stationary gaze entropy (inclusive BG)
 def stationary_gaze_entropy(all_ooi, data):
@@ -442,7 +403,6 @@ def gaze_transition_entropy(all_ooi, data):
         occurence = transitions.count(value)
         proportions_tge.append(occurence/total_fixations)
     
-
     inner_summation = []
     for i in range(len(ooi_recognised)):
         inner_summation.append(sum(m2[i][:])*proportions_tge[i])  ### mistake!
@@ -459,12 +419,6 @@ def gaze_transition_entropy(all_ooi, data):
         tge_normalised = tge / max_entropy
     return tge_normalised 
 # 1 = max entropy, 0 = minimum entropy
-
-
-
-
-
-
 
 def calculate_general_ooi_metrics(data, all_ooi, trialname):
     
@@ -489,9 +443,6 @@ def calculate_general_ooi_metrics(data, all_ooi, trialname):
 
     return df_general_ooi_metrics, transition_matrix, dict_ooi
 
-    e=2
-
-
 def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
     
     df_general_ooi_metrics = pd.DataFrame(dtype=float)
@@ -515,12 +466,7 @@ def calculate_general_ooi_metrics_per_action(data, all_ooi, trialname):
 
     return df_general_ooi_metrics
 
-    e=2
-
-
 #endregion
-
-
 
 ### SUMMARY CALCULATIONS
 #region
@@ -545,9 +491,7 @@ def summary_ooi_analysis(df_list, spec, save_path, action):
     # also return mean df (without prefix) for further calculation of 
     return df_summary, df_summary_means
 
-
 def summary_ooigen_analysis(df_list, spec, save_path, action):
-    e=2
 
     # concatenate all dfs 
     df_summary = pd.concat(df_list)

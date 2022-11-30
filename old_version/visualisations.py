@@ -170,9 +170,7 @@ def vis_gen_metrics_duration_per_action(df, outputpath, filename):
     plt.clf()
 
 #endregion
-
-   
-    
+ 
 ### OOI-BASED ANALYSIS
 #region
 

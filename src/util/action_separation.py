@@ -35,7 +35,6 @@ def action_times(data, fixationdata, all_actions) -> pd.DataFrame():
     df_actions['start_time_action'] = df_actions['start_time']
     df_actions['end_time_action'] = df_actions['start_time'].shift(-1)
 
-
     # add time of first and last action
     # end of trial time
     end_time_seconds = float(fixationdata['Event End Trial Time [ms]'].iloc[len(fixationdata)-1])
@@ -49,9 +48,6 @@ def action_times(data, fixationdata, all_actions) -> pd.DataFrame():
     df_actions = df_actions.rename(columns = {'index':'action_change_index_ogd'}) # changed
 
     return df_actions
-
-
-
 
 ### OGD DATA (ooi-based analysis)
 #region
@@ -175,7 +171,6 @@ def summary_ooi_general_metrics_per_action(gen_ooi_metrics_action_df_list, idx_a
         list_total_duration.append(general_metrics_action_df_list[idx_action]['Total Duration [ms]'][0])
     
     sge_per_step = sum(list_sum_sge) / sum(list_total_duration)
-    #df_summary_ooi_gen['Normalised Stationary Gaze Entropy'] =  df_summary_ooi_gen['Normalised Stationary Gaze Entropy'].replace([0], sge_per_step)
     df_summary_ooi_gen['Normalised Stationary Gaze Entropy'] = sge_per_step
 
     # calculate average gaze transition entropy (with duration per action)
@@ -192,9 +187,6 @@ def summary_ooi_general_metrics_per_action(gen_ooi_metrics_action_df_list, idx_a
     return df_summary_ooi_gen
 
 #endregion
-
-
-
 
 ### FIXATION/SACCADE DATA (general analysis)
 #region
@@ -281,15 +273,10 @@ def summary_general_metrics_per_action(general_metrics_action_df_list, idx_actio
     
     df_summary_gen['Relative Fixation/Saccade Duration [%]'] =    df_summary_gen['Relative Fixation/Saccade Duration [%]'].replace([0], percentages)
 
-
     # convert nans to 0 again    
     df_summary_gen.fillna(0, inplace=True)
 
     return df_summary_gen
-
-
-
-
 
 
 #endregion

@@ -1,5 +1,5 @@
 '''
-Generation Summary Reports
+Generation of Summary Reports
 '''
 
 from genericpath import exists
@@ -10,10 +10,7 @@ import cv2
 from fpdf import FPDF
 import os
 
-
-
-### results for all groups and per group
-
+### summary reports for all groups and per group
 def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level):
     
     ### SUMMARY OF GAZE ANALYSIS: ALL GROUPS or GROUP X
@@ -26,15 +23,12 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     pdf.set_xy(10,10)
     pdf.cell(190, 20, 'Summary of Gaze Analysis - {}'.format(level), 1, 1, 'C')
 
-    
-    
-    ### EFFICIENCY
+        ### EFFICIENCY
     # (below title)
 
     pdf.set_font('Arial', 'B', 16)
     pdf.set_xy(10,35)
     pdf.cell(190,10, txt='1) Efficiency', align='C')
-
 
     ### first metric: total duration
     img_path = '{}/general_analysis/visualisations/Total Duration [ms]_boxplot_Whole Trial.png'.format(img_import_path)
@@ -72,9 +66,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         pdf.set_xy(10,70)
         pdf.cell(w=img_w, h=80, border=1)
 
-
-
-
     ### second metric (title page): total fixations
     img_path =  '{}/general_analysis/visualisations/Number of Fixations_boxplot_Whole Trial.png'.format(img_import_path)
 
@@ -87,7 +78,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,170)
     pdf.multi_cell(190, 5 , align = 'L', txt='The average number of fixations per trial. Naturally, this correlates with the trial duration. Therefore, it is only useful if it is either normalised or if all recordings of a study have the same length. Generally, the number of fixations decreases with increasing expertise and in turn, increasing efficiency.')
-
 
     # image
     # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -111,7 +101,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # place frame
         pdf.set_xy(10,195)
         pdf.cell(w=img_w, h=80, border=1)
-
 
     ### if ooi analysis and action analysis:
     if ooi_analysis == True and action_analysis == True:
@@ -154,8 +143,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
         ## fourth metric (page without titles): average dwell time
         img_path =  '{}/ooi_analysis/visualisations/Average Dwell Time [ms]_boxplot_Whole Trial.png'.format(img_import_path)
 
@@ -168,7 +155,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
         pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell [ms] on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
-
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -192,9 +178,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             # place frame
             pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
     ### if only ooi analysis, no action analysis
     if ooi_analysis == True and action_analysis == False:
@@ -237,8 +220,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
     ## if only action analysis, no ooi analysis
     if ooi_analysis == False and action_analysis == True:
 
@@ -280,18 +261,13 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
     ### FOCUS
 
     pdf.add_page()
 
-
     pdf.set_font('Arial', 'B', 16)
     pdf.set_xy(10,10)
     pdf.cell(190,10, txt='2) Focus', align='C')
-
-
 
     # first metric (on focus title page)): fixation/saccade duration
     img_path = '{}/general_analysis/visualisations/Relative Fixation Saccade Duration [%]_piecharts_Whole Trial.png'.format(img_import_path)
@@ -305,7 +281,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
     pdf.set_font('Arial', '', 12)
     pdf.set_xy(10,35)
     pdf.multi_cell(190, 5 , align = 'L', txt='Relative percentage of fixation and saccade durations, i.e. the total time the person has spent fixating compared to travelling from one fixation to the next. The higher the ratio, the more time is spent processing compared to searching.')
-
 
     # image
     # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -329,9 +304,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # place frame
         pdf.set_xy(10,60)
         pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
     # if ooi analysis
     if ooi_analysis == True:
@@ -372,10 +344,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             pdf.set_xy(10,185)
             pdf.cell(w=img_w, h=80, border=1)
 
-        
-        
-        
-        
         # third metric (no title): Normalised Gaze Transition Entropy
         pdf.add_page()
         img_path = '{}/ooi_analysis/visualisations/Normalised Gaze Transition Entropy_barplot_Whole Trial.png'.format(img_import_path)
@@ -412,9 +380,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             # place frame
             pdf.set_xy(10,45)
             pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
         # if k-coeff analysis
         if kcoeff_analysis == True:
@@ -455,7 +420,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
                 # place frame
                 pdf.set_xy(10,170)
                 pdf.cell(w=img_w, h=80, border=1)
-
 
             if action_analysis == True:
 
@@ -501,7 +465,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         # second metric first focus page: kcoeff 
         img_path = '{}/k-coefficient_analysis/visualisations/K-Coefficients Summary.png'.format(img_import_path)
         
-        
         # title of metric
         pdf.set_font('Arial', 'B', 12)
         pdf.set_xy(10,150)
@@ -534,7 +497,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             # place frame
             pdf.set_xy(10,185)
             pdf.cell(w=img_w, h=80, border=1)
-
 
         if action_analysis == True:
             # third metric (no title): k-coefficient per action
@@ -574,8 +536,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
                 # place frame
                 pdf.set_xy(10,45)
                 pdf.cell(w=img_w, h=80, border=1)
-
-
 
     ### ATTENTION
     if ooi_analysis == True:
@@ -624,9 +584,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             pdf.set_xy(10,45)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
-
         ### second metric: time to first fixation
         img_path =  '{}/ooi_analysis/visualisations/Time to First Fixation [ms] per OOI_barplot_Whole Trial.png'.format(img_import_path)
 
@@ -639,7 +596,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
         pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
-
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -663,9 +619,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             # place frame
             pdf.set_xy(10,170)
             pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
         ### third metric: Relative Dwell Time [%] per OOI
         img_path =  '{}/ooi_analysis/visualisations/Relative Dwell Time [%] per OOI_piechart_Whole Trial.png'.format(img_import_path)
@@ -706,8 +659,6 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
         # fourth metric: Average Fixation Time [ms] per OOI_barplot_Whole Trial.png
         img_path =  '{}/ooi_analysis/visualisations/Average Fixation Time [ms] per OOI_boxplot_Whole Trial.png'.format(img_import_path)
 
@@ -744,13 +695,9 @@ def allgroups_groups_results(img_import_path, results_path, ooi_analysis, kcoeff
             pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
 
-
     pdf.output(results_path / 'Results_Summary_{}.pdf'.format(level), 'F')
 
-
-
-### results per participant
-
+### summary report per participant
 def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_analysis, action_analysis, level):
     
     ### SUMMARY OF GAZE ANALYSIS: PARTICIPANT
@@ -762,8 +709,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     pdf.set_font('Arial', 'B', 18)
     pdf.set_xy(10,10)
     pdf.cell(190, 20, 'Summary of Gaze Analysis - {}'.format(level), 1, 1, 'C')
-
-    
     
     ### EFFICIENCY
     # (below title)
@@ -771,7 +716,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     pdf.set_font('Arial', 'B', 16)
     pdf.set_xy(10,35)
     pdf.cell(190,10, txt='1) Efficiency', align='C')
-
 
     ### first metric: total duration
     img_path = '{}/general_analysis/visualisations/Total Duration [ms]_barplot_Whole Trial.png'.format(img_import_path)
@@ -891,8 +835,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
         ## fourth metric (page without titles): average dwell time
         img_path =  '{}/ooi_analysis/visualisations/Average Dwell Time [ms]_barplot_Whole Trial.png'.format(img_import_path)
 
@@ -905,7 +847,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
         pdf.multi_cell(190, 5 , align = 'L', txt='The average duration per dwell [ms] on the defined OOIs. Longer dwell times can mean that the chosen OOIs keep up the attention for longer individual time periods.')
-
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -929,9 +870,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             # place frame
             pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
     ### if only ooi analysis, no action analysis
     if ooi_analysis == True and action_analysis == False:
@@ -974,8 +912,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
     ## if only action analysis, no ooi analysis
     if ooi_analysis == False and action_analysis == True:
 
@@ -1017,18 +953,13 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
     ### FOCUS
 
     pdf.add_page()
 
-
     pdf.set_font('Arial', 'B', 16)
     pdf.set_xy(10,10)
     pdf.cell(190,10, txt='2) Focus', align='C')
-
-
 
     # first metric (on focus title page)): fixation/saccade duration
     img_path = '{}/general_analysis/visualisations/Relative Fixation Saccade Duration [%]_piecharts_Whole Trial.png'.format(img_import_path)
@@ -1065,9 +996,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         # place frame
         pdf.set_xy(10,60)
         pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
     # if ooi analysis
     if ooi_analysis == True:
@@ -1107,10 +1035,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             # place frame
             pdf.set_xy(10,185)
             pdf.cell(w=img_w, h=80, border=1)
-
-        
-        
-        
         
         # third metric (no title): Normalised Gaze Transition Entropy
         pdf.add_page()
@@ -1148,9 +1072,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             # place frame
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
         # if k-coeff analysis
         if kcoeff_analysis == True:
@@ -1191,7 +1112,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
                 # place frame
                 pdf.set_xy(10,180)
                 pdf.cell(w=img_w, h=80, border=1)
-
 
             if action_analysis == True:
 
@@ -1236,8 +1156,7 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
     if ooi_analysis == False and kcoeff_analysis == True:
         # second metric first focus page: kcoeff 
         img_path = '{}/k-coefficient_analysis/visualisations/K-Coefficients Summary.png'.format(img_import_path)
-        
-        
+    
         # title of metric
         pdf.set_font('Arial', 'B', 12)
         pdf.set_xy(10,150)
@@ -1277,7 +1196,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             pdf.add_page()
             img_path = '{}/k-coefficient_analysis/visualisations/K-Coefficients Summary per action.png'.format(img_import_path)
             
-            
             # title of metric
             pdf.set_font('Arial', 'B', 12)
             pdf.set_xy(10,20)
@@ -1311,8 +1229,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
                 pdf.set_xy(10,55)
                 pdf.cell(w=img_w, h=80, border=1)
 
-
-
     ### ATTENTION
     if ooi_analysis == True:
 
@@ -1322,7 +1238,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         pdf.set_font('Arial', 'B', 16)
         pdf.set_xy(10,10)
         pdf.cell(190,10, txt='3) Attention / Object of Interest-Based Analysis', align='C')
-
 
         ### first metric: hits per OOI
         img_path = '{}/ooi_analysis/visualisations/Hits per OOI_barplot_Whole Trial.png'.format(img_import_path)
@@ -1360,9 +1275,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
-
         ### second metric: time to first fixation
         img_path =  '{}/ooi_analysis/visualisations/Time to First Fixation [ms] per OOI_barplot_Whole Trial.png'.format(img_import_path)
 
@@ -1375,7 +1287,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
         pdf.set_font('Arial', '', 12)
         pdf.set_xy(10,155)
         pdf.multi_cell(190, 5 , align = 'L', txt='The average time [ms] until the first fixation on a specific object took place. In general, the less time passes until the object is noticed, the higher its importance or the more noticeable it is.')
-
 
         # image
         # calculate image width from ration (if width is >190 at a height of 80, make w = 190) 
@@ -1399,9 +1310,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             # place frame
             pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
-
-
-
 
         ### third metric: Relative Dwell Time [%] per OOI
         img_path =  '{}/ooi_analysis/visualisations/Relative Dwell Time [%] per OOI_piechart_Whole Trial.png'.format(img_import_path)
@@ -1442,8 +1350,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             pdf.set_xy(10,55)
             pdf.cell(w=img_w, h=80, border=1)
 
-
-
         # fourth metric: Average Fixation Time [ms] per OOI_barplot_Whole Trial.png
         img_path =  '{}/ooi_analysis/visualisations/Average Fixation Time [ms] per OOI_barplot_Whole Trial.png'.format(img_import_path)
 
@@ -1479,7 +1385,6 @@ def participants_results(img_import_path, results_path, ooi_analysis, kcoeff_ana
             # place frame
             pdf.set_xy(10,180)
             pdf.cell(w=img_w, h=80, border=1)
-
 
     pdf.output(results_path / 'Results_Summary_{}.pdf'.format(level), 'F')
 

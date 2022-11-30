@@ -1,5 +1,5 @@
 '''
-Sequence comparison
+Sequence comparison of action sequence of each trial to template sequence
 '''
 
 import pandas as pd

@@ -42,7 +42,6 @@ def vis_gen_metrics_barplots(df, outputpath, filename, specification):
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
 
-
 # boxplots for all metrics (distributions per participant, group, all groups)
 def vis_gen_metrics_boxplots_group(nested_list, outputpath, filename, specification, metric, x_labels):
 
@@ -96,7 +95,6 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
         clrs = sns.color_palette('pastel')[0:len(perc_fixation_list)]
         lbls = ['Fixation', 'Saccade']
 
-
     # if only one row of figures
     if figure_rows == 1:
         for fig_number in range(len(perc_fixation_list)):
@@ -123,7 +121,6 @@ def vis_gen_metrics_piechart(df, outputpath, filename, specification):
             else:
                 continue
             break
-
 
         fig.legend(lbls, bbox_to_anchor=(0.95, 1.05), loc = 'upper right') 
         fig.text(1,1, s=filename)
@@ -153,7 +150,6 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
 
-
     # boxplots: fixation duration
     savepath=outputpath /'Average Fixation Duration [ms]_boxplot_{}'.format(specification)
     boxplot = sns.boxplot(data=fix_dur_list, color='mediumseagreen')
@@ -164,7 +160,6 @@ def vis_gen_metrics_boxplots_trials(sac_dur_list, fix_dur_list, outputpath, file
     fig = boxplot.get_figure()
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
-
 
 # barplot for duration per action
 def vis_gen_metrics_duration_per_action(df, outputpath, filename):
@@ -181,8 +176,6 @@ def vis_gen_metrics_duration_per_action(df, outputpath, filename):
     plt.clf()
 
 #endregion
-
-   
     
 ### OOI-BASED ANALYSIS
 #region
@@ -222,8 +215,7 @@ def vis_ooi_metrics(df, outputpath, filename, specification):
 
 # boxplot for distributions per participant, group, all groups
 def vis_ooi_boxplots(nested_list_series, outputpath, filename, specification, metric, x_labels):
-    
-      
+     
     savepath=outputpath /'{} per OOI_boxplot_{}'.format(metric, specification)
     sns.set_theme(style='whitegrid', palette='pastel')
 
@@ -248,9 +240,6 @@ def vis_ooi_boxplots(nested_list_series, outputpath, filename, specification, me
         axes[i].set_xlabel(nested_list_series.index[i])
         #boxplots.append(bxplt)
         
-
-    #axes[0].get_shared_x_axes().join(axes) 
-    
     #axes.set_xscale()
     axes[0].set_ylabel(metric, fontsize=16)
     axes[i].legend(bbox_to_anchor=(1.04, 1), loc="upper left")
@@ -262,7 +251,6 @@ def vis_ooi_boxplots(nested_list_series, outputpath, filename, specification, me
     fig.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
 
-
 # visualisation transition matrix
 def vis_transition_matrix(transition_matrix, dict_ooi, outputpath, trialname, specification):
     # switch key and value in dict_ooi
@@ -272,9 +260,7 @@ def vis_transition_matrix(transition_matrix, dict_ooi, outputpath, trialname, sp
     df_tm.index = df_tm.index.map(dict_ooi_switched)
 
     # create path to save
-    savepath=outputpath /'Transition Matrix (GTE)_{}'.format(specification)
-
-    
+    savepath=outputpath /'Transition Matrix (GTE)_{}'.format(specification)    
     sns.color_palette('pastel')[0:len(df_tm)]
     sns.heatmap(df_tm, annot=True)
     sns.axes_style({'ytick.top': True})
@@ -284,9 +270,6 @@ def vis_transition_matrix(transition_matrix, dict_ooi, outputpath, trialname, sp
     #plt.tight_layout()
     plt.savefig(savepath, bbox_inches = 'tight', dpi = 300)
     plt.clf()
-
-    e=3
-
 
 def vis_ooigen_barplots(df, outputpath, filename, specification):
     # barplots: all general metrics except relative
@@ -306,8 +289,6 @@ def vis_ooigen_barplots(df, outputpath, filename, specification):
 
 #endregion
 
-
-
 ### K-COEFFICIENT
 #region
 
@@ -325,7 +306,6 @@ def vis_kcoeff_lineplot_trial(df, outputpath, trialname, specification):
         fig.savefig(savepath, bbox_inches='tight', dpi=300)
         plt.clf()
 
-
 # visualisation of k-coefficient line graph per participant -> overlay multiple trials
 def vis_kcoeff_lineplot_pp(df_list, outputpath, trialname, legend_names, specification):
     savepath = outputpath / 'K-Coefficients per time'
@@ -342,8 +322,6 @@ def vis_kcoeff_lineplot_pp(df_list, outputpath, trialname, legend_names, specifi
     plt.xlabel('Time [ms]',  labelpad=20)
     plt.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
-
-
 
 # barplot of mean k-coefficients per participant/group/allgroups and mark >2stdv mean with other color
 def vis_kcoeff_barplot(df, outputpath, trialname, specification):
@@ -380,8 +358,6 @@ def vis_kcoeff_barplot(df, outputpath, trialname, specification):
     plt.legend(handlelist, label_list, bbox_to_anchor=(1, 1), loc="upper left")
     plt.savefig(savepath, bbox_inches='tight', dpi=300)
     plt.clf()
-
-
 
 # barplot of mean k-coefficients per participant/group/allgroups and mark >2stdv mean with other color
 def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
@@ -421,7 +397,6 @@ def vis_kcoeff_barplot_action(df, outputpath, trialname, specification):
     plt.clf()
 
 #endregion
-
 
 ### STATISTICS 
 #region

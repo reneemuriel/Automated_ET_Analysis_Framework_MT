@@ -15,14 +15,12 @@ import logging as log
 import src.util.kcoefficient_calculation as kcoefficient_calculation
 import src.util.visualisations as visualisations
 
-
 def analyse(list_tuple: list, output_path: str) -> tuple:
 
     log.info("Starting K-coefficient analysis.") 
 
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
-
 
     fixation_durations = []
     saccade_amplitudes = []
@@ -52,7 +50,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
                 #remove nans (in case of partial fixations)
                 saccade_amplitudes = [item for item in saccade_amplitudes if not(math.isnan(item)) == True]
  
-
     # calculate mean and standard deviation of fixation duration and saccade amplitude of all trials (of both groups)
     mean_fix_dur = statistics.mean(fixation_durations)
     stdv_fix_dur = statistics.pstdev(fixation_durations)
@@ -60,7 +57,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
     stdv_sac_amp = statistics.pstdev(saccade_amplitudes)
 
     # now, iterate again through trials to calculate k-coefficient per fixation and save in df
-    #summary_df_kcoeff = pd.DataFrame(index = trials[i])
     df_kcoeff_participant_list = []
     all_kcoeffs_list = []
     df_allgroups_kcoeff = pd.DataFrame(index=['All Groups'], columns = groups + ['Mean All Groups']) 
@@ -73,7 +69,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
         # iterate through participants
         for j in range(len(participants[i])):
 
-            
             df_pp_kcoeff = pd.DataFrame(columns = trials[i][j] + ['Mean {}'.format(participants[i][j])])
             df_list_kcoeff_lineplot = []
             pp_kcoeff_list = [] 
@@ -135,8 +130,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
                 # also add to list that saves all k-coefficents in one list to calculate mean and stdev over all trials
                 all_kcoeffs_list.append(statistics.mean(df_kcoeff['K-coefficient']))
 
-
-
             ## pp summary 
 
             pp_kcoeff_mean = statistics.mean(pp_kcoeff_list)
@@ -145,7 +138,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
             analysispath =  output_path / Path(groups[i]) / Path(participants[i][j]) / Path('k-coefficient_analysis') 
             os.makedirs(analysispath, exist_ok = True)
             df_pp_kcoeff.to_csv(analysispath / '{} K-Coefficient Summary.csv'.format(participants[i][j]))
-
 
             # append mean to group summary
             df_group_kcoeff[participants[i][j]] = [df_pp_kcoeff.iloc[0,-1]]
@@ -157,8 +149,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
             legends_lineplot = trials[i][j]
             spec = 'Whole Trial'
             visualisations.vis_kcoeff_lineplot_pp(df_list_kcoeff_lineplot, vis_path, participants[i][j], legends_lineplot, spec)
-
-
 
         ## group summary
 
@@ -185,12 +175,9 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
     os.makedirs(analysispath, exist_ok = True)
     df_allgroups_kcoeff.to_csv(analysispath / 'All Groups K-Coefficient Summary.csv')
 
-
-
     # calculate overall mean kcoefficient and its std dev from list that collected all k-coefficients of each trial
     mean_kcoeff_all = statistics.mean(all_kcoeffs_list)
     stdev_kcoeff_all = statistics.stdev(all_kcoeffs_list)
-
 
     # append focal/ambient and outlier/not to dfs per allgroups, groups, participants
     
@@ -224,8 +211,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
             vis_path = analysispath / Path('visualisations')
             visualisations.vis_kcoeff_barplot(df_pp_kcoeff_2,vis_path, participants[i][j], 'Whole Trial' )
 
-        
-
         # import group summary 
         analysispath = output_path / Path(groups[i]) / Path('k-coefficient_analysis')
         df_group_kcoeff_2 = pd.read_csv(analysispath / '{} K-Coefficient Summary.csv'.format(groups[i]), index_col=[0])
@@ -252,7 +237,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
         os.makedirs(vis_path, exist_ok=True)
         visualisations.vis_kcoeff_barplot(df_group_kcoeff_2,vis_path, groups[i], 'Whole Trial' )
     
-
     # import all groups summary
     analysispath = output_path / Path('k-coefficient_analysis')
     df_allgroups_kcoeff_2 = pd.read_csv(analysispath / 'All Groups K-Coefficient Summary.csv', index_col=[0])

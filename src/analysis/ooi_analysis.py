@@ -10,18 +10,15 @@ import statistics
 import logging as log
 
 # local imports
-import ooi_metrics
+import src.util.ooi_metrics as ooi_metrics
 import src.util.visualisations as visualisations
-
 
 def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
 
     log.info("Starting ooi-based analysis.") 
 
-
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
-
 
     # prepare data
     allgroups_boxplot_list_df = []
@@ -69,7 +66,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
                 os.makedirs(analysispath / Path('visualisations'), exist_ok=True)
                 vis_path = analysispath / Path('visualisations')
 
-
                 ### calculate all ooi metrics per trial
                 df_ooi_metrics = ooi_metrics.calculate_ooi_metrics(ogd_final, all_ooi)
                 # save ooi metrics
@@ -80,10 +76,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
                 ### visualisations of ooi metrics per trial
                 spec = 'Whole Trial'   # add this to title in figure (will be respective actin for action plots)
                 visualisations.vis_ooi_metrics(df_ooi_metrics, vis_path, trials[i][j][k], spec)
-
-                
-
-
 
                 ### calculate all ooi-based general metrics per trial
                 df_general_ooi_metrics, transition_matrix,dict_ooi = ooi_metrics.calculate_general_ooi_metrics(ogd_final, all_ooi, trials[i][j][k])
@@ -97,7 +89,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
                 # visualisation of transition matrix
                 spec = 'Whole Trial'
                 visualisations.vis_transition_matrix(transition_matrix, dict_ooi, vis_path, trials[i][j][k], spec)
-
 
             ### summary of ooi analysis per participant
 
@@ -127,8 +118,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
             # collect means in one df
             group_boxplot_means_df.append(participant_df_means_ooi)
 
-
-
             ### summary of ooi-based general analysis per participant
 
             # create summary df of all trials per participant and save to created dir
@@ -156,9 +145,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
                     inner_list.append(participant_df_summary_ooigen[metric][x])
                 group_boxplot_df[metric][0].append(inner_list)
 
-
-
-
         ### summary of ooi analysis per group
 
         # create path for general analysis in group folder
@@ -168,7 +154,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
         group_df_summary_ooi, group_df_means_ooi = ooi_metrics.summary_ooi_analysis(group_list_dfs_ooi, groups[i], save_path, 'Whole Trial')
         # add df to summary list of all groups
         allgroups_list_dfs_ooi.append(group_df_means_ooi)     
-
 
         ### visualisations of ooi analysis per group
         vis_path = save_path / Path('visualisations')
@@ -209,10 +194,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
         # collect means in one df
         allgroups_boxplot_means_df.append(group_df_means_ooi)
 
-
-
-
-
         ### summary of ooi-based general analysis per group
 
         # create summary df of all participants per group and save 
@@ -241,7 +222,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
             group_nested_list = group_boxplot_df[metric][0]
             list_means = [statistics.mean(group_nested_list[x]) for x in range(len(group_nested_list))]
             group_nested_list.append(list_means)
-            # maybe change to own function?
             visualisations.vis_gen_metrics_boxplots_group(group_nested_list, vis_path, groups[i], 'Whole Trial', metric, x_labels)
 
             # append to boxplot_allgroups_df 
@@ -249,8 +229,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
             for x in range(len(participants[i])):
                 inner_list.append(group_df_summary_ooigen[metric][x])
             allgroups_boxplot_df[metric][0].append(inner_list)
-
-
 
     ### summary of ooi analysis of all groups
 
@@ -260,7 +238,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
     # create summary df of all participants per group and save to created dir
     allgroups_df_summary_ooi, allgroups_df_means_ooi = ooi_metrics.summary_ooi_analysis(allgroups_list_dfs_ooi, 'All Groups', save_path, 'Whole Trial')
 
-    
     ### visualisations of ooi analysis of all groups
     vis_path = save_path / Path('visualisations')
     os.makedirs(vis_path, exist_ok = True)
@@ -290,7 +267,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
         visualisations.vis_ooi_boxplots(nested_list_series, vis_path, 'All Groups', 'Whole Trial', metric, x_labels)
         e=2
 
-
     ### summary of ooi-based general analysis of all groups
     allgroups_df_summary_ooigen = ooi_metrics.summary_ooigen_analysis(allgroups_list_dfs_ooigen, 'All Groups', save_path, 'Whole Trial')
 
@@ -309,7 +285,6 @@ def analyse(list_tuple: list, output_path: str, pixel_distance) -> tuple:
         allgroups_nested_list = allgroups_boxplot_df[metric][0]
         list_means = [statistics.mean(allgroups_nested_list[x]) for x in range(len(allgroups_nested_list))]
         allgroups_nested_list.append(list_means)
-        # maybe change to own function?
         visualisations.vis_gen_metrics_boxplots_group(allgroups_nested_list, vis_path, 'All Groups', 'Whole Trial', metric, x_labels)
     
     log.info("Finished ooi-based analysis.") 

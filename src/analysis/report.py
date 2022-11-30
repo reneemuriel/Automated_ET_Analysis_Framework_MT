@@ -10,19 +10,12 @@ import logging as log
 
 import src.util.result_summaries as result_summaries
 
-
 def get_summary(list_tuple: list, output_path: str, ooi_analysis: bool, kcoeff_analysis: bool, action_analysis: bool) -> tuple:
 
     log.info("All modules executed. Starting to generate summary reports.") 
 
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
-
-    ### only if it should be run separately
-    #ooi_analysis = True
-    #kcoeff_analysis = True
-    #action_analysis = True
-
     
     img_import_path = output_path
     results_path = Path('data/report')

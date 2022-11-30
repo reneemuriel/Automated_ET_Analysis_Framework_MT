@@ -1,8 +1,7 @@
 '''
-add column fixation_object
+Add fixation_object column, where for each fixation the fixated OOI (only one, the closer one) or the background is listed.
 '''
 
-# only 1 OOI per fixation possible -> choose closer one
 # if last column is action
 def add_fixation_object_action(data, pixel_distance):
     fixation_object = []

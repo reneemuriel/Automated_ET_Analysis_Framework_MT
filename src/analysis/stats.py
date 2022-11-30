@@ -12,7 +12,6 @@ import logging as log
 # local imports
 import src.util.visualisations as visualisations
 
-
 def analyse(list_tuple: list, output_path: str) -> tuple:
 
     log.info("Started to calculate statistics.") 
@@ -20,7 +19,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
     # get individual lists from tuple
     trials, trial_paths, trials_only, participants, participant_paths, groups, group_paths, output_path_groups = list_tuple
 
-    
     # save overall mean and overall standard deviation of all trials (not stdev of means of group, similar to k-coefficient)
     
     # iterate through each trial and append to one list
@@ -47,7 +45,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
     means = [mean_sge, mean_gte]
     stdevs = [stdev_sge, stdev_gte]
 
-
     # go through summaries and make barplots per participants and mark >2stdev
     for i in range(len(groups)):
         for j in range(len(participants[i])):
@@ -60,7 +57,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
             pp_summary = pd.read_csv(analysispath / Path('{}_summary_ooi-based_general_analysis_Whole Trial.csv'.format(participants[i][j])), index_col=[0])
             vis_path = analysispath / Path('visualisations')
 
-            
             y=0
             for metric in metrics:
                 df_stats = pp_summary[[metric]]
@@ -75,12 +71,10 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
                 
                 y=y+1
         
-
         # stats per group
         analysispath = output_path / Path(groups[i]) / Path('ooi_analysis')
         group_summary = pd.read_csv(analysispath / Path('{}_summary_ooi-based_general_analysis_Whole Trial.csv'.format(groups[i])), index_col=[0])
         vis_path = analysispath / Path('visualisations')
-
 
         y=0
         for metric in metrics:
@@ -100,7 +94,6 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
     analysispath = output_path / Path('ooi_analysis')
     allgroups_summary = pd.read_csv(analysispath / Path('{}_summary_ooi-based_general_analysis_Whole Trial.csv'.format('All Groups')), index_col=[0])
     vis_path = analysispath / Path('visualisations')
-
 
     y=0
     for metric in metrics:

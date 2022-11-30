@@ -1,9 +1,3 @@
-'''
-Date:
-Author:
-Brief:
-'''
-
 import sys, os
 
 from PyQt5.QtWidgets import (

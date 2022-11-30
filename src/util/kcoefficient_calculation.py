@@ -1,7 +1,8 @@
 '''
-K-coefficient calculation
+Convert tobii file to K-coefficient file that
+a) only contains the relevant information, i.e. fixation duration and saccade amplitude
+b) only fixations that are followed by a saccade
 '''
-
 
 import pandas as pd
 import os
@@ -22,12 +23,8 @@ def reformat(filepath, trial_path):
 
     df_out.rename(columns = {'Event_type':'event_type', 'Start':'start_time', 'Stop':'end_time', 'Duration':'duration', 'Saccade_amplitude':'saccade_amplitude'}, inplace = True)
 
-
     base = os.path.basename(filepath)
     file_string = os.path.splitext(base)[0]
     
-
     # changed location where file is saved and filename
     df_out.to_csv(trial_path + '_kcoeff.txt', sep='\t', index=False) 
-
-    print("file: {} was reformatted successfully".format(file_string))

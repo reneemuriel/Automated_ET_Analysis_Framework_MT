@@ -1,10 +1,14 @@
 '''
 Reformat _tobii.tsv (metrics export) files to _fixations.txt files 
+
+Place tobii files data/tobii/to_fixations/. 
+
+If the files are named correctly (participantxx_trialxx_tobii.tsv), the new files will be named "participantxx_trialxx_fixations.txt".
+
+These files can be used in the OGD algorithm.
 '''
 
-# place tobii files data/tobii/to_fixations ' 
-# if the files are named correctly (participantxx_trialxx_tobii.tsv), the new files will be named "participantxx_trialxx_fixations.txt"
-# these files can be used in the OGD algorithm 
+
 
 
 # import
@@ -23,10 +27,10 @@ def reformat(file, output_path):
 
     df_raw = pd.read_csv(file, sep='\t')
 
-    #Filter by row e.g. only rows that are fixations
+    # filter by row e.g. only rows that are fixations
     df_out = df_raw[df_raw["Event_type"]  == "Fixation"]
 
-    #Select colums
+    # select colums
     df_out = df_out[["Start", "Stop", "Duration", "FixationPointX", "FixationPointY"]]
 
     # multiply normalised coordinates by resolution (1920 x 1080)
