@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```
 
 ### Data Pre-Processing
-For the data pre-processing and correct data structure follow the instructions from [here](TODO:).
+For the data pre-processing and correct data structure follow the instructions from [here](preprocessing.md).
 
 
 ## Directory Structure
@@ -67,14 +67,14 @@ ET analysis can then be started by performing the following 3 steps:
 3. Press the "Start Analysis" button. Execution may take a few hours, and the GUI may freeze in this time, without there being a problem. Do not force quit the application in case this happens, as all progress will be lost.
 
 ### Non-Interactive Mode
-Run the ET analysis framework in _non-interactive mode_ by specifying a path to a `.yaml` configuration file. An example is provided [here](TODO:).
+Run the ET analysis framework in _non-interactive mode_ by specifying a path to a `.yaml` configuration file. An example is provided [here](config/example.yaml).
 ```bash
 python app.py --config config/example.yaml
 ```
 The program will then start and run to completion without further interaction. This may take a few hours.
 
 ## Deliverables
-The written thesis can be found [here](TODO:) while a comprehensive guide on the data pre-processing and input structure can be found [here](TODO:).
+The written thesis can be found [here](TODO:) while a comprehensive guide on the data pre-processing and input structure can be found [here](preprocessing.md).
 
 ## License
 The graphical user interface (GUI) in this framework is written with PyQt5, i.e. Python bindings for the QT framework. These are licensed under the General Public License (GPL). Consequently, this repository is also licensed under the GPL. In essence, this means that users provided with a copy of this framework must be provided with access to the underlying source code. Since the framework is entirely written in Python and no individual binaries are distributed, this requirement is always satisfied.
