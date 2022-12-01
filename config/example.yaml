@@ -1,7 +1,7 @@
-action_list: ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Injection', 'Remove Tip', 'Cap On']
+action_list: []
 executionOptions:
-  action_analysis: true
-  entropy_stats: false
+  action_analysis: false
+  entropy_stats: true
   general_analysis: true
   hitradius: 20
   kcoeff_analysis: true
@@ -9,6 +9,6 @@ executionOptions:
   ooi_analysis: true
   sequence_comparison: false
 paths:
-  input: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/input/
-  output: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/output/
-template_sequence: ['Cap Off', 'Apply Tip', 'Setting Units', 'Priming', 'Setting Units', 'Injection', 'Setting Units', 'Remove Tip', 'Cap On']
+  input: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/input/example_input/
+  output: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/output/example_output/
+template_sequence: []

@@ -34,7 +34,7 @@ def analyse(list_tuple: list, output_path: str) -> tuple:
             # iterate through each trial
             for k in range(len(trials[i][j])):
                 
-                kcoeff_path = trial_paths[i][j][k] + '_tobii_kcoeff.tsv' # change to '_tobii_kcoeff.tsv' if old tobii export is used
+                kcoeff_path = trial_paths[i][j][k] + '_tobii.tsv'
 
                 # filter for whole fixations and saccades 
                 kcoefficient_calculation.reformat(kcoeff_path, trial_paths[i][j][k])

@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```
 
 ### Data Pre-Processing
-For the data pre-processing and correct data structure follow the instructions from [here](preprocessing.md).
+For the data pre-processing and correct data input structure follow the instructions from [here](preprocessing.md).
 
 
 ## Directory Structure
@@ -62,7 +62,7 @@ python app.py
 ```
 ET analysis can then be started by performing the following 3 steps:
 
-1. Enter the paths to the input and output paths.
+1. Enter the paths to the input and output directory. 
 2. Specify execution options.
 3. Press the "Start Analysis" button. Execution may take a few hours, and the GUI may freeze in this time, without there being a problem. Do not force quit the application in case this happens, as all progress will be lost.
 
