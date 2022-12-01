@@ -9,6 +9,6 @@ executionOptions:
   ooi_analysis: true
   sequence_comparison: false
 paths:
-  input: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/input/example_input/
-  output: C:/Users/renee/OneDrive/Dokumente/ETHZ/Master_Thesis/05_Framework/Framework/data/output/example_output/
+  input: data/input/example_input/
+  output: data/output/example_output/
 template_sequence: []
